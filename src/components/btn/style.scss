@@ -1,0 +1,36 @@
+@import "../common/theme";
+@import "../common/mixins";
+@import "../common/breakpoints";
+
+.btn {
+  @include btn();
+
+  &__icon {
+    max-width: 10px;
+    max-height: 10px;
+    fill: $color-primary;
+  }
+
+  &--default,
+  &--success,
+  &--danger {
+    @include box-shadow();
+
+    font-weight: bold;
+    color: $color-light;
+  }
+
+  &--success {
+    background-color: $color-primary;
+  }
+
+  &--danger {
+    border: $color-secondary;
+    background-color: $color-secondary;
+  }
+
+  &--default {
+    border: $color-text;
+    background-color: $color-text;
+  }
+}

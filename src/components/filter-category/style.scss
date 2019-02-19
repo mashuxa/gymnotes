@@ -1,0 +1,7 @@
+@import "../common/mixins";
+
+.filter-category {
+  &__results-wrapper {
+    @include flex-grid();
+  }
+}

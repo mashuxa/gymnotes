@@ -1,0 +1,24 @@
+@import "../common/mixins";
+
+.footer {
+  @include block(
+          $type: flex,
+          $theme: dark,
+          $padding: 15px 20px);
+
+  margin-top: auto;
+  flex: 0 0 auto;
+
+  &__contacts {
+    @include clear-link();
+  }
+
+  &__icon {
+    &--letter {
+      width: 15px;
+      height: 11px;
+      padding-right: 5px;
+      fill: $color-primary;
+    }
+  }
+}

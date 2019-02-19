@@ -1,0 +1,95 @@
+@import "../common/breakpoints";
+@import "../common/mixins";
+@import "../common/theme";
+
+.navigation {
+  @include block(
+          $type: flex,
+          $theme: light,
+          $padding: 0,
+          $justify-content: space-around,
+          $align-items: stretch,
+          $flex-direction: column
+  );
+  @include box-shadow();
+
+  justify-content: flex-start;
+  flex: 0 0 auto;
+  user-select: none;
+  transition-duration: 0.15s;
+  z-index: 2;
+  width: 45px;
+  overflow: hidden auto;
+
+  &__link {
+    @include clear-link();
+
+    color: $color-text;
+    fill: $color-text;
+    padding: 10px 15px;
+    display: flex;
+    align-content: center;
+    cursor: pointer;
+
+    &--menu {
+      border-bottom: 1px solid $color-border;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      color: $color-primary;
+    }
+
+    &:first-of-type {
+      @media (min-width: $breakpoint-tablet-md) {
+        padding-top: 15px;
+      }
+    }
+
+    &:last-of-type {
+      @media (min-width: $breakpoint-tablet-md) {
+        padding-bottom: 15px;
+      }
+    }
+
+    &:active,
+    &:hover,
+    &.active {
+      color: $color-primary;
+      fill: $color-primary;
+    }
+  }
+
+  &__link-name {
+    padding-left: 10px;
+    visibility: hidden;
+    transition-duration: 0.3s;
+    opacity: 0;
+  }
+
+  &__link-icon {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+
+    @media (min-width: $breakpoint-tablet-md) {
+      padding-right: 5px;
+    }
+  }
+
+  &__toggle {
+    display: none;
+  }
+
+  &__toggle:checked ~ & &__link-name {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  &__toggle:checked ~ & &__link--menu {
+    fill: $color-primary;
+  }
+
+  &__toggle:checked ~ & {
+    width: 150px;
+  }
+}

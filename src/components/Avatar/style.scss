@@ -1,0 +1,31 @@
+@import "../common/mixins";
+
+.avatar {
+  @include clear-link();
+
+  width: 44px;
+  cursor: pointer;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+
+  &__image {
+    display: block;
+    width: 100%;
+  }
+
+  &--label {
+    width: 100px;
+    height: 100px;
+
+    &__input {
+      display: none;
+    }
+  }
+
+  &--big {
+    width: 80px;
+    height: 80px;
+  }
+}

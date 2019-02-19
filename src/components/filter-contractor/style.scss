@@ -1,0 +1,7 @@
+@import "../common/mixins";
+
+.filter-contractor {
+  &__wrapper {
+    @include flex-grid($last-line-grow: 10);
+  }
+}

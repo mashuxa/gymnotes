@@ -1,0 +1,203 @@
+@import "theme";
+@import "breakpoints";
+
+
+@mixin block(
+  $padding: none,
+  $theme: none,
+  $type: none,
+  $font-family: ("Century Gothic", sans-serif),
+  $font-weight: 300,
+  $grid-columns: 2,
+  $font-size: 14px,
+  $line-height: 1.2,
+  $text-align: left,
+  $align-content: center,
+  $align-items: center,
+  $justify-content: space-between,
+  $flex-wrap: wrap,
+  $flex-direction: row,
+  $grid-rows: auto-fit,
+  $grid-rows-gap: 4px,
+  $grid-columns-gap: 4px
+) {
+  font-family: $font-family;
+  font-weight: $font-weight;
+  font-size: $font-size;
+  line-height: $line-height;
+  text-align: $text-align;
+
+  @if $padding != none {
+    padding: $padding;
+  }
+  @if $theme == dark {
+    color: $color-text-light;
+    background-color: $color-background-dark;
+  } @else if $theme == light {
+    color: $color-text-dark;
+    background-color: $color-background-light;
+  }
+  @if $type == flex {
+    display: flex;
+    flex-direction: $flex-direction;
+    justify-content: $justify-content;
+    align-items: $align-items;
+    align-content: $align-content;
+    flex-wrap: $flex-wrap;
+  } @else if $type == block {
+    display: block;
+    text-align: $text-align;
+  } @else if $type == inline-block {
+    display: inline-block;
+  } @else if $type == grid {
+    display: grid;
+    grid-template-columns: repeat($grid-columns, 1fr);
+    grid-column-gap: $grid-columns-gap;
+    grid-template-rows: repeat($grid-rows, 1fr);
+    grid-row-gap: $grid-rows-gap;
+
+    @media (min-width: $breakpoint-phone-lg) {
+      grid-template-columns: repeat($grid-columns + 1, 1fr);
+    }
+
+    @media (min-width: $breakpoint-tablet-sm) {
+      grid-template-columns: repeat($grid-columns + 2, 1fr);
+    }
+
+    @media (min-width: $breakpoint-tablet-md) {
+      grid-template-columns: repeat($grid-columns + 3, 1fr);
+    }
+
+    @media (min-width: $breakpoint-desktop-sm) {
+      grid-template-columns: repeat($grid-columns + 4, 1fr);
+    }
+
+    @media (min-width: $breakpoint-desktop-md) {
+      grid-template-columns: repeat($grid-columns + 6, 1fr);
+    }
+
+    @media (min-width: $breakpoint-desktop-lg) {
+      grid-template-columns: repeat($grid-columns + 7, 1fr);
+    }
+
+    @media (min-width: $breakpoint-desktop-xl) {
+      grid-template-columns: repeat($grid-columns + 8, 1fr);
+    }
+  }
+}
+
+@mixin clear-link() {
+  display: inline-block;
+  color: inherit;
+  font-size: inherit;
+  text-transform: inherit;
+  line-height: inherit;
+  text-decoration: inherit;
+}
+
+@mixin box-shadow($type: none) {
+  @if $type == inset {
+    box-shadow: inset 0 0 2px 0 rgba(0, 0, 0, 0.2);
+  } @else {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
+  }
+}
+
+@mixin editable() {
+  position: relative;
+
+  &:after {
+    content: 'X';
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(-100%, -100%);
+  }
+}
+
+@mixin date-picker() {
+  &::-webkit-clear-button,
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    display: none;
+  }
+
+  &::-webkit-calendar-picker-indicator {
+    color: $color-primary;
+    background-color: transparent;
+    opacity: 1;
+    cursor: pointer;
+    margin-left: -25px;
+  }
+}
+
+@mixin btn() {
+  @include block(
+          $type: inline-block,
+          $theme: light,
+          $padding: 5px 10px);
+
+  border: 1px solid $color-primary;
+  user-select: none;
+  color: $color-primary;
+  border-radius: 4px;
+  display: table;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  transition-duration: 0.15s;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover,
+  &:active {
+    filter: brightness(1.1);
+  }
+}
+
+@mixin input(
+  $background-color: $color-background,
+  $border-radius: 2px
+) {
+  @include block($type: inline-block, $padding: 5px);
+  @include box-shadow($type: inset);
+
+  outline: none;
+  border: none;
+  background-color: $background-color;
+  border-radius: $border-radius;
+  overflow: hidden;
+}
+
+@mixin clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+@mixin flex-grid(
+  $margin: 4px,
+  $flex-grow: 1,
+  $flex-shrink: 0,
+  $flex-basis: 100px,
+  $last-line-grow: 0
+) {
+  @include block($type: flex);
+
+  margin: 0 -$margin;
+
+  & > * {
+    flex: $flex-grow $flex-shrink $flex-basis;
+    margin: $margin;
+  }
+
+  &:after {
+    content: '';
+    flex-grow: $last-line-grow;
+  }
+}

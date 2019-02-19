@@ -1,0 +1,26 @@
+<section class="tabs u-my-lg">
+    <input class="tabs__radio-input" type="radio" id="tab-1" name="tabs-1">
+    <input class="tabs__radio-input" type="radio" id="tab-2" name="tabs-1">
+    <input class="tabs__radio-input" type="radio" id="tab-3" name="tabs-1" checked>
+    <div class="tabs__label-wrapper">
+        <label class="tabs__label" for="tab-1">My appointments</label>
+        <label class="tabs__label" for="tab-2">My clients</label>
+        <label class="tabs__label" for="tab-3">My schedule</label>
+    </div>
+    <div class="tabs__tab tabs__tab--1">
+        ${require('../appointment/index.html')}
+    </div>
+    <div class="tabs__tab tabs__tab--2">
+        ${require('../appointment/index.html')}
+        ${require('../appointment/index.html')}
+        ${require('../appointment/index.html')}
+        ${require('../appointment/index.html')}
+        ${require('../appointment/index.html')}
+        ${require('../appointment/index.html')}
+        ${require('../appointment/index.html')}
+    </div>
+    <div class="tabs__tab tabs__tab--3">
+        ${require('../time-list/time-list--editable/index.html')}
+        ${require('../add-schedule/index.html')}
+    </div>
+</section>

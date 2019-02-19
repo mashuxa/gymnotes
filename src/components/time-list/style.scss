@@ -1,0 +1,68 @@
+@import "../common/theme";
+@import "../common/mixins";
+
+.time-list {
+  @include block(
+          $text-align: center
+  );
+
+  width: 100%;
+  table-layout: fixed;
+  border-spacing: 4px;
+  color: $color-text;
+
+  &__header {
+    @include block(
+            $text-align: center
+    );
+
+    color: $color-text
+  }
+
+  &__item-wrapper {
+    @include block (
+            $type: grid,
+            $grid-columns: 4);
+  }
+
+  &__item {
+    user-select: none;
+    background-color: lighten($color-background, 1.5);
+    box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 10px;
+
+    &--enable {
+      @include box-shadow();
+
+      cursor: pointer;
+      font-weight: bold;
+      color: $color-primary;
+      background-color: $color-light;
+    }
+
+    &--active {
+      color: $color-light;
+      background-color: $color-primary;
+      box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  &__btns-wrapper {
+    @include block($type: flex, $padding: 20px 0 10px);
+  }
+
+  &__btn-icon {
+    fill: $color-light;
+
+    &--cancel {
+      width: 8px;
+      height: 8px;
+    }
+
+    &--plus {
+      width: 10px;
+      height: 10px;
+    }
+  }
+}

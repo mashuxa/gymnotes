@@ -1,0 +1,59 @@
+@import "../common/mixins";
+@import "../common/theme";
+
+.contractor-card {
+  @include block(
+          $theme: light,
+          $padding: 15px 10px
+  );
+  @include box-shadow();
+
+  text-align: center;
+
+  &__name {
+    font-size: 1.4em;
+    color: $color-primary;
+    margin: 0;
+    font-weight: 500;
+  }
+
+  &__phone {
+   @include clear-link();
+
+    font-size: 1.2em;
+    color: $color-primary;
+    white-space: nowrap;
+  }
+
+  &__link-icon {
+    width: 12px;
+    height: 12px;
+    fill: $color-primary;
+  }
+
+  &__description {
+    color: $color-text;
+    text-align: justify;
+    min-width: 200px;
+  }
+
+  &__category-tags-wrapper {
+    min-width: 150px;
+  }
+
+  &__category {
+    color: $color-text;
+
+    &:not(:last-child):after {
+      content: ', ';
+    }
+  }
+
+  &__avatar-wrapper,
+  &__name,
+  &__phone,
+  &__category-tags-wrapper,
+  &__description {
+    padding-bottom: 10px;
+  }
+}

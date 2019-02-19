@@ -1,0 +1,14 @@
+//mobile first markup
+//initial values ​​up to 375px
+//design tested on minimal resolution - 320px
+
+$max-width-container:    980px;  //320-375
+
+$breakpoint-phone-md:    320px;  //320-375
+$breakpoint-phone-lg:    376px;  //376-425
+$breakpoint-tablet-sm:   426px;  //426-768
+$breakpoint-tablet-md:   769px;  //769-1024
+$breakpoint-desktop-sm:  1025px; //1025-1200
+$breakpoint-desktop-md:  1201px; //1201-1440
+$breakpoint-desktop-lg:  1441px; //1440-1600
+$breakpoint-desktop-xl:  1601px; //1600-...

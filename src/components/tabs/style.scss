@@ -1,0 +1,50 @@
+@import "../common/mixins";
+@import "../common/theme";
+
+.tabs {
+  &__radio-input {
+    display: none;
+  }
+
+  &__label-wrapper {
+    @include block(
+            $type: flex,
+            $theme: light,
+            $flex-wrap: nowrap
+    );
+
+    @include box-shadow();
+  }
+
+  &__label {
+    flex-grow: 1;
+    user-select: none;
+    padding: 10px;
+    cursor: pointer;
+    transition-duration: 0.3s;
+    text-align: center;
+    color: $color-text;
+    border-right: 1px solid transparent;
+
+    &:not(:last-of-type) {
+      border-right-color: $color-background;
+    }
+  }
+
+  #tab-1:checked ~ &__label-wrapper [for="tab-1"],
+  #tab-2:checked ~ &__label-wrapper [for="tab-2"],
+  #tab-3:checked ~ &__label-wrapper [for="tab-3"] {
+    color: $color-primary;
+  }
+
+  .tabs__tab {
+    display: none;
+    padding-top: 10px;
+  }
+
+  #tab-1:checked ~ .tabs__tab--1,
+  #tab-2:checked ~ .tabs__tab--2,
+  #tab-3:checked ~ .tabs__tab--3 {
+    display: block;
+  }
+}

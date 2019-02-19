@@ -1,0 +1,25 @@
+@import "../common/mixins";
+@import "../common/theme";
+
+.header {
+  @include block($theme: dark, $type: flex, $padding: 10px);
+  @include box-shadow();
+
+  position: relative;
+  flex: 0 0 auto;
+
+  &__icon {
+    &--login {
+      width: 25px;
+      height: 25px;
+      fill: $color-primary;
+    }
+  }
+
+  &__link {
+    &--login {
+      display: inline-block;
+      padding: 10px;
+    }
+  }
+}

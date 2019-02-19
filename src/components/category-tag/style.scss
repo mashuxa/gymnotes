@@ -1,0 +1,33 @@
+@import "../common/mixins";
+
+.category-tag {
+  @include block(
+          $theme: light,
+          $padding: 5px 10px,
+          $font-size: inherit,
+          $text-align: center
+  );
+
+  @include box-shadow();
+
+  user-select: none;
+  cursor: pointer;
+  color: $color-text;
+
+
+
+  &__icon {
+    width: 10px;
+    height: 10px;
+
+    &--cancel {
+      fill: $color-secondary;
+    }
+  }
+
+  &--removable {
+    @include block($type: flex);
+
+    background-color: $color-background;
+  }
+}

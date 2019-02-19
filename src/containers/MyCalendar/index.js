@@ -1,9 +1,14 @@
 import React from 'react';
+import {Calendar} from '../../components/Calendar';
+import {Tabs} from '../../components/Tabs';
 
 
 function MyCalendar() {
     return (
-        <h1>MyCalendar</h1>
+        <React.Fragment>
+            <Calendar/>
+            <Tabs/>
+        </React.Fragment>
     );
 }
 

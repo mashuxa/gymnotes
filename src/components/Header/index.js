@@ -10,7 +10,9 @@ function Header() {
     const isUserLogged = false;
     return (
         <header className="header">
-            <Logo/>
+            <Link exact to='/' className="logo">
+                <Logo/>
+            </Link>
             {isUserLogged ? <Avatar/> : <Link to='/enter' className='header__link header__link--login'><IconLogin className="header__icon header__icon--login"/></Link>}
         </header>
     );

@@ -9,6 +9,7 @@
           $padding: 0,
           $justify-content: space-around,
           $align-items: stretch,
+          $align-content: stretch,
           $flex-direction: column
   );
   @include box-shadow();
@@ -39,15 +40,11 @@
     }
 
     &:first-of-type {
-      @media (min-width: $breakpoint-tablet-md) {
-        padding-top: 15px;
-      }
+      padding-top: 15px;
     }
 
     &:last-of-type {
-      @media (min-width: $breakpoint-tablet-md) {
-        padding-bottom: 15px;
-      }
+      padding-bottom: 15px;
     }
 
     &:active,

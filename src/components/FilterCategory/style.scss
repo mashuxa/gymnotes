@@ -1,0 +1,9 @@
+@import "../common/mixins";
+
+.filter-category {
+  margin-bottom: 20px;
+
+  &__results-wrapper {
+    @include flex-grid();
+  }
+}

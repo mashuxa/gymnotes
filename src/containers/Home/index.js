@@ -1,9 +1,15 @@
 import React from 'react';
-
+import {FilterDate} from "../../components/FilterDate";
+import {FilterCategory} from '../../components/FilterCategory'
+import {FilterContractor} from '../../components/FilterContractor'
 
 function Home() {
     return (
-        <h1>Home</h1>
+        <React.Fragment>
+            <FilterDate/>
+            <FilterCategory/>
+            <FilterContractor/>
+        </React.Fragment>
     );
 }
 

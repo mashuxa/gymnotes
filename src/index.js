@@ -15,7 +15,7 @@ ReactDOM.render((
     <BrowserRouter>
         <App>
             <Switch>
-                <Route exact path='/' component={Home}/>
+                <Route exact="true" path='/' component={Home}/>
                 <Route path='/my-calendar' component={MyCalendar}/>
                 <Route path='/settings' component={ContractorForm}/>
                 <Route path='/contractor-calendar' component={ContractorCalendar}/>

@@ -18,7 +18,7 @@ function Navigation() {
                     <span className="navigation__link-name">Menu</span>
                 </label>
 
-                    <NavLink exact to='/' className="navigation__link">
+                    <NavLink exact="true" to='/' className="navigation__link">
                         <IconHome className="navigation__link-icon"/>
                         <span className="navigation__link-name">Home</span>
                     </NavLink>

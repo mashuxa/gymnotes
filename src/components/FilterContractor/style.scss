@@ -2,6 +2,9 @@
 
 .filter-contractor {
   &__wrapper {
-    @include flex-grid($last-line-grow: 10);
+    @include flex-grid();
+
+    padding-top: 4px;
+    padding-bottom: 15px;
   }
 }

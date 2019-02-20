@@ -5,5 +5,7 @@
 
   &__results-wrapper {
     @include flex-grid();
+
+    padding-top: 4px;
   }
 }

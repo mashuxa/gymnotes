@@ -35,7 +35,8 @@
     background-color: $color-background-dark;
   } @else if $theme == light {
     color: $color-text-dark;
-    background-color: $color-background-light;
+    background-color: lightgrey;
+    //background-color: $color-background-light;
   }
   @if $type == flex {
     display: flex;

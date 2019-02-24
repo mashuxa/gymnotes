@@ -9,7 +9,7 @@ function Tabs() {
         <section className="tabs">
             <input className="tabs__radio-input" type="radio" id="tab-1" name="tabs-1"/>
             <input className="tabs__radio-input" type="radio" id="tab-2" name="tabs-1"/>
-            <input className="tabs__radio-input" type="radio" id="tab-3" name="tabs-1" checked/>
+            <input className="tabs__radio-input" type="radio" id="tab-3" name="tabs-1" defaultChecked/>
             <div className="tabs__label-wrapper">
                 <label className="tabs__label" htmlFor="tab-1">My appointments</label>
                 <label className="tabs__label" htmlFor="tab-2">My clients</label>

@@ -29,35 +29,35 @@ function FormSchedule() {
             </div>
             <div className="form-schedule__presets form-schedule__presets--days">
                 <label className="form-schedule__day-label">
-                    <input className="form-schedule__day-input" type="checkbox" checked id="mon"/>
+                    <input className="form-schedule__day-input" type="checkbox" defaultChecked id="mon"/>
                     <span className="form-schedule__day-name">mon</span>
                     <span className="form-schedule__day-checkbox">
                         <IconChecked className='form-schedule__chekbox-icon'/>
             </span>
                 </label>
                 <label className="form-schedule__day-label">
-                    <input className="form-schedule__day-input" type="checkbox" checked id="tue"/>
+                    <input className="form-schedule__day-input" type="checkbox" defaultChecked id="tue"/>
                     <span className="form-schedule__day-name">tue</span>
                     <span className="form-schedule__day-checkbox">
                 <IconChecked className='form-schedule__chekbox-icon'/>
             </span>
                 </label>
                 <label className="form-schedule__day-label">
-                    <input className="form-schedule__day-input" type="checkbox" checked id="wed"/>
+                    <input className="form-schedule__day-input" type="checkbox" defaultChecked id="wed"/>
                     <span className="form-schedule__day-name">wed</span>
                     <span className="form-schedule__day-checkbox">
                 <IconChecked className='form-schedule__chekbox-icon'/>
             </span>
                 </label>
                 <label className="form-schedule__day-label">
-                    <input className="form-schedule__day-input" type="checkbox" checked id="thu"/>
+                    <input className="form-schedule__day-input" type="checkbox" defaultChecked id="thu"/>
                     <span className="form-schedule__day-name">thu</span>
                     <span className="form-schedule__day-checkbox">
                <IconChecked className='form-schedule__chekbox-icon'/>
             </span>
                 </label>
                 <label className="form-schedule__day-label">
-                    <input className="form-schedule__day-input" type="checkbox" checked id="fri"/>
+                    <input className="form-schedule__day-input" type="checkbox" defaultChecked id="fri"/>
                     <span className="form-schedule__day-name">fri</span>
                     <span className="form-schedule__day-checkbox">
                 <IconChecked className='form-schedule__chekbox-icon'/>

@@ -8,6 +8,7 @@ import {ReactComponent as IconPhone} from './assets/phone.svg';
 function Appointment() {
     return (
         <table className="appointment">
+            <tbody>
             <tr>
                 <td className="appointment__avatar" rowSpan="2">
                     <Avatar/>
@@ -32,6 +33,7 @@ function Appointment() {
                     <IconClose className='appointment__icon appointment__icon--cancel'/>
                 </td>
             </tr>
+            </tbody>
         </table>
     );
 }

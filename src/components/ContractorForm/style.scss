@@ -29,29 +29,46 @@
     }
 
     &--name,
-    &--phone {
+    &--phone,
+    &--address-search {
       margin: 5px 0;
       flex-grow: 1;
+    }
+
+    &--name,
+    &--phone {
+      margin-left: 5px;
     }
 
     &--name {
       color: $color-primary;
     }
 
-    &--category-search,
-    &--address-search {
+    &--category-search {
       width: 100%;
     }
   }
 
   &__category-wrapper {}
 
+  &__address-map,
+  &__address-map-wrapper {
+    width: 100%;
+    height: 200px;
+  }
+
   &__search-wrapper {
     padding: 10px 0;
+
+    &--address {
+      @include block($type: flex)
+    }
   }
 
   &__search-results {
     border: 1px solid green;
+    width: 100%;
+    padding: 10px 0;
   }
 
 

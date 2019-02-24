@@ -18,7 +18,7 @@ function Navigation() {
                     <span className="navigation__link-name">Menu</span>
                 </label>
 
-                    <NavLink exact="true" to='/' className="navigation__link">
+                    <NavLink exact to='/' className="navigation__link">
                         <IconHome className="navigation__link-icon"/>
                         <span className="navigation__link-name">Home</span>
                     </NavLink>
@@ -30,7 +30,6 @@ function Navigation() {
                         <IconSettings className="navigation__link-icon"/>
                         <span className="navigation__link-name">Settings</span>
                     </NavLink>
-
             </nav>
         </React.Fragment>);
 }

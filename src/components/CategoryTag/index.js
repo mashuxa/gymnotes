@@ -6,7 +6,7 @@ function CategoryTag() {
     return (
         <div className="category-tag">
             Category item
-            {/*<IconClose className='category-tag__icon category-tag__icon--cancel'/>*/}
+            <IconClose className='category-tag__icon category-tag__icon--cancel'/>
         </div>
     );
 }

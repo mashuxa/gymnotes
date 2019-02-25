@@ -33,4 +33,12 @@
     border: $color-text;
     background-color: $color-text;
   }
+
+  &--edit {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(-100%, -100%);
+    background: none;
+  }
 }

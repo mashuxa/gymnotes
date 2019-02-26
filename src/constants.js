@@ -1,3 +1,3 @@
-const GOOGLE_API_KEY = 'AIzaSyDiwSm7afWo0wEe4jF9SZz637z_oKLvMWc';
+const PLACES_YANDEX_API = '49da7782-0d50-4a11-8698-7d8ea0fe67fd';
 
-export {GOOGLE_API_KEY};
+export {PLACES_YANDEX_API};

@@ -1,9 +1,7 @@
 import React from 'react';
 import './style.scss';
 import {Avatar} from '../Avatar';
-import {ReactComponent as IconSearch} from './assets/search.svg';
-import {Map} from '../Map';
-import {GOOGLE_API_KEY} from '../../constants';
+import {PLACES_YANDEX_API} from '../../constants';
 
 
 class ContractorForm extends React.Component {
@@ -39,45 +37,46 @@ class ContractorForm extends React.Component {
         this.setState({userAddress: ''});
     };
 
-    setUserAddress = (e) => {
-        this.setState({userAddress: e.target.innerText});
+    setUserAddress = (result) => {
+        this.setState({
+            userAddress: result.properties.GeocoderMetaData.text,
+            userAddressCoordinates: {
+                lat: result.geometry.coordinates[1],
+                lng: result.geometry.coordinates[0]
+            }
+        });
     };
 
-    // componentDidMount() {
-    //     navigator.geolocation.getCurrentPosition((position) => {
-    //         const lat = position.coords.latitude;
-    //         const lng = position.coords.longitude;
-    //         if (lat && lng) {
-    //
-    //             this.setState({
-    //                 userAddressCoordinates: {
-    //                     lat,
-    //                     lng
-    //                 }
-    //             });
-    //         }
-    //     });
-    // }
-    setSearchAddressValue = (e) =>{
+    setSearchAddressValue = (e) => {
         this.setState({searchAddressValue: e.target.value});
-        const requestUrl = `https://maps.googleapis.com/maps/api/place/queryautocomplete/json?key=${GOOGLE_API_KEY}&input=${this.state.searchAddressValue}`;
-        console.log(requestUrl);
+    };
 
-        fetch(requestUrl).then((response)=>{
-            console.log(response);
-            console.log(response.JSON());
-        }).then(
+    searchAddress = () => {
+        const requestUrl = `https://search-maps.yandex.ru/v1/?apikey=${PLACES_YANDEX_API}&text=${this.state.searchAddressValue}&lang=${navigator.language}`;
 
-        );
+        fetch(requestUrl).then(response => response.json())
+            .then((results) => {
+                this.setState({addressResults: results.features});
+            });
     };
 
     render() {
-        const categories = this.state.userCategoriesId.map((categoryId) => {
-            return <span key={categoryId}>{categoryId} </span>;
-        });
-        console.log(this.state.searchAddressValue);
+        const searchAddressResults = Boolean(this.state.addressResults.length) && <div className="contractor-form__search-results">
+            {
+                this.state.addressResults.map((result) => {
+                    return (
+                        <div key={result.properties.id} className="contractor-form__search-result" onClick={() => {
+                            this.setUserAddress(result);
+                        }}>
+                            {result.properties.GeocoderMetaData.text}
+                        </div>
+                    );
+                })
+            }
+        </div>;
+
         return (
-            <form className="contractor-form" autoComplete="on">
+            <form className="contractor-form">
                 <div className="contractor-form__avatar-wrapper">
                     <Avatar className="avatar avatar--label" src={this.state.avatarSrc}/>
                 </div>
@@ -90,41 +89,28 @@ class ContractorForm extends React.Component {
                     <input className="contractor-form__input contractor-form__input--phone" placeholder="+375291234567"
                            type="tel" value={this.state.userPhone} onChange={this.setUserPhone}/>
                 </label>
-                <div className="contractor-form__category-wrapper">
-                    {categories}
-                </div>
+                <div className="contractor-form__category-wrapper">+</div>
                 <div className="contractor-form__search-wrapper">
                     <input type="search" className="contractor-form__input contractor-form__input--category-search"
                            id="contractorCategory" placeholder="Start type category"/>
-                    <div className="contractor-form__search-results">
-
-                    </div>
+                    <div className="contractor-form__search-results">+</div>
                 </div>
                 {this.state.userAddress ?
-                    <label className="contractor-form__label contractor-form__label--adress">
+                    (<label className="contractor-form__label contractor-form__label--adress">
                         <span>Your address: {this.state.userAddress}</span>
                         <button className="btn btn--edit" type="button" onClick={this.clearUserAddress}>Edit</button>
-                    </label>
+                    </label>)
                     :
-                    <div className="contractor-form__search-wrapper contractor-form__search-wrapper--address">
+                    (<div className="contractor-form__search-wrapper contractor-form__search-wrapper--address">
                         <input className="contractor-form__input contractor-form__input--address-search" type="search"
-                               id="contractorAddress" placeholder="Start type your address" onChange={this.setSearchAddressValue}/>
-                        <div className="contractor-form__search-results">
-                            {this.state.addressResults.map((result)=>{
-                                return <div key={result} className='contractor-form__search-results' onClick={this.setUserAddress}>{result}</div>
-                            })}
-                        </div>
-
-                        {/*<Map coordinates={this.state.userAddressCoordinates}*/}
-                             {/*googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDiwSm7afWo0wEe4jF9SZz637z_oKLvMWc&v=3.exp&libraries=geometry,drawing,places"*/}
-                             {/*loadingElement={<div className="contractor-form__address-map-loader"/>}*/}
-                             {/*containerElement={<div className="contractor-form__address-map-wrapper"/>}*/}
-                             {/*mapElement={<div className="contractor-form__address-map"/>}/>*/}
-                    </div>
+                               id="contractorAddress" placeholder="Start type your address"
+                               onChange={this.setSearchAddressValue}/>
+                        <button onClick={this.searchAddress} type="button">Search!</button>
+                        {searchAddressResults}
+                    </div>)
                 }
                 <textarea className="contractor-form__description" rows="4" placeholder="Tell about you"
-                          value={this.state.userDescription} onChange={this.setUserDescription}>
-                    sdfhsdh
+                          value={this.state.userDescription} onChange={this.setUserDescription}>+
                 </textarea>
                 <div className="contractor-form__btns-wrapper">
                     <button className="btn btn--default" type="reset">Reset</button>

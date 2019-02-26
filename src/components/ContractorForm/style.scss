@@ -2,137 +2,159 @@
 @import "../common/theme";
 
 .contractor-form {
-  @include block(
-          $theme: light,
-          $padding: 10px
-  );
-
-  @include box-shadow();
-
-  text-align: left;
-
-  &__avatar-wrapper {
-    padding-right: 10px;
-    margin: auto;
-    display: inline-block;
-    float: left;
-  }
-
-  &__input {
-    @include input();
-
-    width: 140px;
-    transition-duration: 0.3s;
-
-    &:focus {
-      flex-grow: 1;
-    }
-
-    &--name,
-    &--phone,
-    &--address-search {
-      margin: 5px 0;
-      flex-grow: 1;
-    }
-
-    &--name,
-    &--phone {
-      margin-left: 5px;
-    }
-
-    &--name {
-      color: $color-primary;
-    }
-
-    &--category-search {
-      width: 100%;
-    }
-  }
-
-  &__category-wrapper {}
-
-  &__address-map,
-  &__address-map-wrapper {
-    width: 100%;
-    height: 200px;
-  }
-
-  &__search-wrapper {
-    padding: 10px 0;
-
-    &--address {
-      @include block($type: flex)
-    }
-  }
-
-  &__search-results {
-    border: 1px solid green;
-    width: 100%;
-    padding: 10px 0;
-  }
-
-
-
-  &__label {
     @include block(
+        $theme: light,
+        $padding: 10px
+    );
+
+    @include box-shadow();
+
+    text-align: left;
+
+    &__avatar-wrapper {
+        padding-right: 10px;
+        margin: auto;
+        display: inline-block;
+        float: left;
+    }
+
+    &__input {
+        @include input();
+
+        width: 140px;
+        transition-duration: 0.3s;
+
+        &:focus {
+            flex-grow: 1;
+        }
+
+        &--name,
+        &--phone,
+        &--address-search {
+            margin: 5px 0;
+            flex-grow: 1;
+        }
+
+        &--name,
+        &--phone {
+            margin-left: 5px;
+        }
+
+        &--name {
+            color: $color-primary;
+        }
+
+        &--category-search {
+            width: 100%;
+        }
+    }
+
+    &__category-wrapper {
+    }
+
+    &__address-map,
+    &__address-map-wrapper {
+        width: 100%;
+        height: 200px;
+    }
+
+    &__search-wrapper {
+        padding: 10px 0;
+        position: relative;
+
+        &--address {
+            @include block( $type: flex);
+        }
+    }
+
+    &__search-results {
+        @include block(
+            $theme: light,
+            $padding: 10px 0
+        );
+        @include box-shadow();
+
+        position: absolute;
+        bottom: 0;
+        transform: translateY(100%);
+    }
+
+    &__search-result {
+        padding: 5px 10px;
+        transition-duration: 0.3s;
+
+        &:hover {
+            cursor: pointer;
+            color: $color-text;
+        }
+
+        &:not(:last-of-type) {
+            border-bottom: 1px solid $color-border;
+        }
+    }
+
+
+    &__label {
+        @include block(
             $type: flex,
             $justify-content: flex-start
-    );
+        );
 
-    padding-bottom: 10px;
-    position: relative;
-    font-weight: 500;
+        padding-bottom: 10px;
+        position: relative;
+        font-weight: 500;
 
-    &--adress {
-      justify-content: space-between;
+        &--adress {
+            justify-content: space-between;
+            flex-wrap: nowrap;
+        }
     }
-  }
 
-  &__description {
-    @include input();
+    &__description {
+        @include input();
 
-    padding: 10px;
-    margin: 10px 0;
-    color: $color-text;
-    width: 100%;
-    box-sizing: border-box;
-    max-width: 100%;
-    min-width: 100%;
-  }
+        padding: 10px;
+        margin: 10px 0;
+        color: $color-text;
+        width: 100%;
+        box-sizing: border-box;
+        max-width: 100%;
+        min-width: 100%;
+    }
 
-  &__category-tags-wrapper {
-    @include flex-grid(
+    &__category-tags-wrapper {
+        @include flex-grid(
             $last-line-grow: 100
-    );
+        );
 
-    position: relative;
-    padding: 10px 0;
-    left: -4px;
-  }
+        position: relative;
+        padding: 10px 0;
+        left: -4px;
+    }
 
-  &__btns-wrapper {
-    @include block(
+    &__btns-wrapper {
+        @include block(
             $type: flex,
             $padding: 10px 0 0);
-  }
+    }
 
-  &__address-search {
-    @include input();
+    &__address-search {
+        @include input();
 
-    border: none;
-    flex-grow: 1;
-    margin-bottom: 0;
-  }
+        border: none;
+        flex-grow: 1;
+        margin-bottom: 0;
+    }
 
-  &__category-select-btn {
-    @include btn();
+    &__category-select-btn {
+        @include btn();
 
-    border: none;
-  }
+        border: none;
+    }
 
-  &__category-select-icon {
-    width: 16px;
-    height: 16px;
-    fill: $color-primary;
-  }
+    &__category-select-icon {
+        width: 16px;
+        height: 16px;
+        fill: $color-primary;
+    }
 }

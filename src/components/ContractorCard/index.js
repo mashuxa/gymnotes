@@ -8,7 +8,7 @@ function ContractorCard() {
     return (
         <article className="contractor-card">
             <div className="contractor-card__avatar-wrapper">
-                <Avatar/>
+                <Avatar isFileInput={false}/>
             </div>
             <h1 className="contractor-card__name">
                 Name Lastname

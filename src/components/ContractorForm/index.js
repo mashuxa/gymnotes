@@ -3,6 +3,15 @@ import './style.scss';
 import {Avatar} from '../Avatar';
 import {PLACES_YANDEX_API} from '../../constants';
 
+// for each category and subcaregory separate (different!) id
+const CATEGORIES = [
+    {   id: 210,
+        text: 'shdfk',
+        subcategories: [
+
+        ],
+    }
+];
 
 class ContractorForm extends React.Component {
     state = {
@@ -78,7 +87,7 @@ class ContractorForm extends React.Component {
         return (
             <form className="contractor-form">
                 <div className="contractor-form__avatar-wrapper">
-                    <Avatar className="avatar avatar--label" src={this.state.avatarSrc}/>
+                    <Avatar className="avatar avatar--label" src={this.state.avatarSrc} isFileInput={true}/>
                 </div>
                 <label className="contractor-form__label">
                     Your name:
@@ -89,11 +98,10 @@ class ContractorForm extends React.Component {
                     <input className="contractor-form__input contractor-form__input--phone" placeholder="+375291234567"
                            type="tel" value={this.state.userPhone} onChange={this.setUserPhone}/>
                 </label>
-                <div className="contractor-form__category-wrapper">+</div>
+                <div className="contractor-form__category-wrapper">Categories will be here</div>
                 <div className="contractor-form__search-wrapper">
                     <input type="search" className="contractor-form__input contractor-form__input--category-search"
                            id="contractorCategory" placeholder="Start type category"/>
-                    <div className="contractor-form__search-results">+</div>
                 </div>
                 {this.state.userAddress ?
                     (<label className="contractor-form__label contractor-form__label--adress">

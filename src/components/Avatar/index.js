@@ -3,14 +3,21 @@ import './style.scss';
 import defaultAvatar from './assets/guest.png';
 import {Link} from "react-router-dom";
 
-const Avatar = (props) =>{
-    console.log();
+const Avatar = (props) => {
     const avatarSrc = props.src ? props.src : defaultAvatar;
-        return (
-        <Link to='/settings' className='avatar'>
-            <img className='avatar__image' width='44' src={avatarSrc} alt='Guest' title=' click for preview you
+    const isFileInput = props.isFileInput;
+    return (
+        isFileInput ?
+            <label className='avatar avatar--label'>
+                <input className='avatar--label__input' type="file"/>
+                <img className='avatar__image' width='44' src={avatarSrc} alt='Guest' title=' click for preview you
                  photo'/>
-        </Link>
+            </label>
+            :
+            <div className='avatar'>
+                <img className='avatar__image' width='44' src={avatarSrc} alt='Guest' title=' click for preview you
+                 photo'/>
+            </div>
     );
 };
-export { Avatar };
+export {Avatar};

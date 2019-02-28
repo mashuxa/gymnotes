@@ -1,17 +1,8 @@
 import React from 'react';
 import './style.scss';
 import {Avatar} from '../Avatar';
-import {PLACES_YANDEX_API} from '../../constants';
+import {API_URL} from '../../constants';
 
-// for each category and subcaregory separate (different!) id
-const CATEGORIES = [
-    {   id: 210,
-        text: 'shdfk',
-        subcategories: [
-
-        ],
-    }
-];
 
 class ContractorForm extends React.Component {
     state = {
@@ -19,15 +10,7 @@ class ContractorForm extends React.Component {
         userName: '',
         userPhone: '',
         userDescription: '',
-        userCategoriesId: [],
-        userAddressCoordinates: {
-            lat: 0,
-            lng: 0
-        },
-        userAddress: '',
-
-        searchAddressValue: '',
-        addressResults: []
+        userCategoriesId: []
     };
 
     setUserName = (e) => {
@@ -42,48 +25,30 @@ class ContractorForm extends React.Component {
         this.setState({userDescription: e.target.value});
     };
 
-    clearUserAddress = () => {
-        this.setState({userAddress: ''});
-    };
-
-    setUserAddress = (result) => {
-        this.setState({
-            userAddress: result.properties.GeocoderMetaData.text,
-            userAddressCoordinates: {
-                lat: result.geometry.coordinates[1],
-                lng: result.geometry.coordinates[0]
-            }
-        });
-    };
-
-    setSearchAddressValue = (e) => {
-        this.setState({searchAddressValue: e.target.value});
-    };
-
-    searchAddress = () => {
-        const requestUrl = `https://search-maps.yandex.ru/v1/?apikey=${PLACES_YANDEX_API}&text=${this.state.searchAddressValue}&lang=${navigator.language}`;
-
-        fetch(requestUrl).then(response => response.json())
-            .then((results) => {
-                this.setState({addressResults: results.features});
+    fetchData = (url, callback) => {
+        fetch(url)
+            .then((response) => {
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+                return response.json();
+            })
+            .then((responseAsJson) => {
+                callback(responseAsJson);
+            })
+            .catch((error) => {
+                console.error('Looks like there was a problem: ', error);
             });
     };
 
-    render() {
-        const searchAddressResults = Boolean(this.state.addressResults.length) && <div className="contractor-form__search-results">
-            {
-                this.state.addressResults.map((result) => {
-                    return (
-                        <div key={result.properties.id} className="contractor-form__search-result" onClick={() => {
-                            this.setUserAddress(result);
-                        }}>
-                            {result.properties.GeocoderMetaData.text}
-                        </div>
-                    );
-                })
-            }
-        </div>;
+    componentDidMount() {
+        const url = `${API_URL}/user-data/response.json`;
+        this.fetchData(url, (data) => {
+            console.log(data);
+        });
+    }
 
+    render() {
         return (
             <form className="contractor-form">
                 <div className="contractor-form__avatar-wrapper">
@@ -103,23 +68,8 @@ class ContractorForm extends React.Component {
                     <input type="search" className="contractor-form__input contractor-form__input--category-search"
                            id="contractorCategory" placeholder="Start type category"/>
                 </div>
-                {this.state.userAddress ?
-                    (<label className="contractor-form__label contractor-form__label--adress">
-                        <span>Your address: {this.state.userAddress}</span>
-                        <button className="btn btn--edit" type="button" onClick={this.clearUserAddress}>Edit</button>
-                    </label>)
-                    :
-                    (<div className="contractor-form__search-wrapper contractor-form__search-wrapper--address">
-                        <input className="contractor-form__input contractor-form__input--address-search" type="search"
-                               id="contractorAddress" placeholder="Start type your address"
-                               onChange={this.setSearchAddressValue}/>
-                        <button onClick={this.searchAddress} type="button">Search!</button>
-                        {searchAddressResults}
-                    </div>)
-                }
                 <textarea className="contractor-form__description" rows="4" placeholder="Tell about you"
-                          value={this.state.userDescription} onChange={this.setUserDescription}>+
-                </textarea>
+                          value={this.state.userDescription} onChange={this.setUserDescription}></textarea>
                 <div className="contractor-form__btns-wrapper">
                     <button className="btn btn--default" type="reset">Reset</button>
                     <button className="btn btn--success" type="submit">Apply</button>

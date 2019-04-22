@@ -5,9 +5,9 @@ import {API_URL} from '../../constants';
 
 class Registration extends React.Component {
     state = {
-        login: '',
-        password: '',
-        repeatPassword: '',
+        login: 'mashuxa',
+        password: '12345',
+        repeatPassword: '12345',
         agreements: false,
     };
 
@@ -34,9 +34,12 @@ class Registration extends React.Component {
         if(this.validateForm()){
             fetch(`${API_URL}/registration`, {
                 method: 'POST',
-                body: new FormData(e.target),
+                body: JSON.stringify(this.state),
+                headers: {
+                    "Content-Type": "application/json"
+                },
             }).then(result =>{
-                return result.ok ? result.json() : "error";
+                return result.ok ? result.json() : result;
             }).then(data =>{
                console.log(data);
             });

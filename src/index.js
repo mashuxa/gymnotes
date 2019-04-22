@@ -8,6 +8,8 @@ import {MyCalendar} from './containers/MyCalendar';
 import {ContractorForm} from './components/ContractorForm';
 import {ContractorCalendar} from './containers/ContractorCalendar';
 import {Enter} from './containers/Enter';
+import {Terms} from './containers/Terms';
+import {Policy} from './containers/Policy';
 import {Error} from './containers/Error';
 
 
@@ -20,6 +22,8 @@ ReactDOM.render((
                 <Route path='/settings' component={ContractorForm}/>
                 <Route path='/contractor-calendar' component={ContractorCalendar}/>
                 <Route path='/enter' component={Enter}/>
+                <Route path='/terms' component={Terms}/>
+                <Route path='/policy' component={Policy}/>
                 <Route path='*' component={Error}/>
             </Switch>
         </App>

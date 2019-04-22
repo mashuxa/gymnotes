@@ -1,7 +1,6 @@
 import React from 'react';
 import './style.scss';
 import defaultAvatar from './assets/guest.png';
-import {Link} from "react-router-dom";
 
 const Avatar = (props) => {
     const avatarSrc = props.src ? props.src : defaultAvatar;

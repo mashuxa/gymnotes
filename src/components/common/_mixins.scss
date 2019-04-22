@@ -88,11 +88,21 @@
 
 @mixin clear-link() {
   display: inline-block;
-  color: inherit;
+  color: $color-primary;
   font-size: inherit;
   text-transform: inherit;
   line-height: inherit;
   text-decoration: inherit;
+  cursor: pointer;
+  transition-duration: 0.3s;
+
+  &:hover {
+    color: darken($color-primary, 5%);
+  }
+
+  &:active {
+    color: darken($color-primary, 10%);
+  }
 }
 
 @mixin box-shadow($type: none) {

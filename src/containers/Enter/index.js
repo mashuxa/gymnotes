@@ -1,9 +1,10 @@
 import React from 'react';
+import {Registration} from "../../components/Registration";
 
 
 function Enter() {
     return (
-        <h1>Login/Registration</h1>
+        <Registration />
     );
 }
 

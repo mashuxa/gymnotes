@@ -1,0 +1,36 @@
+@import "../common/breakpoints";
+@import "../common/mixins";
+@import "../common/theme";
+
+.login {
+  @include block(
+          $type: flex,
+          $theme: light,
+          $padding: 20px,
+          $justify-content: space-around,
+          $align-items: stretch,
+          $align-content: stretch,
+          $flex-direction: column
+  );
+  @include box-shadow();
+
+  margin-bottom: 20px;
+
+  &__input {
+    @include input();
+  }
+
+  &__input,
+  &__label,
+  &__btn {
+    margin: 10px 0;
+  }
+
+  &__link {
+    @include clear-link();
+  }
+
+  &__btn {
+    @include btn();
+  }
+}

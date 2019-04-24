@@ -8,7 +8,7 @@ class Registration extends React.Component {
         login: 'mashuxa',
         password: '12345',
         repeatPassword: '12345',
-        agreements: false,
+        agreements: true,
     };
 
     setLogin = (e) => {
@@ -56,7 +56,7 @@ class Registration extends React.Component {
                 <input className="registration__input" onChange={this.setPassword} value={this.state.password} placeholder="Password" type="text" name="password"/>
                 <input className="registration__input" onChange={this.setRepeatPassword} value={this.state.repeatPassword} placeholder="Repeat password" type="text" name="repeatPassword"/>
                 <label className="registration__label">
-                    <input className="registration__checkbox" onChange={this.setAgreements} value={this.state.agreements} type="checkbox" name="agreements"/>
+                    <input className="registration__checkbox" onChange={this.setAgreements} value={this.state.agreements} checked={this.state.agreements}  type="checkbox" name="agreements"/>
                     <span>
                         I agree to the QuickPick <Link className="registration__link" to='/terms'>Terms of Service</Link> and <Link className="registration__link" to='/policy'>Privacy Policy</Link>
                     </span>

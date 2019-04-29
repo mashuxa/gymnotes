@@ -34,7 +34,14 @@ class Login extends React.Component {
             }).then(result => {
                 return result.ok ? result.json() : result;
             }).then(data => {
-                console.log(data);
+                if(data.success){
+                    localStorage.setItem('login', data.authJSON.login);
+                    localStorage.setItem('id', data.authJSON._id);
+                    localStorage.setItem('token', data.authJSON.token);
+                    document.location.href="/settings";
+                } else {
+                    console.log(data);
+                }
             });
         } else {
             console.error('check inputs');

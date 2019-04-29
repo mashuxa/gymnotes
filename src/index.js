@@ -11,6 +11,7 @@ import {Login} from './components/Login';
 import {Registration} from './components/Registration';
 import {Terms} from './containers/Terms';
 import {Policy} from './containers/Policy';
+import {AccessDenied} from './containers/AccessDenied';
 import {Error} from './containers/Error';
 
 
@@ -26,6 +27,7 @@ ReactDOM.render((
                 <Route path='/registration' component={Registration}/>
                 <Route path='/terms' component={Terms}/>
                 <Route path='/policy' component={Policy}/>
+                <Route path='/access-denied' component={AccessDenied}/>
                 <Route path='*' component={Error}/>
             </Switch>
         </App>

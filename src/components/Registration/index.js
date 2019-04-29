@@ -41,7 +41,12 @@ class Registration extends React.Component {
             }).then(result => {
                 return result.ok ? result.json() : result;
             }).then(data => {
-                console.log(data);
+                if(data.success){
+                    document.location.href="/login";
+                    console.log(data);
+                } else {
+                    console.log(data);
+                }
             });
         } else {
             console.error('check inputs');

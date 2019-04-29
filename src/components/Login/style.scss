@@ -14,8 +14,6 @@
   );
   @include box-shadow();
 
-  margin-bottom: 20px;
-
   &__input {
     @include input();
   }

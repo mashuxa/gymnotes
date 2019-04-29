@@ -22,7 +22,7 @@ function Navigation() {
                         <IconHome className="navigation__link-icon"/>
                         <span className="navigation__link-name">Home</span>
                     </NavLink>
-                    <NavLink to='/my-calendar' className="navigation__link">
+                    <NavLink to='/calendar' className="navigation__link">
                         <IconCalendar className="navigation__link-icon"/>
                         <span className="navigation__link-name">Calendar</span>
                     </NavLink>

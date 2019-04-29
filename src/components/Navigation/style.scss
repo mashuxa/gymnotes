@@ -7,44 +7,70 @@
           $type: flex,
           $theme: light,
           $padding: 0,
-          $justify-content: space-around,
+          $justify-content: center,
           $align-items: stretch,
           $align-content: stretch,
-          $flex-direction: column
+          $flex-direction: row
   );
   @include box-shadow();
 
-  justify-content: flex-start;
   flex: 0 0 auto;
   user-select: none;
   transition-duration: 0.15s;
   z-index: 2;
-  width: 45px;
   overflow: hidden auto;
+  box-shadow: 0 -1px 1px 0 rgba(0,0,0,0.05);
+
+  @media (min-width: $breakpoint-tablet-sm) {
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 45px;
+  }
 
   &__link {
     @include clear-link();
 
     color: $color-text;
     fill: $color-text;
-    padding: 10px 15px;
-    display: flex;
-    align-content: center;
+    padding: 13px;
     cursor: pointer;
+    flex: 1 1 0;
+    text-align: center;
+    border-right: 1px solid transparent;
+
+    &:not(:last-of-type) {
+      border-right-color: $color-border-lightgrey;
+    }
+
+    @media (min-width: $breakpoint-tablet-sm) {
+      display: flex;
+      align-content: center;
+      padding: 10px 15px;
+      flex-grow: 0;
+
+      &:first-of-type {
+        padding-top: 15px;
+      }
+
+      &:last-of-type {
+        padding-bottom: 15px;
+      }
+
+      &:not(:last-of-type) {
+        border-right-color: transparent;
+      }
+    }
 
     &--menu {
-      border-bottom: 1px solid $color-border;
+      display: none;
+      border-bottom: 1px solid $color-border-lightgrey;
       padding-top: 15px;
       padding-bottom: 15px;
       color: $color-primary;
-    }
 
-    &:first-of-type {
-      padding-top: 15px;
-    }
-
-    &:last-of-type {
-      padding-bottom: 15px;
+      @media (min-width: $breakpoint-tablet-sm) {
+        display: flex;
+      }
     }
 
     &:active,
@@ -56,10 +82,15 @@
   }
 
   &__link-name {
+    display: none;
     padding-left: 10px;
     visibility: hidden;
     transition-duration: 0.3s;
     opacity: 0;
+
+    @media (min-width: $breakpoint-tablet-sm) {
+      display: block;
+    }
   }
 
   &__link-icon {

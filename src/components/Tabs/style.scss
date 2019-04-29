@@ -17,7 +17,7 @@
   }
 
   &__label {
-    flex-grow: 1;
+    flex: 1 1 0;
     user-select: none;
     padding: 10px;
     cursor: pointer;
@@ -25,9 +25,14 @@
     text-align: center;
     color: $color-text;
     border-right: 1px solid transparent;
+    background-color: $color-lightgray;
+
+    &:hover {
+      color: $color-primary;
+    }
 
     &:not(:last-of-type) {
-      border-right-color: $color-background;
+      border-right-color: $color-border-grey;
     }
   }
 
@@ -35,6 +40,8 @@
   #tab-2:checked ~ &__label-wrapper [for="tab-2"],
   #tab-3:checked ~ &__label-wrapper [for="tab-3"] {
     color: $color-primary;
+    background-color: $color-light;
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.05);
   }
 
   .tabs__tab {

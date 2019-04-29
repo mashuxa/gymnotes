@@ -13,7 +13,7 @@ function Header() {
             <Link exact="true" to='/' className="logo">
                 <Logo/>
             </Link>
-            {isUserLogged ? <Avatar/> : <Link to='/enter' className='header__link header__link--login'><IconLogin className="header__icon header__icon--login"/></Link>}
+            {isUserLogged ? <Avatar/> : <Link to='/login' className='header__link header__link--login'><IconLogin className="header__icon header__icon--login"/></Link>}
         </header>
     );
 }

@@ -19,9 +19,17 @@ html {
   grid-template-rows: auto 1fr auto;
   grid-template-columns: 45px 1fr;
   grid-template-areas:
-     "header     header"
-     "navigation page-wrapper"
-     "footer     footer";
+     "header header"
+     "page-wrapper page-wrapper"
+     "navigation navigation"
+     "footer footer";
+
+  @media (min-width: $breakpoint-tablet-sm) {
+    grid-template-areas:
+            "header     header"
+            "navigation page-wrapper"
+            "footer     footer";
+  }
 }
 
 .header {

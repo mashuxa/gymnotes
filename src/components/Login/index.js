@@ -6,12 +6,12 @@ import {Logo} from "../Logo";
 
 class Login extends React.Component {
     state = {
-        login: 'mashuxa',
+        email: 'mashuxa',
         password: '12345',
     };
 
-    setLogin = (e) => {
-        this.setState({login: e.target.value});
+    setEmail = (e) => {
+        this.setState({email: e.target.value});
     };
     setPassword = (e) => {
         this.setState({password: e.target.value});
@@ -35,12 +35,12 @@ class Login extends React.Component {
                 return result.ok ? result.json() : result;
             }).then(data => {
                 if(data.success){
-                    localStorage.setItem('login', data.authJSON.login);
+                    localStorage.setItem('email', data.authJSON.email);
                     localStorage.setItem('id', data.authJSON._id);
                     localStorage.setItem('token', data.authJSON.token);
-                    document.location.href="/settings";
+                    this.props.history.push('/settings');
                 } else {
-                    console.log(data);
+                    console.log('Incorrect password or email');
                 }
             });
         } else {
@@ -52,8 +52,8 @@ class Login extends React.Component {
         return (
             <form className='login' name='login' onSubmit={this.handleSubmit}>
                 <h1>Log In</h1>
-                <input className="login__input" onChange={this.setLogin} value={this.state.login} placeholder="Login"
-                       type="text" name="login"/>
+                <input className="login__input" onChange={this.setEmail} value={this.state.email} placeholder="Email"
+                       type="text" name="email"/>
                 <input className="login__input" onChange={this.setPassword} value={this.state.password}
                        placeholder="Password" type="text" name="password"/>
                 <button className="login__btn" type="submit">Send</button>

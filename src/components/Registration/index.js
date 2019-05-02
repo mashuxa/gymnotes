@@ -5,14 +5,14 @@ import {API_URL} from '../../constants';
 
 class Registration extends React.Component {
     state = {
-        login: 'mashuxa',
+        email: 'mashuxa',
         password: '12345',
         repeatPassword: '12345',
         agreements: true,
     };
 
-    setLogin = (e) => {
-        this.setState({login: e.target.value});
+    setEmail = (e) => {
+        this.setState({email: e.target.value});
     };
     setPassword = (e) => {
         this.setState({password: e.target.value});
@@ -42,7 +42,7 @@ class Registration extends React.Component {
                 return result.ok ? result.json() : result;
             }).then(data => {
                 if(data.success){
-                    document.location.href="/login";
+                    // document.location.href="/login";
                     console.log(data);
                 } else {
                     console.log(data);
@@ -57,8 +57,8 @@ class Registration extends React.Component {
         return (
             <form className='registration' name='registration' onSubmit={this.handleSubmit}>
                 <h1>Registration</h1>
-                <input className="registration__input" onChange={this.setLogin} value={this.state.login}
-                       placeholder="Login" type="text" name="login"/>
+                <input className="registration__input" onChange={this.setEmail} value={this.state.email}
+                       placeholder="Email" type="text" name="mail"/>
                 <input className="registration__input" onChange={this.setPassword} value={this.state.password}
                        placeholder="Password" type="text" name="password"/>
                 <input className="registration__input" onChange={this.setRepeatPassword}

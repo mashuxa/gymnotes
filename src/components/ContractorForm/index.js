@@ -1,7 +1,8 @@
 import React from 'react';
 import './style.scss';
-import {Avatar} from '../Avatar';
-import {API_URL} from '../../constants';
+import { Avatar } from '../Avatar';
+// import validateUser from '../common/validateUser';
+import { API_URL } from '../../constants';
 
 
 class ContractorForm extends React.Component {
@@ -10,7 +11,7 @@ class ContractorForm extends React.Component {
         userName: '',
         userPhone: '',
         userDescription: '',
-        userCategoriesId: []
+        userCategoriesId: [],
     };
 
     setUserName = (e) => {
@@ -25,26 +26,28 @@ class ContractorForm extends React.Component {
         this.setState({userDescription: e.target.value});
     };
 
-    fetchData = (url, callback) => {
-        fetch(url)
-            .then((response) => {
-                if (!response.ok) {
-                    throw Error(response.statusText);
-                }
-                return response.json();
-            })
-            .then((responseAsJson) => {
-                callback(responseAsJson);
-            })
-            .catch((error) => {
-                console.error('Looks like there was a problem: ', error);
-            });
-    };
-
     componentDidMount() {
-        const url = `${API_URL}/user-data/response.json`;
-        this.fetchData(url, (data) => {
-            console.log(data);
+        const url = `${API_URL}/settings`;
+
+
+        fetch(url, {
+            method: 'POST',
+            body: JSON.stringify({
+                token: localStorage.getItem('token'),
+                email: localStorage.getItem('email'),
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        }).then(result => {
+            return result.ok ? result.json() : result;
+        }).then(data => {
+            if (data.success) {
+                console.log(data.message);
+            } else {
+                console.error(`Access denied! ${data.message}`);
+                this.props.history.push('/login');
+            }
         });
     }
 
@@ -69,7 +72,8 @@ class ContractorForm extends React.Component {
                            id="contractorCategory" placeholder="Start type category"/>
                 </div>
                 <textarea className="contractor-form__description" rows="4" placeholder="Tell about you"
-                          value={this.state.userDescription} onChange={this.setUserDescription}></textarea>
+                          value={this.state.userDescription} onChange={this.setUserDescription}>
+                </textarea>
                 <div className="contractor-form__btns-wrapper">
                     <button className="btn btn--default" type="reset">Reset</button>
                     <button className="btn btn--success" type="submit">Apply</button>
@@ -79,4 +83,4 @@ class ContractorForm extends React.Component {
     };
 }
 
-export {ContractorForm};
+export { ContractorForm };

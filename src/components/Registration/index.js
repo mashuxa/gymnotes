@@ -42,7 +42,7 @@ class Registration extends React.Component {
                 return result.ok ? result.json() : result;
             }).then(data => {
                 if(data.success){
-                    // document.location.href="/login";
+                    this.props.history.push('/login');
                     console.log(data);
                 } else {
                     console.log(data);

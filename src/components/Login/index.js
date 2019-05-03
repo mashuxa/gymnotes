@@ -1,8 +1,9 @@
 import './style.scss';
 import React from 'react';
-import {Link} from 'react-router-dom';
-import {API_URL} from '../../constants';
-import {Logo} from "../Logo";
+import { Link } from 'react-router-dom';
+import { API_URL } from '../../constants';
+import { Logo } from '../Logo';
+
 
 class Login extends React.Component {
     state = {
@@ -29,15 +30,14 @@ class Login extends React.Component {
                 method: 'POST',
                 body: JSON.stringify(this.state),
                 headers: {
-                    "Content-Type": "application/json"
+                    'Content-Type': 'application/json',
                 },
             }).then(result => {
                 return result.ok ? result.json() : result;
             }).then(data => {
-                if(data.success){
-                    localStorage.setItem('email', data.authJSON.email);
-                    localStorage.setItem('id', data.authJSON._id);
-                    localStorage.setItem('token', data.authJSON.token);
+                if (data.success) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('email', data.email);
                     this.props.history.push('/settings');
                 } else {
                     console.log('Incorrect password or email');
@@ -50,7 +50,7 @@ class Login extends React.Component {
 
     render() {
         return (
-            <form className='login' name='login' onSubmit={this.handleSubmit}>
+            <form className="login" name="login" onSubmit={this.handleSubmit}>
                 <h1>Log In</h1>
                 <input className="login__input" onChange={this.setEmail} value={this.state.email} placeholder="Email"
                        type="text" name="email"/>
@@ -60,12 +60,10 @@ class Login extends React.Component {
                 <hr/>
                 <div>
                     <span>Don't have any account yet? </span>
-                    <Link exact="true" to='/registration' className="login__link">
-                        Register
-                    </Link>
+                    <Link exact="true" to="/registration" className="login__link">Register</Link>
                 </div>
             </form>);
     }
 }
 
-export {Login};
+export { Login };

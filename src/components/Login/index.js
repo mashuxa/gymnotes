@@ -38,7 +38,7 @@ class Login extends React.Component {
                 if (data.success) {
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('email', data.email);
-                    this.props.history.push('/settings');
+                    this.props.history.push('/');
                 } else {
                     console.log('Incorrect password or email');
                 }

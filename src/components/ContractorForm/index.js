@@ -41,11 +41,15 @@ class ContractorForm extends React.Component {
             },
         }).then(result => {
             return result.ok ? result.json() : result;
-        }).then(data => {
-            if (data.success) {
-                console.log(data.message);
+        }).then(result => {
+            if (result.success) {
+                this.setState({
+                    userName: result.data.name,
+                    userPhone: result.data.phone,
+                    userDescription: result.data.about,
+                });
             } else {
-                console.error(`Access denied! ${data.message}`);
+                console.error(`Access denied! ${result.message}`);
                 this.props.history.push('/login');
             }
         });

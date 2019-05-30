@@ -25,6 +25,10 @@
     white-space: nowrap;
   }
 
+  &__link {
+    @include clear-link();
+  }
+
   &__link-icon {
     width: 12px;
     height: 12px;

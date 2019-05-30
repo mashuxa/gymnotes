@@ -27,7 +27,7 @@ function ContractorCard() {
                 Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
                 laborum.
             </div>
-            <Link className="btn"
+            <Link className="btn contractor-card__link"
                   to="/contractor-calendar">
                 Show calendar
             </Link>

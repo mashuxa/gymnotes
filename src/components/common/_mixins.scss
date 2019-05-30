@@ -9,7 +9,7 @@
   $font-family: ("Century Gothic", sans-serif),
   $font-weight: 300,
   $grid-columns: 2,
-  $font-size: 14px,
+  $font-size: 12px,
   $line-height: 1.2,
   $text-align: left,
   $align-content: center,
@@ -26,6 +26,10 @@
   font-size: $font-size;
   line-height: $line-height;
   text-align: $text-align;
+
+  @media (min-width: $breakpoint-tablet-sm) {
+    font-size: calc(#{$font-size} + 2px);
+  }
 
   @if $padding != none {
     padding: $padding;

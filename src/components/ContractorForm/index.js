@@ -1,16 +1,16 @@
 import React from 'react';
 import './style.scss';
-import { Avatar } from '../Avatar';
+import {Avatar} from '../Avatar';
 // import validateUser from '../common/validateUser';
-import { API_URL } from '../../constants';
+import {API_URL} from '../../constants';
 
 
 class ContractorForm extends React.Component {
     state = {
         avatarSrc: '',
-        userName: '',
-        userPhone: '',
-        userDescription: '',
+        name: '',
+        phone: '',
+        description: '',
         userCategoriesId: [],
     };
 
@@ -26,9 +26,8 @@ class ContractorForm extends React.Component {
         this.setState({userDescription: e.target.value});
     };
 
-    componentDidMount() {
+    getUserData = () => {
         const url = `${API_URL}/settings`;
-
 
         fetch(url, {
             method: 'POST',
@@ -43,16 +42,18 @@ class ContractorForm extends React.Component {
             return result.ok ? result.json() : result;
         }).then(result => {
             if (result.success) {
-                this.setState({
-                    userName: result.data.name,
-                    userPhone: result.data.phone,
-                    userDescription: result.data.about,
-                });
+                for (let prop in result.data) {
+                    document.getElementsByName(prop)[0].value = result.data[prop];
+                }
             } else {
                 console.error(`Access denied! ${result.message}`);
                 this.props.history.push('/login');
             }
         });
+    };
+
+    componentDidMount() {
+        this.getUserData();
     }
 
     render() {
@@ -64,11 +65,11 @@ class ContractorForm extends React.Component {
                 <label className="contractor-form__label">
                     Your name:
                     <input className="contractor-form__input contractor-form__input--name" placeholder="My name is ..."
-                           type="text" value={this.state.userName} onChange={this.setUserName}/>
+                           type="text" value={this.state.userName} onChange={this.setUserName} name="name"/>
                 </label>
                 <label className="contractor-form__label">Your phone number:
                     <input className="contractor-form__input contractor-form__input--phone" placeholder="+375291234567"
-                           type="tel" value={this.state.userPhone} onChange={this.setUserPhone}/>
+                           type="tel" value={this.state.userPhone} onChange={this.setUserPhone} name="phone"/>
                 </label>
                 <div className="contractor-form__category-wrapper">Categories will be here</div>
                 <div className="contractor-form__search-wrapper">
@@ -76,7 +77,7 @@ class ContractorForm extends React.Component {
                            id="contractorCategory" placeholder="Start type category"/>
                 </div>
                 <textarea className="contractor-form__description" rows="4" placeholder="Tell about you"
-                          value={this.state.userDescription} onChange={this.setUserDescription}>
+                          value={this.state.userDescription} onChange={this.setUserDescription} name="description">
                 </textarea>
                 <div className="contractor-form__btns-wrapper">
                     <button className="btn btn--default" type="reset">Reset</button>
@@ -87,4 +88,4 @@ class ContractorForm extends React.Component {
     };
 }
 
-export { ContractorForm };
+export {ContractorForm};

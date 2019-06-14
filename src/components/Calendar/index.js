@@ -2,8 +2,99 @@ import './style.scss';
 import React from 'react';
 import {ReactComponent as IconArrowLeft} from './assets/arrow-left.svg';
 import {ReactComponent as IconArrowRight} from './assets/arrow-right.svg';
+import {Day} from '../Day';
 
 class Calendar extends React.Component {
+    state = {
+        date: new Date(Date.now()),
+    };
+
+    constructor(props) {
+        super(props);
+
+        this.weekDays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+        this.month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+        this.prevMonth = this.prevMonth.bind(this);
+        this.nextMonth = this.nextMonth.bind(this);
+    }
+
+    get firstMonthDay() {
+        return new Date(this.state.date.getFullYear(), this.state.date.getMonth(), 1);
+    }
+
+    get emptyDays() {
+        return this.firstMonthDay.getUTCDay();
+    }
+
+    get countMonthDays() {
+        return new Date(this.state.date.getFullYear(), this.state.date.getMonth() + 1, 0).getDate();
+    }
+
+    get countDaysFirstWeek() {
+        return this.weekDays.length - this.emptyDays;
+    }
+
+    get dayNames() {
+        return this.weekDays.map((dayName, i) => {
+            return <th className="calendar__th" key={i}>{dayName}</th>;
+        });
+    }
+
+    get emptyDaysFirstWeek() {
+        const days = [];
+
+        for (let i = 0; i < this.emptyDays; i++) {
+            days.push(<td key={i}></td>);
+        }
+        return days;
+    }
+
+    get daysFirstWeek() {
+        const days = [];
+
+        for (let i = 1; i <= this.countDaysFirstWeek; i++) {
+            days.push(<Day key={i} date={i} isSelected={i === this.state.date.getDate()}/>);
+        }
+
+        return days;
+    }
+
+    get restDays() {
+        const weeks = [];
+        const days = [];
+
+        for (let i = this.daysFirstWeek.length + 1; i <= this.countMonthDays; i++) {
+            days.push(<Day key={i} date={i} isSelected={i === this.state.date.getDate()}/>);
+        }
+
+        while (days.length) {
+            const week = days.splice(0, this.weekDays.length);
+
+            weeks.push(<tr key={weeks.length + 1}>{week}</tr>);
+        }
+
+        return weeks;
+    }
+
+    changeMonth(n) {
+        const date = this.state.date;
+        const newDate = new Date(date);
+
+        newDate.setMonth(date.getMonth() + 1 * n);
+        this.setState({
+            date: newDate,
+        });
+    }
+
+    prevMonth() {
+        this.changeMonth(-1);
+    }
+
+    nextMonth() {
+        this.changeMonth(1);
+    }
+
     render() {
         return (
             <table className="calendar">
@@ -11,64 +102,24 @@ class Calendar extends React.Component {
                 <tr>
                     <th className="calendar__header" colSpan="7">
                         <div className="calendar__header-wrapper">
-                            <IconArrowLeft className='calendar__btn calendar__btn--left' />
-                            <span className="calendar__month">January</span>
-                            <IconArrowRight className='calendar__btn calendar__btn--right' />
+                            <IconArrowLeft className='calendar__btn calendar__btn--left' onClick={this.prevMonth}/>
+                            <span className="calendar__month">{this.month[this.state.date.getMonth()]}
+                                <sup>{this.state.date.getFullYear()}</sup>
+                            </span>
+                            <IconArrowRight className='calendar__btn calendar__btn--right' onClick={this.nextMonth}/>
                         </div>
                     </th>
                 </tr>
                 <tr>
-                    <th className="calendar__th">mon</th>
-                    <th className="calendar__th">tue</th>
-                    <th className="calendar__th">wed</th>
-                    <th className="calendar__th">thu</th>
-                    <th className="calendar__th">fri</th>
-                    <th className="calendar__th">sat</th>
-                    <th className="calendar__th">sun</th>
+                    {this.dayNames}
                 </tr>
                 </thead>
                 <tbody className="calendar__tbody">
                 <tr>
-                    <td className="calendar__td">1</td>
-                    <td className="calendar__td calendar__td--enable">2</td>
-                    <td className="calendar__td">3</td>
-                    <td className="calendar__td calendar__td--enable">4</td>
-                    <td className="calendar__td">5</td>
-                    <td className="calendar__td calendar__td--enable">6</td>
-                    <td className="calendar__td">7</td>
+                    {this.emptyDaysFirstWeek}
+                    {this.daysFirstWeek}
                 </tr>
-                <tr>
-                    <td className="calendar__td calendar__td--enable">8</td>
-                    <td className="calendar__td">9</td>
-                    <td className="calendar__td calendar__td--enable">10</td>
-                    <td className="calendar__td">11</td>
-                    <td className="calendar__td">12</td>
-                    <td className="calendar__td calendar__td--enable">13</td>
-                    <td className="calendar__td calendar__td--enable calendar__td--active">14</td>
-                </tr>
-                <tr>
-                    <td className="calendar__td">15</td>
-                    <td className="calendar__td calendar__td--enable">16</td>
-                    <td className="calendar__td">17</td>
-                    <td className="calendar__td">18</td>
-                    <td className="calendar__td calendar__td--enable">19</td>
-                    <td className="calendar__td">20</td>
-                    <td className="calendar__td">21</td>
-                </tr>
-                <tr>
-                    <td className="calendar__td">22</td>
-                    <td className="calendar__td calendar__td--enable">23</td>
-                    <td className="calendar__td calendar__td--enable">24</td>
-                    <td className="calendar__td calendar__td--enable">25</td>
-                    <td className="calendar__td">26</td>
-                    <td className="calendar__td">27</td>
-                    <td className="calendar__td">28</td>
-                </tr>
-                <tr>
-                    <td className="calendar__td">29</td>
-                    <td className="calendar__td">30</td>
-                    <td className="calendar__td">31</td>
-                </tr>
+                {this.restDays}
                 </tbody>
             </table>
         );

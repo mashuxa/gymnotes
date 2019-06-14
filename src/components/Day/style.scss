@@ -1,0 +1,25 @@
+@import "../common/theme";
+@import "../common/mixins";
+
+.day {
+  padding: 10px 0;
+  font-weight: normal;
+  user-select: none;
+  background-color: $color-lightgray;
+  box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.1);
+
+  &--available {
+    @include box-shadow();
+
+    cursor: pointer;
+    font-weight: bold;
+    color: $color-primary;
+    background-color: $color-light;
+  }
+
+  &--selected {
+    color: $color-light;
+    background-color: $color-primary;
+    box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.1);
+  }
+}

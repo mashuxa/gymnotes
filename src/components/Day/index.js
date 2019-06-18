@@ -18,7 +18,7 @@ class Day extends React.Component {
 
     render() {
         return (
-            <td className={this.getClasses()}>
+            <td className={this.getClasses()} data-date={this.props.date} onClick={this.props.onClickDay}>
                 {this.props.date}
             </td>
         );

@@ -48,7 +48,7 @@ html {
   align-content: flex-start;
   grid-area: page-wrapper;
   padding: 10px 5px;
-  overflow-y: auto;
+  overflow-y: scroll;
 
   @media (min-width: $breakpoint-tablet-sm) {
     flex-direction: row-reverse;

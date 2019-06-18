@@ -4,6 +4,7 @@
 
 @mixin block(
   $padding: none,
+  $margin: 0,
   $theme: none,
   $type: none,
   $font-family: ("Century Gothic", sans-serif),
@@ -26,6 +27,7 @@
   font-size: $font-size;
   line-height: $line-height;
   text-align: $text-align;
+  margin: $margin;
 
   @media (min-width: $breakpoint-tablet-sm) {
     font-size: calc(#{$font-size} + 2px);
@@ -159,6 +161,7 @@
   display: table;
   cursor: pointer;
   text-decoration: none;
+  opacity: 0.8;
   text-align: center;
   transition-duration: 0.15s;
 

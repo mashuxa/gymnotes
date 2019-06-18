@@ -1,0 +1,43 @@
+@import "../common/mixins";
+@import "../common/theme";
+
+.react {
+  &-tabs {
+    &__tab-list {
+      @include block(
+              $type: flex,
+              $theme: light,
+              $flex-wrap: nowrap,
+              $align-items: stretch,
+              $padding: 0,
+              $margin: 0 0 10px
+      );
+
+      @include box-shadow();
+
+      list-style: none;
+      background-color: $color-lightgray;
+    }
+
+    &__tab {
+      flex: 1 1 0;
+      user-select: none;
+      padding: 10px;
+      cursor: pointer;
+      transition-duration: 0.3s;
+      text-align: center;
+      color: $color-text;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &:hover {
+        color: $color-primary;
+      }
+
+      &--selected {
+        background-color: white;
+      }
+    }
+  }
+}

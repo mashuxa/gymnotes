@@ -12,8 +12,6 @@ function FormSchedule() {
             </h2>
             <div className="form-schedule__presets form-schedule__presets--time">
                 <input className="form-schedule__input-time" type="time"/>
-                <input className="form-schedule__input-time" type="time"/>
-                <input className="form-schedule__input-time" type="time"/>
                 <button className="btn btn--success">
                     Add one more
                     <IconPlus className='form-schedule__btn-icon form-schedule__btn-icon--plus'/>

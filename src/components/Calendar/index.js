@@ -17,13 +17,14 @@ class Calendar extends React.Component {
 
         this.prevMonth = this.prevMonth.bind(this);
         this.nextMonth = this.nextMonth.bind(this);
+        this.onClickDay = this.onClickDay.bind(this);
     }
 
     get firstMonthDay() {
         return new Date(this.state.date.getFullYear(), this.state.date.getMonth(), 1);
     }
 
-    get emptyDays() {
+    get countEmptyDays() {
         return this.firstMonthDay.getUTCDay();
     }
 
@@ -32,7 +33,7 @@ class Calendar extends React.Component {
     }
 
     get countDaysFirstWeek() {
-        return this.weekDays.length - this.emptyDays;
+        return this.weekDays.length - this.countEmptyDays;
     }
 
     get dayNames() {
@@ -41,10 +42,10 @@ class Calendar extends React.Component {
         });
     }
 
-    get emptyDaysFirstWeek() {
+    get countEmptyDaysFirstWeek() {
         const days = [];
 
-        for (let i = 0; i < this.emptyDays; i++) {
+        for (let i = 0; i < this.countEmptyDays; i++) {
             days.push(<td key={i}></td>);
         }
         return days;
@@ -54,7 +55,7 @@ class Calendar extends React.Component {
         const days = [];
 
         for (let i = 1; i <= this.countDaysFirstWeek; i++) {
-            days.push(<Day key={i} date={i} isSelected={i === this.state.date.getDate()}/>);
+            days.push(<Day key={i} date={i} isSelected={i === this.state.date.getDate()} onClickDay={this.onClickDay}/>);
         }
 
         return days;
@@ -64,8 +65,8 @@ class Calendar extends React.Component {
         const weeks = [];
         const days = [];
 
-        for (let i = this.daysFirstWeek.length + 1; i <= this.countMonthDays; i++) {
-            days.push(<Day key={i} date={i} isSelected={i === this.state.date.getDate()}/>);
+        for (let i = this.countDaysFirstWeek + 1; i <= this.countMonthDays; i++) {
+            days.push(<Day key={i} date={i} isSelected={i === this.state.date.getDate()} onClickDay={this.onClickDay}/>);
         }
 
         while (days.length) {
@@ -75,6 +76,13 @@ class Calendar extends React.Component {
         }
 
         return weeks;
+    }
+
+    onClickDay(e) {
+        const selectedDate = new Date(this.state.date.setDate(e.target.dataset.date));
+
+        this.setState({date: selectedDate});
+        this.props.onChangeDate(selectedDate);
     }
 
     changeMonth(n) {
@@ -103,7 +111,8 @@ class Calendar extends React.Component {
                     <th className="calendar__header" colSpan="7">
                         <div className="calendar__header-wrapper">
                             <IconArrowLeft className='calendar__btn calendar__btn--left' onClick={this.prevMonth}/>
-                            <span className="calendar__month">{this.month[this.state.date.getMonth()]}
+                            <span className="calendar__month">
+                                <span>{this.month[this.state.date.getMonth()]} </span>
                                 <sup>{this.state.date.getFullYear()}</sup>
                             </span>
                             <IconArrowRight className='calendar__btn calendar__btn--right' onClick={this.nextMonth}/>
@@ -116,7 +125,7 @@ class Calendar extends React.Component {
                 </thead>
                 <tbody className="calendar__tbody">
                 <tr>
-                    {this.emptyDaysFirstWeek}
+                    {this.countEmptyDaysFirstWeek}
                     {this.daysFirstWeek}
                 </tr>
                 {this.restDays}

@@ -4,7 +4,7 @@
 
 /* width */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 5px;
 }
 
 /* Track */
@@ -16,7 +16,7 @@
 ::-webkit-scrollbar-thumb {
   transition-duration: 0.3s;
   background-color: rgba(51, 51, 51, 0.3);
-  border-radius: 10px;
+  border-radius: 5px;
 
   &:hover {
     background-color: rgba(51, 51, 51, 0.5);

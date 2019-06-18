@@ -1,7 +1,7 @@
 @import "../common/theme";
 @import "../common/mixins";
 
-.time-list {
+.day-schedule {
   @include block(
           $text-align: center
   );
@@ -23,6 +23,12 @@
     @include block (
             $type: grid,
             $grid-columns: 4);
+
+    //display: none;
+
+    &:empty + & {
+      //display: block;
+    }
   }
 
   &__item {

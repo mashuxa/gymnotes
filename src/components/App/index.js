@@ -1,6 +1,8 @@
 import './normalize.scss';
 import './grid.scss';
 import './utilities.scss';
+import './utilities.scss';
+import './react-restyling.scss';
 
 import React from 'react';
 import {Header} from '../Header';
@@ -12,13 +14,13 @@ function App({children}) {
     return (
         <React.Fragment>
             <Header/>
-            <Navigation/>
             <div className="page-wrapper">
                 {/*<aside className="sidebar"></aside>*/}
                 <main className="main">
                     {children}
                 </main>
             </div>
+            <Navigation/>
             <Footer/>
         </React.Fragment>
     );

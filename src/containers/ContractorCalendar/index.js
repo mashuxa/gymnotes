@@ -1,7 +1,7 @@
 import React from 'react';
 import {ContractorCard} from '../../components/ContractorCard';
 import {Calendar} from '../../components/Calendar';
-import {DaySchedule} from '../../components/DaySchedule';
+import {ScheduleList} from '../../components/ScheduleList';
 
 
 function ContractorCalendar() {
@@ -9,7 +9,7 @@ function ContractorCalendar() {
         <React.Fragment>
             <ContractorCard/>
             <Calendar/>
-            <DaySchedule/>
+            <ScheduleList/>
         </React.Fragment>
     );
 }

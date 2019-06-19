@@ -1,0 +1,34 @@
+@import "../common/theme";
+@import "../common/mixins";
+@import "../common/animation";
+
+$gap: 5px;
+$duration: 0.5s;
+
+.preloader {
+  @include block(
+          $type: flex,
+          $padding: 2*$gap,
+          $text-align: center
+  );
+
+  width: $gap * 5;
+  margin: auto;
+
+  &__dot {
+    display: inline-block;
+    width: $gap;
+    height: $gap;
+    background-color: $color-primary;
+    border-radius: 50%;
+    animation: pulse ($duration*3) ease-in-out infinite;
+
+    &--1 {
+      animation-delay: $duration;
+    }
+
+    &--2 {
+      animation-delay: 2 * $duration;
+    }
+  }
+}

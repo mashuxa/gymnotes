@@ -1,7 +1,7 @@
 import './style.scss';
 import React from 'react';
 
-class Day extends React.Component {
+class CalendarDay extends React.Component {
     state = {
         isAvailable: false,
         date: '',
@@ -25,4 +25,4 @@ class Day extends React.Component {
     }
 }
 
-export {Day};
+export {CalendarDay};

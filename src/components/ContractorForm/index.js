@@ -1,13 +1,14 @@
 import React from 'react';
 import './style.scss';
 import {Avatar} from '../Avatar';
+import {Preloader} from '../Preloader';
 // import validateUser from '../common/validateUser';
 import {API_URL} from '../../constants';
 
 
 class ContractorForm extends React.Component {
     state = {
-        isLoaded: false,
+        isLoading: true,
         avatarSrc: '',
         name: '',
         phone: '',
@@ -44,7 +45,7 @@ class ContractorForm extends React.Component {
                     name: result.data.name || '',
                     phone: result.data.phone || '',
                     description: result.data.description || '',
-                    isLoaded: true,
+                    isLoading: false,
                 });
 
                 console.log(this.state);
@@ -81,7 +82,7 @@ class ContractorForm extends React.Component {
     render() {
         return (
             <React.Fragment>
-                {this.state.isLoaded ? (
+                {this.state.isLoading ? <Preloader/> : (
                     <form className="contractor-form">
                         <div className="contractor-form__avatar-wrapper">
                             <Avatar className="avatar avatar--label" src={this.state.avatarSrc} isFileInput={true}/>
@@ -112,7 +113,7 @@ class ContractorForm extends React.Component {
                             </button>
                         </div>
                     </form>
-                ) : (<h1>Loading...</h1>)}
+                )}
             </React.Fragment>
         );
     };

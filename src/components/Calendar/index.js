@@ -2,7 +2,7 @@ import './style.scss';
 import React from 'react';
 import {ReactComponent as IconArrowLeft} from './assets/arrow-left.svg';
 import {ReactComponent as IconArrowRight} from './assets/arrow-right.svg';
-import {Day} from '../Day';
+import {CalendarDay} from '../CalendarDay';
 
 class Calendar extends React.Component {
     state = {
@@ -55,7 +55,7 @@ class Calendar extends React.Component {
         const days = [];
 
         for (let i = 1; i <= this.countDaysFirstWeek; i++) {
-            days.push(<Day key={i} date={i} isSelected={i === this.state.date.getDate()} onClickDay={this.onClickDay}/>);
+            days.push(<CalendarDay key={i} date={i} isSelected={i === this.state.date.getDate()} onClickDay={this.onClickDay}/>);
         }
 
         return days;
@@ -66,7 +66,7 @@ class Calendar extends React.Component {
         const days = [];
 
         for (let i = this.countDaysFirstWeek + 1; i <= this.countMonthDays; i++) {
-            days.push(<Day key={i} date={i} isSelected={i === this.state.date.getDate()} onClickDay={this.onClickDay}/>);
+            days.push(<CalendarDay key={i} date={i} isSelected={i === this.state.date.getDate()} onClickDay={this.onClickDay}/>);
         }
 
         while (days.length) {

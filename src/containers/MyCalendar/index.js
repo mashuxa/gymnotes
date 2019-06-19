@@ -2,8 +2,8 @@ import React from 'react';
 import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
 import {Calendar} from '../../components/Calendar';
 import {Appointment} from '../../components/Appointment';
-import {FormSchedule} from '../../components/FormSchedule';
-import {DaySchedule} from '../../components/DaySchedule';
+import {ScheduleForm} from '../../components/ScheduleForm';
+import {ScheduleList} from '../../components/ScheduleList';
 
 
 class MyCalendar extends React.Component {
@@ -19,12 +19,11 @@ class MyCalendar extends React.Component {
         });
     }
 
-
     render() {
         return (
             <React.Fragment>
                 <Calendar onChangeDate={this.setDate}/>
-                <Tabs>
+                <Tabs defaultIndex={3}>
                     <TabList>
                         <Tab>My Appointments</Tab>
                         <Tab>My Clients</Tab>
@@ -38,8 +37,8 @@ class MyCalendar extends React.Component {
                         <Appointment/>
                     </TabPanel>
                     <TabPanel>
-                        <DaySchedule/>
-                        <FormSchedule/>
+                        <ScheduleList/>
+                        <ScheduleForm/>
                     </TabPanel>
                 </Tabs>
             </React.Fragment>

@@ -1,7 +1,7 @@
 @import "../common/theme";
 @import "../common/mixins";
 
-.day-schedule {
+.schedule {
   @include block(
           $text-align: center
   );
@@ -13,7 +13,8 @@
 
   &__header {
     @include block(
-            $text-align: center
+            $text-align: center,
+            $padding: 0 0 10px
     );
 
     color: $color-text
@@ -22,13 +23,8 @@
   &__item-wrapper {
     @include block (
             $type: grid,
-            $grid-columns: 4);
-
-    //display: none;
-
-    &:empty + & {
-      //display: block;
-    }
+            $grid-columns: 4
+    );
   }
 
   &__item {
@@ -55,7 +51,10 @@
   }
 
   &__btns-wrapper {
-    @include block($type: flex, $padding: 20px 0 10px);
+    @include block(
+            $type: flex,
+            $padding: 10px 0
+    );
   }
 
   &__btn-icon {
@@ -70,5 +69,9 @@
       width: 10px;
       height: 10px;
     }
+  }
+
+  &__msg {
+    padding: 10px 0;
   }
 }

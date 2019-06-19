@@ -1,7 +1,8 @@
 @import "../common/theme";
 @import "../common/mixins";
+$root: '.schedule-form';
 
-.form-schedule {
+#{$root} {
   @include block(
           $text-align: center,
           $theme: light,
@@ -14,30 +15,26 @@
   color: $color-text;
   box-sizing: border-box;
 
+  &__btns-wrapper {
+    @include block(
+            $type: flex,
+            $flex-wrap: nowrap,
+            $align-items: flex-start,
+            $padding: 5px
+    );
+  }
+
   &__header {
     @include block(
-            $text-align: center
+            $text-align: center,
+            $padding: 10px
     );
 
     color: $color-text
   }
 
-  &__btns-wrapper {
-    @include block($type: flex, $padding: 20px 0 10px);
-  }
-
   &__btn-icon {
     fill: $color-light;
-
-    &--cancel {
-      width: 8px;
-      height: 8px;
-    }
-
-    &--plus {
-      width: 10px;
-      height: 10px;
-    }
   }
 
   &__input-date,
@@ -45,37 +42,37 @@
     @include date-picker();
 
     padding: 5px;
+    margin: 5px;
     border: 1px solid $color-primary;
   }
 
-  &__input-time {
-    margin-right: 5px;
-    margin-bottom: 5px;
-  }
-
   &__input-date {
-    margin-bottom: 5px;
-
     &::-webkit-calendar-picker-indicator {
       margin-left: -10px;
     }
   }
 
-  &__presets {
-    padding: 10px 0;
+  &__week-days {
+    @include block(
+            $type: flex,
+            $flex-wrap: nowrap,
+            $text-align: center
+    );
 
-    &--days {
-      @include block(
-              $type: flex,
-              $flex-wrap: nowrap,
-              $text-align: center
-      )
-    }
+    padding: 10px 0;
   }
 
   &__day-label {
     cursor: pointer;
     flex-grow: 1;
+
+    &:hover {
+      color: $color-primary;
+
+      #{$root}__day-checkbox {
+        border-color: $color-primary;
+      }
+    }
   }
 
   &__day-input {
@@ -83,6 +80,7 @@
   }
 
   &__day-name {
+    user-select: none;
     transition-duration: 0.3s;
   }
 
@@ -96,32 +94,15 @@
   }
 
   &__chekbox-icon {
-    width: 10px;
-    height: 10px;
+    position: relative;
+    top: -3px;
+    width: 12px;
+    height: 12px;
     fill: $color-primary;
     transition-duration: 0.3s;
-    visibility: hidden;
-    opacity: 0;
   }
 
-  &__day-label:hover &__day-name {
-    color: $color-primary;
-  }
-
-  &__day-label:hover &__day-checkbox {
-    border-color: $color-primary;
-  }
-
-  &__day-input:checked ~ &__day-name {
-    color: $color-primary;
-  }
-
-  &__day-input:checked ~ &__day-checkbox {
-    border-color: $color-primary;
-  }
-
-  &__day-input:checked ~ &__day-checkbox &__chekbox-icon {
-    visibility: visible;
-    opacity: 1;
+  .btn--success {
+    margin-left: auto;
   }
 }

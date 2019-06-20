@@ -4,43 +4,39 @@ import {ReactComponent as IconChecked} from './assets/checked.svg';
 import {ReactComponent as IconClose} from './assets/close.svg';
 import {ReactComponent as IconPlus} from './assets/plus.svg';
 import {Button} from '../Button';
-import {AppointmentTime} from '../AppointmentTime';
 
 class ScheduleForm extends React.Component {
     constructor(props) {
         super(props);
 
         this.addTimeInput = this.addTimeInput.bind(this);
-        this.removeTimeInput = this.removeTimeInput.bind(this);
+        this.removeTime = this.removeTime.bind(this);
         this.onSelectWeekDay = this.onSelectWeekDay.bind(this);
         this.changeDate = this.changeDate.bind(this);
+        this.createAppointments = this.createAppointments.bind(this);
     }
 
     state = {
         startDate: this.currentDate,
-        endDate: this.currentDate,
+        endDate: '2019-08-31',
         weekDays: {
+            sun: false,
             mon: true,
             tue: true,
             wed: true,
             thu: true,
             fri: true,
             sat: false,
-            sun: false,
         },
-        timeList: [<AppointmentTime key={Date.now()}/>],
-        selectedTime: null,
+        timeList: ['09:00'],
+        selectedTimeIndex: null,
     };
 
     addTimeInput() {
         const timeList = this.state.timeList;
 
-        timeList.push(<AppointmentTime key={Date.now()}/>);
+        timeList.push('09:00');
         this.setState({timeList: timeList});
-    }
-
-    removeTimeInput(e) {
-        console.log('remove');
     }
 
     onSelectWeekDay(e) {
@@ -64,21 +60,74 @@ class ScheduleForm extends React.Component {
         return new Date(Date.now()).toISOString().split('T')[0];
     }
 
+    onChangeTime(e, i) {
+        const timeList = [...this.state.timeList];
+        timeList[i] = e.target.value;
+        this.setState({timeList: timeList});
+    }
+
+    removeTime() {
+        const timeList = [...this.state.timeList];
+        timeList.splice(this.state.selectedTimeIndex, 1);
+
+        this.setState({
+            selectedTimeIndex: null,
+            timeList: timeList
+        });
+    }
+
+    createAppointments() {
+        const endDate = new Date(this.state.endDate);
+        const appointments = [];
+        const weekDays = Object.values(this.state.weekDays);
+        let date = new Date(this.state.startDate);
+
+        for (date; endDate >= date; date.setDate(date.getUTCDate() + 1)) {
+            if (weekDays[date.getUTCDay()]) {
+                appointments.push({
+                    date: `${date.getUTCFullYear()}-${date.getUTCMonth()+1}-${date.getUTCDate()}`,
+                    timeList: this.state.timeList.map((time)=>{
+                        return {
+                            time: time,
+                            bookedBy: null,
+                        };
+                    }),
+                });
+            }
+        }
+
+        console.log(appointments);
+    }
+
     render() {
-        console.log(this.state.timeList);
+        const timeList = this.state.timeList.map((el, i) => {
+                const isSelectedTime = this.state.selectedTimeIndex === i;
+                const inputBaseClass = 'schedule-form__input-time';
+                const inputClass = isSelectedTime ? `${inputBaseClass} ${inputBaseClass}--selected` : inputBaseClass;
+                return <input className={inputClass} type="time" value={el} key={i}
+                              onChange={(e) => {
+                                  this.onChangeTime(e, i);
+                              }}
+                              onFocus={() => {
+                                  this.setState({selectedTimeIndex: i});
+                              }}
+                />
+            }
+        );
+
         return (
             <section className="schedule-form">
                 <h2 className="schedule-form__header">
                     This time list will be added to calendar
                 </h2>
                 <div className="schedule-form__time-list">
-                    {this.state.timeList}
+                    {timeList}
                 </div>
                 <div className={'schedule-form__btns-wrapper'}>
-                    {this.state.isSelectedTime ? (
-                        <Button title={'Remove selected'} type={'danger'} action={this.removeTimeInput}
-                                text={<IconClose className='schedule-form__btn-icon schedule-form__btn-icon--minus'/>}
-                        />) : false}
+                    {(this.state.selectedTimeIndex === null) ? false : (
+                        <Button title={'Remove selected'} type={'danger'} action={this.removeTime}
+                                text={<IconClose className='schedule-form__btn-icon schedule-form__btn-icon--delete'/>}
+                        />)}
                     <Button title={'Add more'} type={'success'} action={this.addTimeInput}
                             text={<IconPlus className='schedule-form__btn-icon schedule-form__btn-icon--plus'/>}
                     />
@@ -155,7 +204,7 @@ class ScheduleForm extends React.Component {
                     <button className="btn btn--danger">
                         Cancel
                     </button>
-                    <button className="btn btn--success">
+                    <button className="btn btn--success" onClick={this.createAppointments}>
                         Add to calendar
                     </button>
                 </div>

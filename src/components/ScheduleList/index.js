@@ -10,7 +10,7 @@ class ScheduleList extends React.Component {
     };
 
     componentDidMount() {
-        console.log('call AJAX here');
+        // console.log('call AJAX here');
     }
 
     render() {

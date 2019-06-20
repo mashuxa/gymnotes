@@ -1,5 +1,6 @@
 @import "../common/theme";
 @import "../common/mixins";
+
 $root: '.schedule-form';
 
 #{$root} {
@@ -35,6 +36,11 @@ $root: '.schedule-form';
 
   &__btn-icon {
     fill: $color-light;
+
+    &--delete {
+      position: relative;
+      top: -1px;
+    }
   }
 
   &__input-date,
@@ -43,8 +49,18 @@ $root: '.schedule-form';
 
     padding: 5px;
     margin: 5px;
-    border: 1px solid $color-primary;
+    border: 1px solid $color-text;
+
+    &--selected {
+      border-color: $color-secondary;
+    }
+
+    &:focus {
+      border-color: $color-primary;
+      outline: none;
+    }
   }
+
 
   &__input-date {
     &::-webkit-calendar-picker-indicator {

@@ -4,6 +4,7 @@ import {ReactComponent as IconChecked} from './assets/checked.svg';
 import {ReactComponent as IconClose} from './assets/close.svg';
 import {ReactComponent as IconPlus} from './assets/plus.svg';
 import {Button} from '../Button';
+import {API_URL} from "../../constants";
 
 class ScheduleForm extends React.Component {
     constructor(props) {
@@ -13,20 +14,20 @@ class ScheduleForm extends React.Component {
         this.removeTime = this.removeTime.bind(this);
         this.onSelectWeekDay = this.onSelectWeekDay.bind(this);
         this.changeDate = this.changeDate.bind(this);
-        this.createAppointments = this.createAppointments.bind(this);
+        this.addToCalendar = this.addToCalendar.bind(this);
     }
 
     state = {
-        startDate: this.currentDate,
-        endDate: '2019-08-31',
+        startDate: this.props.currentDate,
+        endDate: this.props.currentDate,
         weekDays: {
-            sun: false,
+            sun: true,
             mon: true,
             tue: true,
             wed: true,
             thu: true,
             fri: true,
-            sat: false,
+            sat: true,
         },
         timeList: ['09:00'],
         selectedTimeIndex: null,
@@ -56,10 +57,6 @@ class ScheduleForm extends React.Component {
         this.setState({[target.id]: target.value});
     }
 
-    get currentDate() {
-        return new Date(Date.now()).toISOString().split('T')[0];
-    }
-
     onChangeTime(e, i) {
         const timeList = [...this.state.timeList];
         timeList[i] = e.target.value;
@@ -85,8 +82,8 @@ class ScheduleForm extends React.Component {
         for (date; endDate >= date; date.setDate(date.getUTCDate() + 1)) {
             if (weekDays[date.getUTCDay()]) {
                 appointments.push({
-                    date: `${date.getUTCFullYear()}-${date.getUTCMonth()+1}-${date.getUTCDate()}`,
-                    timeList: this.state.timeList.map((time)=>{
+                    date: `${date.getUTCFullYear()}-${date.getUTCMonth() + 1}-${date.getUTCDate()}`,
+                    timeList: this.state.timeList.map((time) => {
                         return {
                             time: time,
                             bookedBy: null,
@@ -96,7 +93,40 @@ class ScheduleForm extends React.Component {
             }
         }
 
-        console.log(appointments);
+        return appointments;
+    }
+
+    showError(e) {
+        console.error('Error: ', e);
+    }
+
+    updateTimeList = () => {
+        const url = `${API_URL}/calendar`;
+        const timeList = this.createAppointments();
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('token'),
+            },
+            body: JSON.stringify(timeList),
+        }).then(result => {
+            return result.ok ? result.json() : this.showError;
+        }).then(result => {
+            if (result.success) {
+                // console.log(result.data);
+
+            } else {
+                this.showError(result);
+            }
+        });
+
+        return timeList;
+    };
+
+    addToCalendar() {
+        this.updateTimeList();
     }
 
     render() {
@@ -135,7 +165,7 @@ class ScheduleForm extends React.Component {
                 <div className="schedule-form__presets schedule-form__presets--time">
                     <span>From
                         <input className="schedule-form__input-date" type="date" value={this.state.startDate}
-                               id='startDate' onChange={this.changeDate} min={this.currentDate}/>
+                               id='startDate' onChange={this.changeDate} min={this.props.currentDate}/>
                     </span>
                     <span>till
                         <input className="schedule-form__input-date" type="date" value={this.state.endDate}
@@ -204,7 +234,7 @@ class ScheduleForm extends React.Component {
                     <button className="btn btn--danger">
                         Cancel
                     </button>
-                    <button className="btn btn--success" onClick={this.createAppointments}>
+                    <button className="btn btn--success" onClick={this.addToCalendar}>
                         Add to calendar
                     </button>
                 </div>

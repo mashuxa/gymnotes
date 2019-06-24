@@ -6,7 +6,7 @@ import {CalendarDay} from '../CalendarDay';
 
 class Calendar extends React.Component {
     state = {
-        date: new Date(Date.now()),
+        date: this.currentDate,
     };
 
     constructor(props) {
@@ -18,6 +18,18 @@ class Calendar extends React.Component {
         this.prevMonth = this.prevMonth.bind(this);
         this.nextMonth = this.nextMonth.bind(this);
         this.onClickDay = this.onClickDay.bind(this);
+    }
+
+    componentDidMount() {
+        this.updateDates();
+    }
+
+    get currentDate() {
+        return new Date(Date.now());
+    }
+
+    formatDate(date){
+        return date.toISOString().split('T')[0];
     }
 
     get firstMonthDay() {
@@ -78,11 +90,17 @@ class Calendar extends React.Component {
         return weeks;
     }
 
+    updateDates(){
+        const date = this.formatDate(this.state.date);
+        const currentDate = this.formatDate(this.currentDate);
+        this.props.onChangeDate(date, currentDate);
+    }
+
     onClickDay(e) {
         const selectedDate = new Date(this.state.date.setDate(e.target.dataset.date));
 
         this.setState({date: selectedDate});
-        this.props.onChangeDate(selectedDate);
+        this.updateDates();
     }
 
     changeMonth(n) {

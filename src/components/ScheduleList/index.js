@@ -16,6 +16,7 @@ class ScheduleList extends React.Component {
     render() {
         return (
             <React.Fragment>
+                <h1>{this.props.date}</h1>
                 {this.state.isLoading ? <Preloader/> : (
                     <section className="schedule">
                         <h2 className="schedule__header">

@@ -33,6 +33,16 @@ class ScheduleForm extends React.Component {
         selectedTimeIndex: null,
     };
 
+    componentDidUpdate(prevProps) {
+        const nextProps = this.props.currentDate;
+        if (prevProps.currentDate !== nextProps) {
+            this.setState({
+                startDate: nextProps,
+                endDate: nextProps,
+            });
+        }
+    }
+
     addTimeInput() {
         const timeList = this.state.timeList;
 
@@ -82,7 +92,7 @@ class ScheduleForm extends React.Component {
         for (date; endDate >= date; date.setDate(date.getUTCDate() + 1)) {
             if (weekDays[date.getUTCDay()]) {
                 appointments.push({
-                    date: `${date.getUTCFullYear()}-${date.getUTCMonth() + 1}-${date.getUTCDate()}`,
+                    date: date.toISOString().split('T')[0],
                     timeList: this.state.timeList.map((time) => {
                         return {
                             time: time,
@@ -115,8 +125,7 @@ class ScheduleForm extends React.Component {
             return result.ok ? result.json() : this.showError;
         }).then(result => {
             if (result.success) {
-                // console.log(result.data);
-
+                alert("It's added! Change me to pop-up");
             } else {
                 this.showError(result);
             }
@@ -164,11 +173,13 @@ class ScheduleForm extends React.Component {
                 </div>
                 <div className="schedule-form__presets schedule-form__presets--time">
                     <span>From
-                        <input className="schedule-form__input-date" type="date" value={this.state.startDate}
+                        <input className="schedule-form__input-date" type="date"
+                               value={this.state.startDate}
                                id='startDate' onChange={this.changeDate} min={this.props.currentDate}/>
                     </span>
                     <span>till
-                        <input className="schedule-form__input-date" type="date" value={this.state.endDate}
+                        <input className="schedule-form__input-date" type="date"
+                               value={this.state.endDate}
                                id='endDate' onChange={this.changeDate} min={this.state.startDate}/>
                     </span>
                 </div>

@@ -2,7 +2,6 @@ import React from 'react';
 import './style.scss';
 import {Avatar} from '../Avatar';
 import {Preloader} from '../Preloader';
-// import validateUser from '../common/validateUser';
 import {API_URL} from '../../constants';
 
 

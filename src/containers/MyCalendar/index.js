@@ -5,31 +5,27 @@ import {Appointment} from '../../components/Appointment';
 import {ScheduleForm} from '../../components/ScheduleForm';
 import {ScheduleList} from '../../components/ScheduleList';
 
-
 class MyCalendar extends React.Component {
     constructor(props) {
         super(props);
-
-        this.setDates = this.setDates.bind(this);
+        this.updateDate = this.updateDate.bind(this);
     }
 
     state = {
-        currentDate: null,
-        date: null,
-        timeList: null,
+        currentDate: '',
+        date: '',
     };
 
-    setDates(date, currentDate) {
+    updateDate(date, currentDate) {
         this.setState({
-            currentDate: currentDate,
-            date: date,
+            date, currentDate
         });
     }
 
     render() {
         return (
             <React.Fragment>
-                <Calendar onChangeDate={this.setDates}/>
+                <Calendar onChangeDate={this.updateDate}/>
                 <Tabs defaultIndex={3}>
                     <TabList>
                         <Tab>My Appointments</Tab>
@@ -45,7 +41,7 @@ class MyCalendar extends React.Component {
                     </TabPanel>
                     <TabPanel>
                         <ScheduleList date={this.state.date}/>
-                        {this.state.currentDate ? <ScheduleForm currentDate={this.state.currentDate}/> : false}
+                        {this.state.currentDate && <ScheduleForm currentDate={this.state.currentDate}/>}
                     </TabPanel>
                 </Tabs>
             </React.Fragment>

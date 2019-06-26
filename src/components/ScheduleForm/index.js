@@ -125,7 +125,7 @@ class ScheduleForm extends React.Component {
             return result.ok ? result.json() : this.showError;
         }).then(result => {
             if (result.success) {
-                alert("It's added! Change me to pop-up");
+                this.props.onUpdateTimeList();
             } else {
                 this.showError(result);
             }
@@ -242,9 +242,6 @@ class ScheduleForm extends React.Component {
                     </label>
                 </div>
                 <div className="schedule-form__btns-wrapper">
-                    <button className="btn btn--danger">
-                        Cancel
-                    </button>
                     <button className="btn btn--success" onClick={this.addToCalendar}>
                         Add to calendar
                     </button>

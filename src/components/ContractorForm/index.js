@@ -46,8 +46,6 @@ class ContractorForm extends React.Component {
                     description: result.data.description || '',
                     isLoading: false,
                 });
-
-                console.log(this.state);
             } else {
                 console.error(`Access denied! ${result.message}`);
                 this.props.history.push('/login');

@@ -2,7 +2,6 @@ import React from 'react';
 import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
 import {Calendar} from '../../components/Calendar';
 import {Appointment} from '../../components/Appointment';
-import {ScheduleForm} from '../../components/ScheduleForm';
 import {ScheduleList} from '../../components/ScheduleList';
 
 class MyCalendar extends React.Component {
@@ -40,8 +39,7 @@ class MyCalendar extends React.Component {
                         <Appointment/>
                     </TabPanel>
                     <TabPanel>
-                        <ScheduleList date={this.state.date}/>
-                        {this.state.currentDate && <ScheduleForm currentDate={this.state.currentDate}/>}
+                        <ScheduleList date={this.state.date} currentDate={this.state.currentDate}/>
                     </TabPanel>
                 </Tabs>
             </React.Fragment>

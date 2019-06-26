@@ -3,24 +3,28 @@ import React from 'react';
 import {Button} from "../Button";
 import {Preloader} from "../Preloader";
 import {API_URL} from "../../constants";
+import {ScheduleForm} from "../ScheduleForm";
 
 class ScheduleList extends React.Component {
     constructor(props) {
         super(props);
 
-        this.updateTimeList = this.updateTimeList.bind(this);
+        this.getTimeList = this.getTimeList.bind(this);
+        this.toggleScheduleForm = this.toggleScheduleForm.bind(this);
+        this.deleteTime = this.deleteTime.bind(this);
     }
 
     state = {
+        isLoading: true,
+        isShownScheduleForm: false,
         timeList: '',
-        date: '',
+        selectedTimeIndex: null,
     };
 
     componentDidUpdate(prevProps) {
-        const nextProps = this.props.date;
-        if (prevProps.date !== nextProps) {
-            this.setState({date: nextProps});
-            this.updateTimeList(nextProps);
+        const nextPropsDate = this.props.date;
+        if (prevProps.date !== nextPropsDate) {
+            this.getTimeList();
         }
     }
 
@@ -28,11 +32,11 @@ class ScheduleList extends React.Component {
         console.error('Error', e);
     }
 
-    updateTimeList(date) {
+    getTimeList() {
         const url = `${API_URL}/calendar/get-list`;
 
         this.setState({
-            timeList: '',
+            isLoading: true,
         });
 
         fetch(url, {
@@ -41,44 +45,96 @@ class ScheduleList extends React.Component {
                 'Content-Type': 'application/json',
                 'Authorization': localStorage.getItem('token'),
             },
-            body: JSON.stringify({date: date}),
+            body: JSON.stringify({date: this.props.date}),
         }).then(result => {
             return result.ok ? result.json() : this.showError;
         }).then(result => {
             if (result.success) {
-                this.setState({timeList: result.data});
+                this.setState({
+                    isLoading: false,
+                    selectedTimeIndex: null,
+                    timeList: result.data
+                });
             } else {
                 this.showError(result);
             }
         });
     }
 
+    deleteTime(){
+        const date = this.props.date;
+        const timeIndex = this.state.selectedTimeIndex;
+        const msg = `Do you want to delete appointment ${this.state.timeList[timeIndex].time}/${date}?`;
+        const url = `${API_URL}/calendar/delete-time`;
+
+        {/* eslint-disable-next-line */}
+        if(confirm(msg)){
+            this.setState({
+                isLoading: true,
+            });
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': localStorage.getItem('token'),
+                },
+                body: JSON.stringify({
+                    date: date,
+                    timeIndex: timeIndex,
+                }),
+            }).then(result => {
+                return result.ok ? result.json() : this.showError;
+            }).then(result => {
+                if (result.success) {
+                    this.setState({
+                        isLoading: false,
+                        timeList: result.data,
+                        selectedTimeIndex: null,
+                    });
+                } else {
+                    this.showError(result);
+                }
+            });
+        }
+    }
+
+    toggleScheduleForm() {
+        this.setState({
+            isShownScheduleForm: !this.state.isShownScheduleForm
+        });
+    }
+
     render() {
-        // this.state.timeList.timeList.map((el, i) => {
-        //     return <span key={i}>{el.time}</span>;
-        // });
-        const timeList = this.state.timeList ? (
-            this.state.timeList.length ?
+        const timeList = !this.state.timeList.length ?
+            <div className="schedule__msg">No items</div> : <div className="schedule__item-wrapper">{
                 this.state.timeList.map((el, i) => {
-                    return <div key={i}>{el.time}</div>;
-                }) : <div className="schedule__msg">No items</div>) : <Preloader/>;
+                    const isSelectedTime = this.state.selectedTimeIndex === i;
+                    const itemClassBase = 'schedule__item';
+                    const itemClassSelected = isSelectedTime ? ` ${itemClassBase}--selected` : '';
+                    const itemClassBooked = el.bookedBy ? ` ${itemClassBase}--booked` : '';
+
+                    return <div className={`${itemClassBase}${itemClassSelected}${itemClassBooked}`} key={i}
+                                onClick={() => {
+                                    this.setState({selectedTimeIndex: i});
+                                }}
+                    >{el.time}</div>;
+                })
+            }</div>;
 
         return (
             <React.Fragment>
                 <section className="schedule">
                     <h2 className="schedule__header">{this.state.date}</h2>
-                    {/*<h2 className="schedule__header">Choose time</h2>*/}
-                    {/**/}
-                    {timeList}
+                    {this.state.isLoading ? <Preloader/> : timeList}
+
                     <div className="schedule__btns-wrapper">
-                        <Button type='danger' text={'Cancel time'} action={(e) => {
-                            console.log('Cancel time');
-                        }}/>
-                        <Button type='success' text={'Add new'} action={(e) => {
-                            console.log('Add new');
-                        }}/>
+                        {!(this.state.selectedTimeIndex === null) ? <Button type='danger' text={'Cancel time'} action={this.deleteTime}/> : false}
+                        <Button type='success' text={this.state.isShownScheduleForm ? 'Hide form' : 'Add more dates'}
+                                action={this.toggleScheduleForm}/>
                     </div>
                 </section>
+                {this.state.isShownScheduleForm && <ScheduleForm currentDate={this.props.currentDate} onUpdateTimeList={this.getTimeList}/>}
             </React.Fragment>
         );
     }

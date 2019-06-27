@@ -15,6 +15,7 @@ class ScheduleForm extends React.Component {
         this.onSelectWeekDay = this.onSelectWeekDay.bind(this);
         this.changeDate = this.changeDate.bind(this);
         this.addToCalendar = this.addToCalendar.bind(this);
+        this.unSelectTime = this.unSelectTime.bind(this);
     }
 
     state = {
@@ -138,6 +139,13 @@ class ScheduleForm extends React.Component {
         this.updateTimeList();
     }
 
+    unSelectTime(e){
+        if(!e.target.classList.contains('schedule-form__input-time')){
+            this.setState({selectedTimeIndex: null});
+            document.removeEventListener('click', this.unSelectTime);
+        }
+    }
+
     render() {
         const timeList = this.state.timeList.map((el, i) => {
                 const isSelectedTime = this.state.selectedTimeIndex === i;
@@ -149,6 +157,7 @@ class ScheduleForm extends React.Component {
                               }}
                               onFocus={() => {
                                   this.setState({selectedTimeIndex: i});
+                                  document.addEventListener('click', this.unSelectTime);
                               }}
                 />
             }

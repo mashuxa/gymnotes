@@ -7,7 +7,6 @@ import CalendarDay from '../CalendarDay';
 class Calendar extends React.Component {
     state = {
         date: this.currentDate,
-        listExistingDates: '',
     };
 
     constructor(props) {
@@ -123,6 +122,7 @@ class Calendar extends React.Component {
         this.updateDates(newDate);
         this.setState({
             date: newDate,
+            listExistingDates: [],
         });
         this.props.onChangeMonth(this.formatDate(newDate));
     }

@@ -39,7 +39,7 @@ class MyCalendar extends React.Component {
                         <Appointment/>
                     </TabPanel>
                     <TabPanel>
-                        <ScheduleList date={this.state.date} currentDate={this.state.currentDate}/>
+                        {this.state.date && <ScheduleList date={this.state.date} currentDate={this.state.currentDate}/>}
                     </TabPanel>
                 </Tabs>
             </React.Fragment>

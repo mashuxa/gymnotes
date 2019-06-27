@@ -12,6 +12,7 @@ class ScheduleList extends React.Component {
         this.getTimeList = this.getTimeList.bind(this);
         this.toggleScheduleForm = this.toggleScheduleForm.bind(this);
         this.deleteTime = this.deleteTime.bind(this);
+        this.unSelectTime = this.unSelectTime.bind(this);
     }
 
     state = {
@@ -20,6 +21,10 @@ class ScheduleList extends React.Component {
         timeList: '',
         selectedTimeIndex: null,
     };
+
+    componentDidMount() {
+        this.getTimeList();
+    }
 
     componentDidUpdate(prevProps) {
         const nextPropsDate = this.props.date;
@@ -105,6 +110,13 @@ class ScheduleList extends React.Component {
         });
     }
 
+    unSelectTime(e){
+        if(!e.target.classList.contains('schedule__item')){
+            this.setState({selectedTimeIndex: null});
+            document.removeEventListener('click', this.unSelectTime);
+        }
+    }
+
     render() {
         const timeList = !this.state.timeList.length ?
             <div className="schedule__msg">No items</div> : <div className="schedule__item-wrapper">{
@@ -117,6 +129,7 @@ class ScheduleList extends React.Component {
                     return <div className={`${itemClassBase}${itemClassSelected}${itemClassBooked}`} key={i}
                                 onClick={() => {
                                     this.setState({selectedTimeIndex: i});
+                                    document.addEventListener('click', this.unSelectTime);
                                 }}
                     >{el.time}</div>;
                 })

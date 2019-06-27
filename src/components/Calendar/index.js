@@ -2,11 +2,12 @@ import './style.scss';
 import React from 'react';
 import {ReactComponent as IconArrowLeft} from './assets/arrow-left.svg';
 import {ReactComponent as IconArrowRight} from './assets/arrow-right.svg';
-import {CalendarDay} from '../CalendarDay';
+import CalendarDay from '../CalendarDay';
 
 class Calendar extends React.Component {
     state = {
         date: this.currentDate,
+        listExistingDates: '',
     };
 
     constructor(props) {
@@ -22,13 +23,14 @@ class Calendar extends React.Component {
 
     componentDidMount() {
         this.updateDates();
+        this.props.onChangeMonth(this.formatDate(this.state.date));
     }
 
     get currentDate() {
         return new Date(Date.now());
     }
 
-    formatDate(date){
+    formatDate(date) {
         return date.toISOString().split('T')[0];
     }
 
@@ -37,7 +39,7 @@ class Calendar extends React.Component {
     }
 
     get countEmptyDays() {
-        return this.firstMonthDay.getUTCDay();
+        return this.firstMonthDay.getDay();
     }
 
     get countMonthDays() {
@@ -63,11 +65,20 @@ class Calendar extends React.Component {
         return days;
     }
 
+    isExistTime(i) {
+        const dates = this.props.listExistingDates;
+
+        return dates && dates.find((el) => {
+            return Boolean(Number(el) === i);
+        });
+    }
+
     get daysFirstWeek() {
         const days = [];
 
         for (let i = 1; i <= this.countDaysFirstWeek; i++) {
-            days.push(<CalendarDay key={i} date={i} isSelected={i === this.state.date.getDate()} onClickDay={this.onClickDay}/>);
+            days.push(<CalendarDay key={i} date={i} isSelected={i === this.state.date.getDate()}
+                                   isExistTime={this.isExistTime(i)} onClickDay={this.onClickDay}/>);
         }
 
         return days;
@@ -78,7 +89,8 @@ class Calendar extends React.Component {
         const days = [];
 
         for (let i = this.countDaysFirstWeek + 1; i <= this.countMonthDays; i++) {
-            days.push(<CalendarDay key={i} date={i} isSelected={i === this.state.date.getDate()} onClickDay={this.onClickDay}/>);
+            days.push(<CalendarDay key={i} date={i} isSelected={i === this.state.date.getDate()}
+                                   isExistTime={this.isExistTime(i)} onClickDay={this.onClickDay}/>);
         }
 
         while (days.length) {
@@ -90,8 +102,8 @@ class Calendar extends React.Component {
         return weeks;
     }
 
-    updateDates(){
-        const date = this.formatDate(this.state.date);
+    updateDates(newDate) {
+        const date = this.formatDate(newDate || this.state.date);
         const currentDate = this.formatDate(this.currentDate);
         this.props.onChangeDate(date, currentDate);
     }
@@ -108,9 +120,11 @@ class Calendar extends React.Component {
         const newDate = new Date(date);
 
         newDate.setMonth(date.getMonth() + 1 * n);
+        this.updateDates(newDate);
         this.setState({
             date: newDate,
         });
+        this.props.onChangeMonth(this.formatDate(newDate));
     }
 
     prevMonth() {

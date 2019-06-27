@@ -151,8 +151,6 @@ class ScheduleList extends React.Component {
             </React.Fragment>
         );
     }
-
-
 }
 
 export {ScheduleList};

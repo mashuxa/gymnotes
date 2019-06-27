@@ -1,28 +1,15 @@
 import './style.scss';
 import React from 'react';
 
-class CalendarDay extends React.Component {
-    state = {
-        isAvailable: false,
-        date: '',
-        appointments: [],
-    };
+export default (props) => {
+    const classBase = 'day';
+    const classExistTime = props.isExistTime ? ` ${classBase}--available` : '';
+    const classSelected = props.isSelected ? ` ${classBase}--selected` : '';
 
-    getClasses(){
-        const mainClassName = 'day';
-        const availableClass = this.state.isCurrent ? `${mainClassName}--available` : false;
-        const selectedClass = this.props.isSelected ? `${mainClassName}--selected` : false;
-
-        return `${mainClassName} ${availableClass} ${selectedClass}`;
-    }
-
-    render() {
-        return (
-            <td className={this.getClasses()} data-date={this.props.date} onClick={this.props.onClickDay}>
-                {this.props.date}
-            </td>
-        );
-    }
+    return (
+        <td className={`${classBase}${classSelected}${classExistTime}`} data-date={props.date}
+            onClick={props.onClickDay}>
+            {props.date}
+        </td>
+    );
 }
-
-export {CalendarDay};

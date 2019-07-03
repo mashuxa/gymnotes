@@ -4,6 +4,7 @@
 .contractor-card {
   @include block(
           $theme: light,
+          $margin: 4px,
           $padding: 15px 10px
   );
   @include box-shadow();
@@ -25,8 +26,11 @@
     white-space: nowrap;
   }
 
-  &__link {
+  & &__link {
     @include clear-link();
+
+    margin-left: auto;
+    margin-right: 0;
   }
 
   &__link-icon {

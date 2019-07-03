@@ -2,6 +2,7 @@ import React from 'react';
 import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
 import {Calendar} from '../../components/Calendar';
 import {Appointment} from '../../components/Appointment';
+import {Preloader} from "../../components/Preloader";
 import {ScheduleList} from '../../components/ScheduleList';
 import {API_URL} from "../../constants";
 
@@ -16,6 +17,7 @@ class MyCalendar extends React.Component {
         currentDate: '',
         date: '',
         listExistingDates: '',
+        isCalendarLoading: false,
     };
 
     updateDate(date, currentDate) {
@@ -26,6 +28,11 @@ class MyCalendar extends React.Component {
 
     updateListExistingDates(date){
         const url = `${API_URL}/calendar/get-month-dates`;
+
+        this.setState({
+            listExistingDates: [],
+            isCalendarLoading: true,
+        });
 
         fetch(url, {
             method: 'POST',
@@ -40,6 +47,7 @@ class MyCalendar extends React.Component {
             if (result.success) {
                 this.setState({
                     listExistingDates: result.data,
+                    isCalendarLoading: false,
                 });
             } else {
                 console.error(result);
@@ -52,7 +60,7 @@ class MyCalendar extends React.Component {
         return (
             <React.Fragment>
                 <Calendar onChangeDate={this.updateDate} onChangeMonth={this.updateListExistingDates}
-                          listExistingDates={this.state.listExistingDates}/>
+                          listExistingDates={this.state.listExistingDates} isLoading={this.state.isCalendarLoading}/>
                 <Tabs defaultIndex={3}>
                     <TabList>
                         <Tab>My Appointments</Tab>
@@ -67,7 +75,8 @@ class MyCalendar extends React.Component {
                         <Appointment/>
                     </TabPanel>
                     <TabPanel>
-                        {this.state.date && <ScheduleList date={this.state.date} currentDate={this.state.currentDate}/>}
+                        {this.state.date && <ScheduleList date={this.state.date} currentDate={this.state.currentDate}
+                                                          listExistingDates={this.state.listExistingDates}/>}
                     </TabPanel>
                 </Tabs>
             </React.Fragment>

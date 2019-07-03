@@ -8,6 +8,7 @@ import {API_URL} from '../../constants';
 class ContractorForm extends React.Component {
     state = {
         isLoading: true,
+        isUpdating: false,
         avatarSrc: '',
         name: '',
         phone: '',
@@ -30,6 +31,10 @@ class ContractorForm extends React.Component {
     getUserData = () => {
         const url = `${API_URL}/settings`;
 
+        this.setState({
+            isUpdating: true,
+        });
+
         fetch(url, {
             method: 'GET',
             headers: {
@@ -40,10 +45,12 @@ class ContractorForm extends React.Component {
             return result.ok ? result.json() : result;
         }).then(result => {
             if (result.success) {
+                console.log(result.data);
                 this.setState({
                     name: result.data.name || '',
                     phone: result.data.phone || '',
                     description: result.data.description || '',
+                    isUpdating: false,
                     isLoading: false,
                 });
             } else {
@@ -58,6 +65,10 @@ class ContractorForm extends React.Component {
 
         const url = `${API_URL}/settings`;
 
+        this.setState({
+            isUpdating: true,
+        });
+
         fetch(url, {
             method: 'POST',
             headers: {
@@ -68,7 +79,9 @@ class ContractorForm extends React.Component {
         }).then(result => {
             return result.ok ? result.json() : result;
         }).then(result => {
-            console.log('Your account was updated!');
+            this.setState({
+                isUpdating: false,
+            });
         });
     };
 
@@ -95,20 +108,16 @@ class ContractorForm extends React.Component {
                                    placeholder="+375291234567"
                                    type="tel" value={this.state.phone} onChange={this.setPhone} name="phone"/>
                         </label>
-                        <div className="contractor-form__category-wrapper">Categories will be here</div>
-                        <div className="contractor-form__search-wrapper">
-                            <input type="search"
-                                   className="contractor-form__input contractor-form__input--category-search"
-                                   id="contractorCategory" placeholder="Start type category"/>
-                        </div>
                         <textarea className="contractor-form__description" rows="4" placeholder="Tell about you"
                                   value={this.state.description} onChange={this.setDescription} name="description">
                         </textarea>
-                        <div className="contractor-form__btns-wrapper">
-                            <button className="btn btn--default" type="button" onClick={this.getUserData}>Reset</button>
-                            <button className="btn btn--success" type="submit" onClick={this.updateUserData}>Apply
-                            </button>
-                        </div>
+                        {this.state.isUpdating ? <Preloader/> :
+                            <div className="contractor-form__btns-wrapper">
+                                <button className="btn btn--default" type="button" onClick={this.getUserData}>Reset</button>
+                                <button className="btn btn--success" type="submit" onClick={this.updateUserData}>Apply
+                                </button>
+                            </div>
+                        }
                     </form>
                 )}
             </React.Fragment>

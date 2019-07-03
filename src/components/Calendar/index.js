@@ -3,6 +3,7 @@ import React from 'react';
 import {ReactComponent as IconArrowLeft} from './assets/arrow-left.svg';
 import {ReactComponent as IconArrowRight} from './assets/arrow-right.svg';
 import CalendarDay from '../CalendarDay';
+import {Preloader} from "../Preloader";
 
 class Calendar extends React.Component {
     state = {
@@ -143,10 +144,10 @@ class Calendar extends React.Component {
                     <th className="calendar__header" colSpan="7">
                         <div className="calendar__header-wrapper">
                             <IconArrowLeft className='calendar__btn calendar__btn--left' onClick={this.prevMonth}/>
-                            <span className="calendar__month">
+                            {this.props.isLoading ? <Preloader/> : <span className="calendar__month">
                                 <span>{this.month[this.state.date.getMonth()]} </span>
                                 <sup>{this.state.date.getFullYear()}</sup>
-                            </span>
+                            </span>}
                             <IconArrowRight className='calendar__btn calendar__btn--right' onClick={this.nextMonth}/>
                         </div>
                     </th>

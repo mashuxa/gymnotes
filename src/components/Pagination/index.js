@@ -1,37 +1,22 @@
 import './style.scss';
 import React from 'react';
-import {NavLink} from 'react-router-dom';
 
 
-import { ReactComponent as IconMenu }      from './assets/menu.svg';
-import { ReactComponent as IconHome }      from './assets/home.svg';
-import { ReactComponent as IconCalendar }  from './assets/calendar.svg';
-import { ReactComponent as IconSettings }  from './assets/settings.svg';
-
-function Navigation() {
+function Pagination(props) {
     return (
         <React.Fragment>
-            <input className="navigation__toggle" id="navigationMain" type="checkbox"/>
-            <nav className="navigation">
-                <label className="navigation__link navigation__link--menu" htmlFor="navigationMain">
-                    <IconMenu className="navigation__link-icon"/>
-                    <span className="navigation__link-name">Menu</span>
-                </label>
-
-                    <NavLink exact to='/' className="navigation__link">
-                        <IconHome className="navigation__link-icon"/>
-                        <span className="navigation__link-name">Home</span>
-                    </NavLink>
-                    <NavLink to='/calendar' className="navigation__link">
-                        <IconCalendar className="navigation__link-icon"/>
-                        <span className="navigation__link-name">Calendar</span>
-                    </NavLink>
-                    <NavLink to='/settings' className="navigation__link">
-                        <IconSettings className="navigation__link-icon"/>
-                        <span className="navigation__link-name">Settings</span>
-                    </NavLink>
-            </nav>
-        </React.Fragment>);
+            {!props.count ? false : <div className="d-flex j-between">
+                <div>
+                    {props.page === 1 ? false : (<button onClick={props.onClickPrevPage}>Prev</button>)}
+                </div>
+                <span>page {props.page} / {Math.ceil(props.count / props.perPage)}</span>
+                <div>
+                    {(props.page * props.page >= props.count) ? false : (
+                        <button onClick={props.onClickNextPage}>Next</button>)}
+                </div>
+            </div>}
+        </React.Fragment>
+    );
 }
 
-export {Navigation};
+export {Pagination};

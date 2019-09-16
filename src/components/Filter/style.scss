@@ -1,19 +1,22 @@
 @import "../common/mixins";
+@import "../common/theme";
 
-.filter-date {
+.filter {
   @include block(
-          $type: flex,
-          $justify-content: center,
-          $align-items: baseline,
           $theme: light,
-          $padding: 10px);
+          $padding: 10px,
+          $margin: 0 5px 20px
+  );
   @include box-shadow();
 
-  margin-bottom: 20px; //for-delete
+  &__title {
+    text-align: center;
+    color: grey;
+  }
 
   &__label {
+    cursor: pointer;
     padding: 5px;
-    text-align: center;
   }
 
   &__label-name {
@@ -21,6 +24,9 @@
             $type: inline-block,
             $padding: 5px
     );
+
+    color: $color-text;
+    font-weight: 600;
   }
 
   &__input {
@@ -32,5 +38,80 @@
     color: $color-primary;
     cursor: pointer;
     box-shadow: none;
+
+    &:invalid {
+      color: $color-error;
+    }
+  }
+
+  &__text-filter {
+    @include block(
+            $type: flex,
+            $flex-wrap: nowrap,
+            $padding: 10px,
+            $flex-direction: row-reverse
+    );
+
+    flex-grow: 1;
+  }
+
+  &__icon {
+    transition-duration: 0.3s;
+    fill: $color-text;
+    max-width: 10px;
+    max-height: 10px;
+    padding-right: 10px;
+    flex-shrink: 0;
+
+    &--table,
+    &--list {
+      max-width: 16px;
+      max-height: 12px;
+      padding: 0 8px;
+    }
+  }
+
+  &__input-radio {
+    display: none;
+  }
+
+  &__input-radio:checked + &__label svg {
+    fill: $color-primary;
+  }
+
+  &__view-switch {
+    padding: 10px;
+    margin-left: auto;
+  }
+
+  &__input-search {
+    @include input();
+
+    width: 100%;
+    margin-right: auto;
+
+    &:focus {
+      flex-grow: 1;
+    }
+  }
+
+  &__order-select {
+    @include btn();
+  }
+
+  &__input-search:focus + &__icon,
+  &__order-select:focus + &__icon {
+    fill: $color-primary;
+  }
+
+  &__order-filter {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    padding: 10px;
+  }
+
+  & &__btn {
+    margin: auto;
   }
 }

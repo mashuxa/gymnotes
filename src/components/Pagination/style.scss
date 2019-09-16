@@ -2,7 +2,7 @@
 @import "../common/mixins";
 @import "../common/theme";
 
-.navigation {
+.pagination {
   @include block(
           $type: flex,
           $theme: light,
@@ -28,99 +28,5 @@
     justify-content: flex-start;
     width: 45px;
     box-shadow: 0 -1px 1px 0 rgba(0,0,0,0.05);
-  }
-
-  &__link {
-    @include clear-link();
-
-    color: $color-text;
-    fill: $color-text;
-    padding: 13px;
-    cursor: pointer;
-    flex: 1 1 0;
-    text-align: center;
-    border-right: 1px solid transparent;
-
-    &:not(:last-of-type) {
-      border-right-color: $color-border-lightgrey;
-    }
-
-    @media (min-width: $breakpoint-tablet-sm) {
-      display: flex;
-      align-content: center;
-      padding: 10px 15px;
-      flex-grow: 0;
-
-      &:first-of-type {
-        padding-top: 15px;
-      }
-
-      &:last-of-type {
-        padding-bottom: 15px;
-      }
-
-      &:not(:last-of-type) {
-        border-right-color: transparent;
-      }
-    }
-
-    &--menu {
-      display: none;
-      border-bottom: 1px solid $color-border-lightgrey;
-      padding-top: 15px;
-      padding-bottom: 15px;
-      color: $color-primary;
-
-      @media (min-width: $breakpoint-tablet-sm) {
-        display: flex;
-      }
-    }
-
-    &:active,
-    &:hover,
-    &.active {
-      color: $color-primary;
-      fill: $color-primary;
-    }
-  }
-
-  &__link-name {
-    display: none;
-    padding-left: 10px;
-    visibility: hidden;
-    transition-duration: 0.3s;
-    opacity: 0;
-
-    @media (min-width: $breakpoint-tablet-sm) {
-      display: block;
-    }
-  }
-
-  &__link-icon {
-    display: inline-block;
-    width: 15px;
-    height: 15px;
-    flex-shrink: 0;
-
-    @media (min-width: $breakpoint-tablet-md) {
-      padding-right: 5px;
-    }
-  }
-
-  &__toggle {
-    display: none;
-  }
-
-  &__toggle:checked ~ & &__link-name {
-    visibility: visible;
-    opacity: 1;
-  }
-
-  &__toggle:checked ~ & &__link--menu {
-    fill: $color-primary;
-  }
-
-  &__toggle:checked ~ & {
-    width: 150px;
   }
 }

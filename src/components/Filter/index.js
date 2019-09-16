@@ -1,28 +1,37 @@
 import './style.scss';
-import './app';
 import React from 'react';
 
-function FilterDate() {
+
+function Filter(props) {
     return (
-        <section className="filter-date">
-            <label className="filter-date__label">
-                <span className="filter-date__label-name">Select time from</span>
-                <input className="filter-date__input form__input--date" type="datetime-local" id="startDate"/>
-            </label>
+        <form className="filter" onSubmit={props.onClickSearch}>
+            <div className="d-flex">
+                <label className="filter__label">
+                    <span className="filter__label-name">
+                        Time interval from:
+                    </span>
+                    <input className="filter__input form__input--date" type="datetime-local" id="startDate"
+                           onChange={props.onSetStartDate} value={props.startDate} required
+                    />
+                </label>
+                <label className="filter__label">
+                    <span className="filter__label-name">till</span>
+                    <input className="filter__input form__input--date" type="datetime-local" id="endDate"
+                           onChange={props.onSetEndDate} value={props.endDate} required
+                    />
+                </label>
+            </div>
 
-            <label className="filter-date__label">
-                <span className="filter-date__label-name">till</span>
-                <input className="filter-date__input form__input--date" type="datetime-local" id="endDate"/>
-            </label>
+            <div className="filter__text-filter">
+                <input className="filter__input-search" type="search" placeholder="Text filter..."
+                       onChange={props.onSetTextFilterValue} value={props.textFilterValue}/>
+            </div>
 
-            <button className="btn" type="button">
+            <button className="btn filter__btn" type="button" onClick={props.onClickSearch}>
                 Search!
-                {/*<svg className='btn__icon'>*/}
-                    {/*<use xlink:href="#arrow-right"></use>*/}
-                {/*</svg>*/}
             </button>
-        </section>
-);
+        </form>
+    );
 }
 
-export {FilterDate};
+export {Filter};

@@ -15,7 +15,6 @@ function App({children}) {
         <React.Fragment>
             <Header/>
             <div className="page-wrapper">
-                {/*<aside className="sidebar"></aside>*/}
                 <main className="main">
                     {children}
                 </main>

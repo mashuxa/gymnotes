@@ -119,10 +119,18 @@
       margin-left: auto;
     }
   }
-  
+
   &-mr {
     &-a {
       margin-left: auto;
     }
   }
+}
+
+.d-flex {
+  display: flex;
+}
+
+.j-between {
+  justify-content: space-between;
 }

@@ -44,10 +44,10 @@ class Home extends React.Component {
             endDate: this.state.endDate,
             textFilter: this.state.textFilter,
             perPage: this.state.perPage,
-            page: this.state.page,
+            page: page || this.state.page,
         };
 
-        fetch(url, {
+        return fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -58,11 +58,13 @@ class Home extends React.Component {
             return result.ok ? result.json() : result;
         }).then(result => {
             if (result.success) {
-                this.setState({
+                const newState = {
                     users: result.data,
                     isLoading: false,
                     count: result.count,
-                });
+                };
+                if (page) newState.page = page;
+                this.setState(newState);
             } else {
                 console.error(`Access denied! ${result.message}`);
                 this.props.history.push('/login');
@@ -84,24 +86,21 @@ class Home extends React.Component {
 
     onClickPrevPage() {
         this.setState({
-            page: Math.max(1, this.state.page - 1),
-            users: [],
             isLoading: true,
+            users: [],
         });
-        this.getUsers();
+        this.getUsers(null, Math.max(1, this.state.page - 1));
     }
 
     onClickNextPage() {
         this.setState({
-            page: this.state.page + 1,
-            users: [],
             isLoading: true,
+            users: [],
         });
-        this.getUsers();
+        this.getUsers(null, this.state.page + 1);
     }
 
     render() {
-        console.log(this.state.page);
         return (
             <React.Fragment>
                 <Filter onClickSearch={this.getUsers} usersPerPage={this.state.perPage} page={this.state.page}

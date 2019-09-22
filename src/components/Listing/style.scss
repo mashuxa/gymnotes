@@ -1,0 +1,71 @@
+@import "../common/breakpoints";
+@import "../common/mixins";
+@import "../common/theme";
+
+.listing {
+  &__pagination {
+    @include block(
+            $type: flex,
+            $padding: 10px 0,
+            $justify-content: space-between,
+            $align-items: stretch,
+            $align-content: stretch,
+            $flex-direction: row
+    );
+  }
+
+  &__pagination-btn {
+    @include box-shadow();
+
+    outline: none;
+    border: none;
+    background-color: $color-background-light;
+    padding: 12px;
+    margin: 5px;
+    border-radius: 1px;
+
+    &:before {
+      content: '';
+      display: block;
+      background-color: transparent;
+      outline: none;
+      padding: 0;
+      border-color: transparent;
+      border-style: solid;
+      border-width: 5px 8px;
+    }
+
+    &:hover {
+      color: $color-primary;
+      cursor: pointer;
+    }
+
+    &--prev {
+      &:before {
+        border-right-color: $color-primary;
+        border-left-width: 0;
+      }
+    }
+
+    &--next {
+      &:before {
+        border-left-color: $color-primary;
+        border-right-width: 0;
+      }
+    }
+
+    &--disabled {
+      visibility: hidden;
+    }
+  }
+
+  &__msg {
+    @include block(
+            $padding: 20px,
+            $margin: 5px,
+            $theme: light,
+            $text-align: center
+    );
+    @include box-shadow();
+  }
+}

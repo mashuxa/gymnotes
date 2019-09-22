@@ -1,12 +1,8 @@
 import React from 'react';
 import {Filter} from "../../components/Filter";
-import {Preloader} from '../../components/Preloader';
-import {API_URL} from "../../constants";
-import {ContractorCard} from "../../components/ContractorCard";
-import {Pagination} from "../../components/Pagination";
-
-// @todo: move to constants
-const COUNT_PER_PAGE = 3;
+import {Listing} from '../../components/Listing';
+import {Preloader} from "../../components/Preloader";
+import {API_URL, listing} from "../../constants";
 
 class Home extends React.Component {
     constructor(props) {
@@ -21,12 +17,11 @@ class Home extends React.Component {
     }
 
     state = {
-        isLoading: true,
         users: [],
         startDate: '2019-01-01T09:00',
         endDate: '2020-01-01T18:00',
         textFilter: '',
-        perPage: COUNT_PER_PAGE,
+        perPage: listing.COUNT_PER_PAGE,
         page: 1,
         count: null,
     };
@@ -35,36 +30,30 @@ class Home extends React.Component {
         this.getUsers();
     }
 
-    getUsers(e, page) {
+    getUsers(e) {
         e && e.preventDefault();
-
-        const url = `${API_URL}/users`;
-        const filterParameters = {
-            startDate: this.state.startDate,
-            endDate: this.state.endDate,
-            textFilter: this.state.textFilter,
-            perPage: this.state.perPage,
-            page: page || this.state.page,
-        };
-
-        return fetch(url, {
+        return fetch(`${API_URL}/users`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': localStorage.getItem('token'),
             },
-            body: JSON.stringify(filterParameters),
+            body: JSON.stringify({
+                startDate: this.state.startDate,
+                endDate: this.state.endDate,
+                textFilter: this.state.textFilter,
+                perPage: this.state.perPage,
+                page: this.state.page,
+            }),
         }).then(result => {
             return result.ok ? result.json() : result;
         }).then(result => {
             if (result.success) {
-                const newState = {
+                this.setState({
                     users: result.data,
                     isLoading: false,
                     count: result.count,
-                };
-                if (page) newState.page = page;
-                this.setState(newState);
+                });
             } else {
                 console.error(`Access denied! ${result.message}`);
                 this.props.history.push('/login');
@@ -86,18 +75,18 @@ class Home extends React.Component {
 
     onClickPrevPage() {
         this.setState({
-            isLoading: true,
             users: [],
-        });
-        this.getUsers(null, Math.max(1, this.state.page - 1));
+            count: null,
+            page:  Math.max(1, this.state.page - 1),
+        }, this.getUsers);
     }
 
     onClickNextPage() {
         this.setState({
-            isLoading: true,
             users: [],
-        });
-        this.getUsers(null, this.state.page + 1);
+            count: null,
+            page: this.state.page + 1,
+        }, this.getUsers);
     }
 
     render() {
@@ -108,10 +97,11 @@ class Home extends React.Component {
                         onSetStartDate={this.setStartDate} startDate={this.state.startDate}
                         onSetEndDate={this.setEndDate} endDate={this.state.endDate}
                 />
-                <Pagination count={this.state.count} page={this.state.page} perPage={this.state.perPage}
-                            onClickPrevPage={this.onClickPrevPage} onClickNextPage={this.onClickNextPage}/>
-                {this.state.isLoading ? <Preloader/> : this.state.users.map((user, i) => <ContractorCard key={i}
-                                                                                                         data={user}/>)}
+                {this.state.count === null ? <Preloader/> :
+                    <Listing perPage={this.state.perPage} page={this.state.page} count={this.state.count}
+                             items={this.state.users}
+                             onClickPrevPage={this.onClickPrevPage}
+                             onClickNextPage={this.onClickNextPage}/>}
             </React.Fragment>
         );
     }

@@ -17,12 +17,6 @@ function ContractorCard(props) {
                 {props.data.phone && <IconPhone className='contractor-card__link-icon'/>}
                 {props.data.phone}
             </a>
-            {/*<div className="contractor-card__category-tags-wrapper">*/}
-                {/*<span className="contractor-card__category">Category</span>*/}
-                {/*<span className="contractor-card__category">Category</span>*/}
-                {/*<span className="contractor-card__category">Category</span>*/}
-                {/*<span className="contractor-card__category">Category</span>*/}
-            {/*</div>*/}
             <div className="contractor-card__description">
                 {props.data.description}
             </div>

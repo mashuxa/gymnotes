@@ -1,6 +1,6 @@
-@import "../common/mixins";
-@import "../common/theme";
-@import "../common/breakpoints";
+@import "../../common/mixins";
+@import "../../common/theme";
+@import "../../common/breakpoints";
 
 .appointment {
   @include block(

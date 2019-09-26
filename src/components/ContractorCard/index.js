@@ -20,10 +20,9 @@ function ContractorCard(props) {
             <div className="contractor-card__description">
                 {props.data.description}
             </div>
-            <Link className="btn contractor-card__link"
-                  to={`/user/${props.data.id}`}>
+            {props.isHiddenLink ? false : <Link className="btn contractor-card__link" to={`/user/${props.data.id}`}>
                 Show calendar
-            </Link>
+            </Link>}
         </article>
     );
 }

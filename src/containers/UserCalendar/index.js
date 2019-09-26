@@ -1,17 +1,22 @@
 import React from 'react';
+import './style.scss';
 import {Preloader} from '../../components/Preloader';
 import {ContractorCard} from '../../components/ContractorCard';
 import {Calendar} from '../../components/Calendar';
-import {ScheduleList} from '../../components/ScheduleList';
+import {AppointmentsList} from '../../components/AppointmentsList';
 import {API_URL} from "../../constants";
 
 class UserCalendar extends React.Component {
     constructor(props) {
         super(props);
+
+        this.updateDate = this.updateDate.bind(this);
     }
 
     state = {
-        isLoading: true,
+        userData: null,
+        listExistingDates: [],
+        selectedDate: null,
     };
 
     componentDidMount() {
@@ -30,17 +35,30 @@ class UserCalendar extends React.Component {
         }).then(result => {
             if (result) {
                 this.setState({
-                    isLoading: false
+                    userData: result.data
                 });
-                console.log(result.data);
             } else {
-                console.log(result);
+                console.error('Error 1');
             }
         });
     }
 
+    updateDate(date) {
+        this.setState({selectedDate: date});
+        // console.log("updateDate", date);
+    }
+
+    updateListExistingDates(month) {
+        // console.log("updateListExistingDates", month);
+    }
+
     render() {
-        return this.state.isLoading ? <Preloader/> : <h1>User Data</h1>;
+        return !this.state.userData ? <Preloader/> : <div className='user-calendar'>
+            <ContractorCard isHiddenLink={true} data={this.state.userData}/>
+            <Calendar onChangeDate={this.updateDate} onChangeMonth={this.updateListExistingDates}
+                      listExistingDates={this.state.listExistingDates}/>
+            <AppointmentsList userId={this.state.userData.id} date={this.state.selectedDate}/>
+        </div>;
     }
 }
 

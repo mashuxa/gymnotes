@@ -1,0 +1,22 @@
+@import "../../components/common/theme";
+@import "../../components/common/mixins";
+
+.user-calendar {
+  display: flex;
+  flex-wrap: wrap;
+
+  .contractor-card,
+  .calendar {
+    @media (min-width: $breakpoint-tablet-md) {
+      width: calc((100% - 25px) / 2);
+    }
+  }
+
+  .contractor-card {
+    margin: 0;
+  }
+
+  .calendar {
+    margin-left: auto;
+  }
+}

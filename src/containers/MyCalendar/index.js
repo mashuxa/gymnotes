@@ -1,8 +1,7 @@
 import React from 'react';
 import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
 import {Calendar} from '../../components/Calendar';
-import {Appointment} from '../../components/Appointment';
-import {Preloader} from "../../components/Preloader";
+import {Appointment} from '../../components/__unused/Appointment';
 import {ScheduleList} from '../../components/ScheduleList';
 import {API_URL} from "../../constants";
 

@@ -4,43 +4,45 @@
 .appointments-list {
   @include block();
 
-  //width: 100%;
-  //table-layout: fixed;
-  //border-spacing: 4px;
-  //color: $color-text;
+  width: 100%;
 
-  &__header {
-    //@include block(
-    //        $text-align: center,
-    //        $padding: 0 0 10px
-    //);
-    //
-    //color: $color-text
-  }
-
-  &__items-wrapper {
-    //@include block (
-    //        $type: flex,
-    //        $justify-content: flex-start
-    //);
+  &__wrapper {
+    @include block (
+            $type: flex,
+            $justify-content: flex-start
+    );
   }
 
   &__item {
-    //cursor: pointer;
-    //user-select: none;
-    //background-color: lighten($color-background, 1.5);
-    //box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.1);
-    //text-align: center;
-    //padding: 10px;
-    //margin-right: 10px;
-    //margin-bottom: 10px;
+    @include block(
+            $theme: light,
+            $padding: 5px 10px,
+            $margin: 5px,
+            $font-size: inherit,
+            $text-align: center
+    );
+
+    @include box-shadow();
+
+    cursor: pointer;
+    user-select: none;
+
+    &--active {
+      color: $color-light;
+      background-color: $color-primary;
+      box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.1);
+    }
+
+    &--selected {
+      box-shadow: 0 0 0 1px $color-secondary;
+    }
   }
 
-  &__msg {
-    //padding: 10px 0;
-  }
-
-  &__btn {
-    //margin-left: auto;
+  &__btns-wrapper {
+    @include block(
+            $type: flex,
+            $justify-content: flex-end,
+            $padding: 10px 0
+    );
   }
 }

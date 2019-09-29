@@ -57,7 +57,7 @@ class UserCalendar extends React.Component {
             <ContractorCard isHiddenLink={true} data={this.state.userData}/>
             <Calendar onChangeDate={this.updateDate} onChangeMonth={this.updateListExistingDates}
                       listExistingDates={this.state.listExistingDates}/>
-            <AppointmentsList userId={this.state.userData.id} date={this.state.selectedDate}/>
+            {this.state.selectedDate && <AppointmentsList id={this.state.userData.id} date={this.state.selectedDate}/>}
         </div>;
     }
 }

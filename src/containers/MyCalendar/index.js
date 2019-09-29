@@ -25,7 +25,7 @@ class MyCalendar extends React.Component {
         });
     }
 
-    updateListExistingDates(date){
+    updateListExistingDates(date) {
         const url = `${API_URL}/calendar/get-month-dates`;
 
         this.setState({
@@ -49,7 +49,8 @@ class MyCalendar extends React.Component {
                     isCalendarLoading: false,
                 });
             } else {
-                console.error(result);
+                console.error(`Access denied! ${result.message}`);
+                this.props.history.push('/login');
             }
         });
     }

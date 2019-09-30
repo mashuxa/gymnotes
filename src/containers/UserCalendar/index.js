@@ -11,12 +11,14 @@ class UserCalendar extends React.Component {
         super(props);
 
         this.updateDate = this.updateDate.bind(this);
+        this.updateListExistingDates = this.updateListExistingDates.bind(this);
     }
 
     state = {
         userData: null,
         listExistingDates: [],
         selectedDate: null,
+        isCalendarLoading: true,
     };
 
     componentDidMount() {
@@ -45,11 +47,38 @@ class UserCalendar extends React.Component {
 
     updateDate(date) {
         this.setState({selectedDate: date});
-        // console.log("updateDate", date);
     }
 
-    updateListExistingDates(month) {
-        // console.log("updateListExistingDates", month);
+    updateListExistingDates(date) {
+        const url = `${API_URL}/calendar/get-month-dates`;
+
+        this.setState({
+            listExistingDates: [],
+        });
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('token'),
+            },
+            body: JSON.stringify({
+                id: this.state.userData.id,
+                date,
+            }),
+        }).then(result => {
+            return result.ok ? result.json() : this.showError;
+        }).then(result => {
+            if (result.success) {
+                this.setState({
+                    listExistingDates: result.data,
+                    isCalendarLoading: false,
+                });
+            } else {
+                console.error(`Access denied! ${result.message}`);
+                this.props.history.push('/login');
+            }
+        });
     }
 
     render() {

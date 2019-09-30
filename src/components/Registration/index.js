@@ -43,9 +43,8 @@ class Registration extends React.Component {
             }).then(data => {
                 if(data.success){
                     this.props.history.push('/login');
-                    console.log(data);
                 } else {
-                    console.log(data);
+                    console.error(data);
                 }
             });
         } else {

@@ -30,10 +30,6 @@ class Calendar extends React.Component {
         return new Date(Date.now());
     }
 
-    formatDate(date) {
-        return date.toISOString().split('T')[0];
-    }
-
     get firstMonthDay() {
         return new Date(this.state.date.getFullYear(), this.state.date.getMonth(), 1);
     }
@@ -65,14 +61,6 @@ class Calendar extends React.Component {
         return days;
     }
 
-    isExistTime(i) {
-        const dates = this.props.listExistingDates;
-
-        return dates && dates.find((el) => {
-            return Boolean(Number(el) === i);
-        });
-    }
-
     get daysFirstWeek() {
         const days = [];
 
@@ -100,6 +88,18 @@ class Calendar extends React.Component {
         }
 
         return weeks;
+    }
+
+    formatDate(date) {
+        return date.toISOString().split('T')[0];
+    }
+
+    isExistTime(i) {
+        const dates = this.props.listExistingDates;
+
+        return dates && dates.find((el) => {
+            return Boolean(Number(el) === i);
+        });
     }
 
     updateDates(newDate) {

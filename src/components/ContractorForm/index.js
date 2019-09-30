@@ -45,7 +45,6 @@ class ContractorForm extends React.Component {
             return result.ok ? result.json() : result;
         }).then(result => {
             if (result.success) {
-                console.log(result.data);
                 this.setState({
                     name: result.data.name || '',
                     phone: result.data.phone || '',

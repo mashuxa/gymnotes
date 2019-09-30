@@ -104,7 +104,6 @@ class AppointmentsList extends React.Component {
     }
 
     render() {
-        console.log(this.state.timeList);
         return (
             <React.Fragment>
                 {this.state.isLoading && <Preloader/>}

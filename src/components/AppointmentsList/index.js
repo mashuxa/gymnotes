@@ -95,6 +95,8 @@ class AppointmentsList extends React.Component {
 
                 timeList.splice(this.state.selectedTimeIndex, 1);
 
+                this.props.onBookTime();
+
                 this.setState({
                     isLoading: false,
                     timeList,

@@ -14,7 +14,7 @@ class ScheduleForm extends React.Component {
         this.removeTime = this.removeTime.bind(this);
         this.onSelectWeekDay = this.onSelectWeekDay.bind(this);
         this.changeDate = this.changeDate.bind(this);
-        this.addToCalendar = this.addToCalendar.bind(this);
+        this.updateTimeList = this.updateTimeList.bind(this);
         this.unSelectTime = this.unSelectTime.bind(this);
     }
 
@@ -135,10 +135,6 @@ class ScheduleForm extends React.Component {
         return timeList;
     };
 
-    addToCalendar() {
-        this.updateTimeList();
-    }
-
     unSelectTime(e){
         if(!e.target.classList.contains('schedule-form__input-time')){
             this.setState({selectedTimeIndex: null});
@@ -251,7 +247,7 @@ class ScheduleForm extends React.Component {
                     </label>
                 </div>
                 <div className="schedule-form__btns-wrapper">
-                    <button className="btn btn--success" onClick={this.addToCalendar}>
+                    <button className="btn btn--success" onClick={this.updateTimeList}>
                         Add to calendar
                     </button>
                 </div>

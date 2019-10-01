@@ -147,7 +147,11 @@ class ScheduleList extends React.Component {
                                 action={this.toggleScheduleForm}/>
                     </div>
                 </section>
-                {this.state.isShownScheduleForm && <ScheduleForm currentDate={this.props.currentDate} onUpdateTimeList={this.getTimeList}/>}
+                {this.state.isShownScheduleForm && <ScheduleForm currentDate={this.props.currentDate}
+                                                                 onUpdateTimeList={()=>{
+                                                                     this.getTimeList();
+                                                                     this.props.updateListExistingDates();
+                                                                 }}/>}
             </React.Fragment>
         );
     }

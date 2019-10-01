@@ -49,7 +49,7 @@ class UserCalendar extends React.Component {
         this.setState({selectedDate: date});
     }
 
-    updateListExistingDates(date) {
+    updateListExistingDates(date = this.state.selectedDate) {
         const url = `${API_URL}/calendar/get-month-dates`;
 
         this.setState({
@@ -86,7 +86,9 @@ class UserCalendar extends React.Component {
             <ContractorCard isHiddenLink={true} data={this.state.userData}/>
             <Calendar onChangeDate={this.updateDate} onChangeMonth={this.updateListExistingDates}
                       listExistingDates={this.state.listExistingDates}/>
-            {this.state.selectedDate && <AppointmentsList id={this.state.userData.id} date={this.state.selectedDate}/>}
+            {this.state.selectedDate &&
+            <AppointmentsList id={this.state.userData.id} date={this.state.selectedDate}
+                              onBookTime={this.updateListExistingDates}/>}
         </div>;
     }
 }

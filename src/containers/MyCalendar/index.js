@@ -10,6 +10,8 @@ class MyCalendar extends React.Component {
         super(props);
         this.updateDate = this.updateDate.bind(this);
         this.updateListExistingDates = this.updateListExistingDates.bind(this);
+        this.getAppontments = this.getAppontments.bind(this);
+        this.getClients = this.getClients.bind(this);
     }
 
     state = {
@@ -17,6 +19,8 @@ class MyCalendar extends React.Component {
         date: '',
         listExistingDates: '',
         isCalendarLoading: false,
+        appointments: [],
+        clients: [],
     };
 
     updateDate(date, currentDate) {
@@ -55,6 +59,13 @@ class MyCalendar extends React.Component {
         });
     }
 
+    getAppontments() {
+        console.log('getAppontments');
+    }
+
+    getClients() {
+        console.log('getClients');
+    }
 
     render() {
         return (
@@ -63,20 +74,29 @@ class MyCalendar extends React.Component {
                           listExistingDates={this.state.listExistingDates} isLoading={this.state.isCalendarLoading}/>
                 <Tabs defaultIndex={3}>
                     <TabList>
-                        <Tab>My Appointments</Tab>
-                        <Tab>My Clients</Tab>
-                        <Tab>My Schedule</Tab>
+                        <Tab onClick={this.getAppontments}>My Appointments</Tab>
+                        <Tab onClick={this.getClients}>My Clients</Tab>
+                        <Tab>Free time</Tab>
                     </TabList>
                     <TabPanel>
-                        <Appointment/>
+                        {this.state.appointments.map((el)=>{
+                            <Appointment src={el.src} name={el.name} time={el.time} date={el.date} phone={el.phone}
+                                         onCancel={this.getAppontments}/>
+                        })}
                     </TabPanel>
                     <TabPanel>
-                        <Appointment/>
-                        <Appointment/>
+                        {this.state.clients.map((el)=>{
+                            <Appointment src={el.src} name={el.name} time={el.time} date={el.date} phone={el.phone}
+                                         onCancel={this.getAppontments}/>
+                        })}
                     </TabPanel>
                     <TabPanel>
                         {this.state.date && <ScheduleList date={this.state.date} currentDate={this.state.currentDate}
-                                                          listExistingDates={this.state.listExistingDates}/>}
+                                                          listExistingDates={this.state.listExistingDates}
+                                                          updateListExistingDates={() => {
+                                                              this.updateListExistingDates(this.state.date);
+                                                          }}
+                        />}
                     </TabPanel>
                 </Tabs>
             </React.Fragment>

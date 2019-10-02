@@ -1,6 +1,6 @@
 import './style.scss';
 import React from 'react';
-import {Avatar} from '../../Avatar';
+import {Avatar} from '../Avatar';
 import {ReactComponent as IconClose} from './assets/close.svg';
 import {ReactComponent as IconPhone} from './assets/phone.svg';
 

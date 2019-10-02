@@ -1,7 +1,8 @@
 import React from 'react';
 import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
 import {Calendar} from '../../components/Calendar';
-import {Appointment} from '../../components/__unused/Appointment';
+import {Preloader} from '../../components/Preloader';
+import {Appointment} from '../../components/Appointment';
 import {ScheduleList} from '../../components/ScheduleList';
 import {API_URL} from "../../constants";
 
@@ -19,13 +20,16 @@ class MyCalendar extends React.Component {
         date: '',
         listExistingDates: '',
         isCalendarLoading: false,
-        appointments: [],
-        clients: [],
+        appointments: null,
+        clients: null,
     };
 
     updateDate(date, currentDate) {
         this.setState({
             date, currentDate
+        }, ()=>{
+            this.getClients();
+            this.getAppontments();
         });
     }
 
@@ -60,14 +64,66 @@ class MyCalendar extends React.Component {
     }
 
     getAppontments() {
-        console.log('getAppontments');
+        const url = `${API_URL}/user-get-appointments`;
+
+        this.setState({
+            appointments: null,
+        });
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('token'),
+            },
+            body: JSON.stringify({date: this.state.date}),
+        }).then(result => {
+            return result.ok ? result.json() : this.showError;
+        }).then(result => {
+            if (result.success) {
+                this.setState({
+                    appointments: result.data
+                });
+            } else {
+                console.error(result.message);
+            }
+        });
     }
 
     getClients() {
-        console.log('getClients');
+        const url = `${API_URL}/user-get-clients`;
+
+        this.setState({
+            clients: null,
+        });
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('token'),
+            },
+            body: JSON.stringify({date: this.state.date}),
+        }).then(result => {
+            return result.ok ? result.json() : this.showError;
+        }).then(result => {
+            if (result.success) {
+                this.setState({
+                    clients: result.data
+                });
+            } else {
+                console.error(result.message);
+            }
+        });
     }
 
+    // onCancelClient(){}
+
+    // onCancelAppointment(){}
+
     render() {
+        const appointments = this.state.appointments;
+        const clients = this.state.clients;
+
         return (
             <React.Fragment>
                 <Calendar onChangeDate={this.updateDate} onChangeMonth={this.updateListExistingDates}
@@ -79,24 +135,25 @@ class MyCalendar extends React.Component {
                         <Tab>Free time</Tab>
                     </TabList>
                     <TabPanel>
-                        {this.state.appointments.map((el)=>{
-                            <Appointment src={el.src} name={el.name} time={el.time} date={el.date} phone={el.phone}
-                                         onCancel={this.getAppontments}/>
-                        })}
+                        {!appointments ? <Preloader/> : appointments.map((el, i) => <Appointment src={el.src} key={i}
+                                                                                              name={el.name}
+                                                                                              time={el.time}
+                                                                                              date={el.date}
+                                                                                              phone={el.phone}
+                                                                                              onCancel={this.getAppontments}/>)}
                     </TabPanel>
                     <TabPanel>
-                        {this.state.clients.map((el)=>{
-                            <Appointment src={el.src} name={el.name} time={el.time} date={el.date} phone={el.phone}
-                                         onCancel={this.getAppontments}/>
-                        })}
+                        {!clients ? <Preloader/> : clients.map((el, i) => <Appointment src={el.src} name={el.name}
+                                                                                    time={el.time} date={el.date}
+                                                                                    phone={el.phone} key={i}
+                                                                                    onCancel={this.getAppontments}/>)}
                     </TabPanel>
                     <TabPanel>
                         {this.state.date && <ScheduleList date={this.state.date} currentDate={this.state.currentDate}
                                                           listExistingDates={this.state.listExistingDates}
                                                           updateListExistingDates={() => {
                                                               this.updateListExistingDates(this.state.date);
-                                                          }}
-                        />}
+                                                          }}/>}
                     </TabPanel>
                 </Tabs>
             </React.Fragment>

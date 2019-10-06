@@ -90,7 +90,7 @@ class ScheduleForm extends React.Component {
         const weekDays = Object.values(this.state.weekDays);
         let date = new Date(this.state.startDate);
 
-        for (date; endDate >= date; date.setDate(date.getUTCDate() + 1)) {
+        for (date; endDate >= date; date.setUTCDate(date.getUTCDate() + 1)) {
             if (weekDays[date.getUTCDay()]) {
                 appointments.push({
                     date: date.toISOString().split('T')[0],

@@ -31,15 +31,15 @@ class Calendar extends React.Component {
     }
 
     get firstMonthDay() {
-        return new Date(this.state.date.getFullYear(), this.state.date.getMonth(), 1);
+        return new Date(this.state.date.getUTCFullYear(), this.state.date.getUTCMonth(), 1);
     }
 
     get countEmptyDays() {
-        return this.firstMonthDay.getDay();
+        return this.firstMonthDay.getUTCDay();
     }
 
     get countMonthDays() {
-        return new Date(this.state.date.getFullYear(), this.state.date.getMonth() + 1, 0).getDate();
+        return new Date(this.state.date.getUTCFullYear(), this.state.date.getUTCMonth() + 1, 0).getUTCDate();
     }
 
     get countDaysFirstWeek() {
@@ -65,7 +65,7 @@ class Calendar extends React.Component {
         const days = [];
 
         for (let i = 1; i <= this.countDaysFirstWeek; i++) {
-            days.push(<CalendarDay key={i} date={i} isSelected={i === this.state.date.getDate()}
+            days.push(<CalendarDay key={i} date={i} isSelected={i === this.state.date.getUTCDate()}
                                    isExistTime={this.isExistTime(i)} onClickDay={this.onClickDay}/>);
         }
 
@@ -77,7 +77,7 @@ class Calendar extends React.Component {
         const days = [];
 
         for (let i = this.countDaysFirstWeek + 1; i <= this.countMonthDays; i++) {
-            days.push(<CalendarDay key={i} date={i} isSelected={i === this.state.date.getDate()}
+            days.push(<CalendarDay key={i} date={i} isSelected={i === this.state.date.getUTCDate()}
                                    isExistTime={this.isExistTime(i)} onClickDay={this.onClickDay}/>);
         }
 
@@ -109,7 +109,7 @@ class Calendar extends React.Component {
     }
 
     onClickDay(e) {
-        const selectedDate = new Date(this.state.date.setDate(e.target.dataset.date));
+        const selectedDate = new Date(this.state.date.setUTCDate(e.target.dataset.date));
 
         this.setState({date: selectedDate});
         this.updateDates();
@@ -119,7 +119,7 @@ class Calendar extends React.Component {
         const date = this.state.date;
         const newDate = new Date(date);
 
-        newDate.setMonth(date.getMonth() + 1 * n);
+        newDate.setUTCMonth(date.getUTCMonth() + 1 * n);
         this.updateDates(newDate);
         this.setState({
             date: newDate,
@@ -145,8 +145,8 @@ class Calendar extends React.Component {
                         <div className="calendar__header-wrapper">
                             <IconArrowLeft className='calendar__btn calendar__btn--left' onClick={this.prevMonth}/>
                             {this.props.isLoading ? <Preloader/> : <span className="calendar__month">
-                                <span>{this.month[this.state.date.getMonth()]} </span>
-                                <sup>{this.state.date.getFullYear()}</sup>
+                                <span>{this.month[this.state.date.getUTCMonth()]} </span>
+                                <sup>{this.state.date.getUTCFullYear()}</sup>
                             </span>}
                             <IconArrowRight className='calendar__btn calendar__btn--right' onClick={this.nextMonth}/>
                         </div>

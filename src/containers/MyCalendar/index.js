@@ -13,6 +13,8 @@ class MyCalendar extends React.Component {
         this.updateListExistingDates = this.updateListExistingDates.bind(this);
         this.getAppontments = this.getAppontments.bind(this);
         this.getClients = this.getClients.bind(this);
+        this.cancelClient = this.cancelClient.bind(this);
+        this.cancelAppointment = this.cancelAppointment.bind(this);
     }
 
     state = {
@@ -27,7 +29,7 @@ class MyCalendar extends React.Component {
     updateDate(date, currentDate) {
         this.setState({
             date, currentDate
-        }, ()=>{
+        }, () => {
             this.getClients();
             this.getAppontments();
         });
@@ -116,9 +118,51 @@ class MyCalendar extends React.Component {
         });
     }
 
-    // onCancelClient(){}
+    cancelClient(appointmentData) {
+        const url = `${API_URL}/user-cancel-client`;
 
-    // onCancelAppointment(){}
+        this.setState({clients: null});
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('token'),
+            },
+            body: JSON.stringify(appointmentData),
+        }).then(result => {
+            return result.ok ? result.json() : this.showError;
+        }).then(result => {
+            if (result.success) {
+                this.getClients();
+            } else {
+                console.error(result.message);
+            }
+        });
+    }
+
+    cancelAppointment(appointmentData) {
+        const url = `${API_URL}/user-cancel-appointment`;
+
+        this.setState({appointments: null});
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('token'),
+            },
+            body: JSON.stringify(appointmentData),
+        }).then(result => {
+            return result.ok ? result.json() : this.showError;
+        }).then(result => {
+            if (result.success) {
+                this.getAppontments();
+            } else {
+                console.error(result.message);
+            }
+        });
+    }
 
     render() {
         const appointments = this.state.appointments;
@@ -135,18 +179,20 @@ class MyCalendar extends React.Component {
                         <Tab>Free time</Tab>
                     </TabList>
                     <TabPanel>
-                        {!appointments ? <Preloader/> : appointments.map((el, i) => <Appointment src={el.src} key={i}
-                                                                                              name={el.name}
-                                                                                              time={el.time}
-                                                                                              date={el.date}
-                                                                                              phone={el.phone}
-                                                                                              onCancel={this.getAppontments}/>)}
+                        {!appointments ? <Preloader/> : appointments.map((el, i) => {
+                            return <Appointment src={el.src} key={i} name={el.name} time={el.time} date={el.date}
+                                                phone={el.phone} onCancel={() => {
+                                this.cancelAppointment(el)
+                            }}/>
+                        })}
                     </TabPanel>
                     <TabPanel>
-                        {!clients ? <Preloader/> : clients.map((el, i) => <Appointment src={el.src} name={el.name}
-                                                                                    time={el.time} date={el.date}
-                                                                                    phone={el.phone} key={i}
-                                                                                    onCancel={this.getAppontments}/>)}
+                        {!clients ? <Preloader/> : clients.map((el, i) => {
+                            return <Appointment src={el.src} name={el.name} time={el.time} date={el.date}
+                                                phone={el.phone} key={i} onCancel={() => {
+                                this.cancelClient(el)
+                            }}/>
+                        })}
                     </TabPanel>
                     <TabPanel>
                         {this.state.date && <ScheduleList date={this.state.date} currentDate={this.state.currentDate}

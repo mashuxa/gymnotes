@@ -93,7 +93,6 @@
 }
 
 @mixin clear-link() {
-  display: inline-block;
   color: $color-primary;
   font-size: inherit;
   text-transform: inherit;

@@ -3,6 +3,7 @@ import React from 'react';
 import {Avatar} from '../Avatar';
 import {ReactComponent as IconClose} from './assets/close.svg';
 import {ReactComponent as IconPhone} from './assets/phone.svg';
+import {API_URL} from "../../constants";
 
 function Appointment(props) {
     return (
@@ -10,7 +11,7 @@ function Appointment(props) {
             <tbody>
             <tr>
                 <td className="appointment__avatar" rowSpan="2">
-                    <Avatar src={props.src} name={props.name}/>
+                    <Avatar src={`${API_URL}${props.src}`} name={props.name}/>
                 </td>
                 <td className="appointment__name">
                     <a className='appointment__link' href={`/user/${props.id}`}>{props.name}</a>
@@ -18,7 +19,7 @@ function Appointment(props) {
                 <td className="appointment__time">{props.time}</td>
                 <td className="appointment__phone">
                     <a href={`tel:${props.phone}`}>
-                        <IconPhone className='appointment__icon appointment__icon--phone'/>
+                        <IconPhone className='svg-puls appointment__icon appointment__icon--phone'/>
                     </a>
                 </td>
             </tr>

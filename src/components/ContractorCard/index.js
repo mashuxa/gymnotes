@@ -3,12 +3,13 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {Avatar} from '../Avatar';
 import {ReactComponent as IconPhone} from './assets/phone.svg';
+import {API_URL} from "../../constants";
 
 function ContractorCard(props) {
     return (
         <article className="contractor-card">
             <div className="contractor-card__avatar-wrapper">
-                <Avatar isFileInput={false} name={`${props.data.name}`}/>
+                <Avatar src={`${API_URL}${props.data.avatarSrc}`} isFileInput={false} name={props.data.name}/>
             </div>
             <h1 className="contractor-card__name">
                 {props.data.name}

@@ -8,16 +8,11 @@
   .contractor-card,
   .calendar {
     @media (min-width: $breakpoint-tablet-md) {
-      width: calc((100% - 25px) / 2);
+      width: calc((100% - 28px)/2);
     }
   }
 
-  .contractor-card {
-    //margin: 0;
-  }
-
   .calendar {
-    margin: 5px 0 0;
-    //margin-left: auto;
+    margin: 0;
   }
 }

@@ -39,6 +39,10 @@
 
   &__phone {
     border-bottom: 1px solid $color-border-lightgrey;
+
+    &:hover {
+      animation: svg-pulse 2s infinite;
+    }
   }
 
   &__phone,
@@ -52,6 +56,12 @@
   &__avatar {
     width: 64px;
     text-align: center;
+
+    .avatar {
+      margin: 10px;
+      width: 80px;
+      height: 80px;
+    }
   }
 
   &__time,

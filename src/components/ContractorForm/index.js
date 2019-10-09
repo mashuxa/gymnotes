@@ -59,7 +59,7 @@ class ContractorForm extends React.Component {
                     name: result.data.name || '',
                     phone: result.data.phone || '',
                     description: result.data.description || '',
-                    avatarSrc: result.data.avatarSrc || '',
+                    avatarSrc: result.data.avatarSrc ? `${API_URL}${result.data.avatarSrc}` : '',
                     isUpdating: false,
                     isLoading: false,
                 });
@@ -100,7 +100,8 @@ class ContractorForm extends React.Component {
                     name: result.data.name || '',
                     phone: result.data.phone || '',
                     description: result.data.description || '',
-                    avatarSrc: result.data.avatarSrc || '',
+                    avatarSrc: result.data.avatarSrc ? `${API_URL}${result.data.avatarSrc}` : '',
+                    avatar: null,
                     isUpdating: false,
                     isLoading: false,
                 });
@@ -108,8 +109,8 @@ class ContractorForm extends React.Component {
                 this.setState({
                     isUpdating: false,
                     isLoading: false,
+                    avatar: null,
                 });
-                console.error(result.message);
             }
         });
     };
@@ -119,20 +120,22 @@ class ContractorForm extends React.Component {
         const url = URL.createObjectURL(file);
 
         this.setState({
+            avatarSrc: null,
+        });
+        this.setState({
             avatarSrc: url,
             avatar: file
         });
+        URL.revokeObjectURL(file);
     }
 
     render() {
-        console.log(this.state.avatarSrc);
         return (
             <React.Fragment>
                 {this.state.isLoading ? <Preloader/> : (
                     <form className="contractor-form">
                         <div className="contractor-form__avatar-wrapper">
-                            <Avatar className="avatar avatar--label" src={this.state.avatarSrc} isFileInput={true}
-                                    onChangeAvatar={this.uploadImage}/>
+                            <Avatar src={this.state.avatarSrc} isFileInput={true} onChangeAvatar={this.uploadImage}/>
                         </div>
                         <label className="contractor-form__label">
                             Your name:

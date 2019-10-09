@@ -82,6 +82,7 @@ class UserCalendar extends React.Component {
     }
 
     render() {
+        console.log(this.state.userData);
         return !this.state.userData ? <Preloader/> : <div className='user-calendar'>
             <ContractorCard isHiddenLink={true} data={this.state.userData}/>
             <Calendar onChangeDate={this.updateDate} onChangeMonth={this.updateListExistingDates}

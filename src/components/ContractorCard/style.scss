@@ -8,11 +8,10 @@
           $padding: 15px 10px
   );
   @include box-shadow();
-
-  text-align: center;
+  @include clearfix();
 
   &__name {
-    font-size: 1.4em;
+    font-size: 1.5em;
     color: $color-primary;
     margin: 0;
     font-weight: 500;
@@ -21,9 +20,12 @@
   &__phone {
    @include clear-link();
 
+    padding-right: 30px;
     font-size: 1.2em;
+    line-height: 2;
     color: $color-primary;
     white-space: nowrap;
+    border-bottom: 1px solid $color-primary;
   }
 
   & &__link {
@@ -31,30 +33,31 @@
 
     margin-left: auto;
     margin-right: 0;
+
+    &:hover {
+      color: $color-light;
+      background-color: $color-primary;
+    }
   }
 
   &__link-icon {
-    width: 12px;
-    height: 12px;
+    width: 20px;
+    height: 20px;
+    padding-right: 5px;
     fill: $color-primary;
+    position: relative;
+    top: 2px;
+
+    &:hover {
+      animation: svg-pulse 2s infinite;
+    }
   }
 
   &__description {
     color: $color-text;
     text-align: justify;
     min-width: 200px;
-  }
-
-  &__category-tags-wrapper {
-    min-width: 150px;
-  }
-
-  &__category {
-    color: $color-text;
-
-    &:not(:last-child):after {
-      content: ', ';
-    }
+    padding: 10px 0;
   }
 
   &__avatar-wrapper,
@@ -63,5 +66,10 @@
   &__category-tags-wrapper,
   &__description {
     padding-bottom: 10px;
+  }
+
+  &__avatar-wrapper {
+    float: left;
+    padding-right: 10px;
   }
 }

@@ -180,7 +180,7 @@ class MyCalendar extends React.Component {
                     </TabList>
                     <TabPanel>
                         {!appointments ? <Preloader/> : appointments.map((el, i) => {
-                            return <Appointment src={el.src} key={i} name={el.name} time={el.time} date={el.date}
+                            return <Appointment src={el.avatarSrc} key={i} name={el.name} time={el.time} date={el.date}
                                                 phone={el.phone} id={el.id} onCancel={() => {
                                 this.cancelAppointment(el)
                             }}/>
@@ -188,7 +188,7 @@ class MyCalendar extends React.Component {
                     </TabPanel>
                     <TabPanel>
                         {!clients ? <Preloader/> : clients.map((el, i) => {
-                            return <Appointment src={el.src} name={el.name} time={el.time} date={el.date}
+                            return <Appointment src={el.avatarSrc} name={el.name} time={el.time} date={el.date}
                                                 phone={el.phone} id={el.id} key={i} onCancel={() => {
                                 this.cancelClient(el)
                             }}/>

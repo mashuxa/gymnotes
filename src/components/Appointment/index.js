@@ -10,10 +10,10 @@ function Appointment(props) {
             <tbody>
             <tr>
                 <td className="appointment__avatar" rowSpan="2">
-                    <Avatar src={props.src}/>
+                    <Avatar src={props.src} name={props.name}/>
                 </td>
                 <td className="appointment__name">
-                    {props.name}
+                    <a className='appointment__link' href={`/user/${props.id}`}>{props.name}</a>
                 </td>
                 <td className="appointment__time">{props.time}</td>
                 <td className="appointment__phone">

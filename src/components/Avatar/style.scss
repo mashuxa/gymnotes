@@ -1,10 +1,9 @@
 @import "../common/mixins";
 
 .avatar {
-  @include clear-link();
-
+  display: block;
+  margin: auto;
   width: 44px;
-  cursor: pointer;
   height: 44px;
   border-radius: 50%;
   overflow: hidden;
@@ -16,6 +15,7 @@
   }
 
   &--label {
+    cursor: pointer;
     width: 100px;
     height: 100px;
 

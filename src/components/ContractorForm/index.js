@@ -6,15 +6,25 @@ import {API_URL} from '../../constants';
 
 
 class ContractorForm extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.uploadImage = this.uploadImage.bind(this);
+    }
+
     state = {
         isLoading: true,
         isUpdating: false,
         avatarSrc: '',
+        avatar: null,
         name: '',
         phone: '',
         description: '',
-        userCategoriesId: [],
     };
+
+    componentDidMount() {
+        this.getUserData();
+    }
 
     setName = (e) => {
         this.setState({name: e.target.value});
@@ -49,6 +59,7 @@ class ContractorForm extends React.Component {
                     name: result.data.name || '',
                     phone: result.data.phone || '',
                     description: result.data.description || '',
+                    avatarSrc: result.data.avatarSrc || '',
                     isUpdating: false,
                     isLoading: false,
                 });
@@ -63,38 +74,65 @@ class ContractorForm extends React.Component {
         e.preventDefault();
 
         const url = `${API_URL}/settings`;
+        const formData = new FormData();
 
         this.setState({
             isUpdating: true,
         });
 
+        formData.set('avatar', this.state.avatar);
+        formData.set('name', this.state.name);
+        formData.set('phone', this.state.phone);
+        formData.set('description', this.state.description);
+        formData.set('phone', this.state.phone);
+
         fetch(url, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': localStorage.getItem('token'),
             },
-            body: JSON.stringify(this.state),
+            body: formData,
         }).then(result => {
             return result.ok ? result.json() : result;
         }).then(result => {
-            this.setState({
-                isUpdating: false,
-            });
+            if (result.success) {
+                this.setState({
+                    name: result.data.name || '',
+                    phone: result.data.phone || '',
+                    description: result.data.description || '',
+                    avatarSrc: result.data.avatarSrc || '',
+                    isUpdating: false,
+                    isLoading: false,
+                });
+            } else {
+                this.setState({
+                    isUpdating: false,
+                    isLoading: false,
+                });
+                console.error(result.message);
+            }
         });
     };
 
-    componentDidMount() {
-        this.getUserData();
+    uploadImage(e) {
+        const file = e.target.files[0];
+        const url = URL.createObjectURL(file);
+
+        this.setState({
+            avatarSrc: url,
+            avatar: file
+        });
     }
 
     render() {
+        console.log(this.state.avatarSrc);
         return (
             <React.Fragment>
                 {this.state.isLoading ? <Preloader/> : (
                     <form className="contractor-form">
                         <div className="contractor-form__avatar-wrapper">
-                            <Avatar className="avatar avatar--label" src={this.state.avatarSrc} isFileInput={true}/>
+                            <Avatar className="avatar avatar--label" src={this.state.avatarSrc} isFileInput={true}
+                                    onChangeAvatar={this.uploadImage}/>
                         </div>
                         <label className="contractor-form__label">
                             Your name:
@@ -112,7 +150,8 @@ class ContractorForm extends React.Component {
                         </textarea>
                         {this.state.isUpdating ? <Preloader/> :
                             <div className="contractor-form__btns-wrapper">
-                                <button className="btn btn--default" type="button" onClick={this.getUserData}>Reset</button>
+                                <button className="btn btn--default" type="button" onClick={this.getUserData}>Reset
+                                </button>
                                 <button className="btn btn--success" type="submit" onClick={this.updateUserData}>Apply
                                 </button>
                             </div>

@@ -8,7 +8,7 @@ function ContractorCard(props) {
     return (
         <article className="contractor-card">
             <div className="contractor-card__avatar-wrapper">
-                <Avatar isFileInput={false}/>
+                <Avatar isFileInput={false} name={`${props.data.name}`}/>
             </div>
             <h1 className="contractor-card__name">
                 {props.data.name}

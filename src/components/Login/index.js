@@ -7,8 +7,8 @@ import { Logo } from '../Logo';
 
 class Login extends React.Component {
     state = {
-        email: 'mashuxa',
-        password: '12345',
+        email: '',
+        password: '',
     };
 
     setEmail = (e) => {

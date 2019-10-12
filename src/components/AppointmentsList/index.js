@@ -32,7 +32,7 @@ class AppointmentsList extends React.Component {
         const url = `${API_URL}/user-get-list`;
 
         this.setState({
-            isLoading: true,
+            timeList: null,
         });
 
         fetch(url, {
@@ -108,10 +108,9 @@ class AppointmentsList extends React.Component {
     render() {
         return (
             <React.Fragment>
-                {this.state.isLoading && <Preloader/>}
                 <section className="appointments-list">
                     <div className="appointments-list__wrapper">
-                        {this.state.timeList.map((date, i) => {
+                        {this.state.timeList ? this.state.timeList.map((date, i) => {
                             const isSelected = this.state.selectedTimeIndex === i;
                             const itemClass = 'appointments-list__item';
 
@@ -123,7 +122,7 @@ class AppointmentsList extends React.Component {
                                 }}>
                                 {date}
                             </div>;
-                        })}
+                        }): <Preloader/>}
                     </div>
                     <div className="appointments-list__btns-wrapper">
                         {this.state.selectedTimeIndex !== null && <Button type='success' text={'Book'}

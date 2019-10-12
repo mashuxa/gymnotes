@@ -5,9 +5,9 @@ import {API_URL} from '../../constants';
 
 class Registration extends React.Component {
     state = {
-        email: 'mashuxa',
-        password: '12345',
-        repeatPassword: '12345',
+        email: '',
+        password: '',
+        repeatPassword: '',
         agreements: true,
     };
 

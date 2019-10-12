@@ -11,13 +11,18 @@ function ContractorCard(props) {
             <div className="contractor-card__avatar-wrapper">
                 <Avatar src={`${API_URL}${props.data.avatarSrc}`} isFileInput={false} name={props.data.name}/>
             </div>
-            <h1 className="contractor-card__name">
-                {props.data.name}
-            </h1>
-            <a className="contractor-card__phone" href="tel:+375291234567">
-                {props.data.phone && <IconPhone className='contractor-card__link-icon'/>}
-                {props.data.phone}
-            </a>
+            <div className="contractor-card__header">
+                <h1 className="contractor-card__name">
+                    {props.data.name}
+                </h1>
+                <a className="contractor-card__phone" href="tel:+375291234567">
+                    {props.data.phone && <IconPhone className='contractor-card__link-icon'/>}
+                    <span className="contractor-card__phone-number">
+                    {props.data.phone}
+                    </span>
+                </a>
+            </div>
+            <hr className="contractor-card__separator" />
             <div className="contractor-card__description">
                 {props.data.description}
             </div>

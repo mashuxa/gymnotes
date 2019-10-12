@@ -82,15 +82,14 @@ class UserCalendar extends React.Component {
     }
 
     render() {
-        console.log(this.state.userData);
-        return !this.state.userData ? <Preloader/> : <div className='user-calendar'>
+        return this.state.userData ? <div className='user-calendar'>
             <ContractorCard isHiddenLink={true} data={this.state.userData}/>
             <Calendar onChangeDate={this.updateDate} onChangeMonth={this.updateListExistingDates}
                       listExistingDates={this.state.listExistingDates}/>
             {this.state.selectedDate &&
             <AppointmentsList id={this.state.userData.id} date={this.state.selectedDate}
                               onBookTime={this.updateListExistingDates}/>}
-        </div>;
+        </div> : <Preloader/>;
     }
 }
 

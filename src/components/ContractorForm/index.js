@@ -145,7 +145,7 @@ class ContractorForm extends React.Component {
                         </label>
                         <label className="contractor-form__label">Your phone number:
                             <input className="contractor-form__input contractor-form__input--phone"
-                                   placeholder="+375291234567"
+                                   placeholder="375291234567"
                                    type="tel" value={this.state.phone} onChange={this.setPhone} name="phone"/>
                         </label>
                         <textarea className="contractor-form__description" rows="4" placeholder="Tell about you"

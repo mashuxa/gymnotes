@@ -8,13 +8,9 @@
   width: 100px;
   height: 100px;
   box-shadow:
-          0 0 2px 2px $color-border-grey,
-          0 0 0 1px $color-light;
-
-  @media (min-width: $breakpoint-tablet-sm) {
-    width: 150px;
-    height: 150px;
-  }
+          0 0 0 3px #fff,
+          0 1px 6px 0 $color-grey-shadow,
+          0 0 6px 0 $color-grey-shadow;
 
   &__image {
     display: block;

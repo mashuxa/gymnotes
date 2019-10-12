@@ -1,4 +1,5 @@
 @import "../common/theme";
+@import "../common/breakpoints";
 
 //START Scroll
 
@@ -25,3 +26,17 @@
 }
 
 //END Scroll
+
+html {
+  font-size: 10px;
+  line-height: 1.3;
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+  font-size: 1.2rem;
+
+  @media (min-width: $breakpoint-tablet-md) {
+    font-size: 1.5rem;
+  }
+}

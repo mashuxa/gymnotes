@@ -7,16 +7,16 @@ import {connect} from "react-redux";
 
 class Registration extends React.Component {
     setEmail = (e) => {
-        this.props.store.dispatch(actions.setEmail(e.target.value));
+        this.props.store.dispatch(actions.setAuthData({email: e.target.value}));
     };
     setPassword = (e) => {
-        this.props.store.dispatch(actions.setPassword(e.target.value));
+        this.props.store.dispatch(actions.setAuthData({password: e.target.value}));
     };
     setRepeatPassword = (e) => {
-        this.props.store.dispatch(actions.setRepeatPassword(e.target.value));
+        this.props.store.dispatch(actions.setAuthData({repeatPassword: e.target.value}));
     };
     setAgreements = (e) => {
-        this.props.store.dispatch(actions.setAgreements(e.target.value));
+        this.props.store.dispatch(actions.setAuthData({agreements: e.target.value}));
     };
 
     validateForm = () => {

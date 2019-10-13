@@ -2,16 +2,14 @@ import './style.scss';
 import React from 'react';
 import {ReactComponent as IconArrowLeft} from './assets/arrow-left.svg';
 import {ReactComponent as IconArrowRight} from './assets/arrow-right.svg';
-import CalendarDay from '../CalendarDay';
-import {Preloader} from "../Preloader";
+import CalendarDay from '../../components/CalendarDay';
+import {Preloader} from "../../components/Preloader";
 
 class Calendar extends React.Component {
-    state = {
-        date: this.currentDate,
-    };
-
     constructor(props) {
         super(props);
+
+        this.date = new Date(this.props.date);
 
         this.weekDays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
         this.month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -21,17 +19,8 @@ class Calendar extends React.Component {
         this.onClickDay = this.onClickDay.bind(this);
     }
 
-    componentDidMount() {
-        this.updateDates();
-        this.props.onChangeMonth(this.formatDate(this.state.date));
-    }
-
-    get currentDate() {
-        return new Date(Date.now());
-    }
-
     get firstMonthDay() {
-        return new Date(this.state.date.getUTCFullYear(), this.state.date.getUTCMonth(), 1);
+        return new Date(this.date.getUTCFullYear(), this.date.getUTCMonth(), 1);
     }
 
     get countEmptyDays() {
@@ -39,7 +28,7 @@ class Calendar extends React.Component {
     }
 
     get countMonthDays() {
-        return new Date(this.state.date.getUTCFullYear(), this.state.date.getUTCMonth() + 1, 0).getUTCDate();
+        return new Date(this.date.getUTCFullYear(), this.date.getUTCMonth() + 1, 0).getUTCDate();
     }
 
     get countDaysFirstWeek() {
@@ -65,7 +54,7 @@ class Calendar extends React.Component {
         const days = [];
 
         for (let i = 1; i <= this.countDaysFirstWeek; i++) {
-            days.push(<CalendarDay key={i} date={i} isSelected={i === this.state.date.getUTCDate()}
+            days.push(<CalendarDay key={i} date={i} isSelected={i === this.date.getUTCDate()}
                                    isExistTime={this.isExistTime(i)} onClickDay={this.onClickDay}/>);
         }
 
@@ -77,7 +66,7 @@ class Calendar extends React.Component {
         const days = [];
 
         for (let i = this.countDaysFirstWeek + 1; i <= this.countMonthDays; i++) {
-            days.push(<CalendarDay key={i} date={i} isSelected={i === this.state.date.getUTCDate()}
+            days.push(<CalendarDay key={i} date={i} isSelected={i === this.date.getUTCDate()}
                                    isExistTime={this.isExistTime(i)} onClickDay={this.onClickDay}/>);
         }
 
@@ -102,30 +91,14 @@ class Calendar extends React.Component {
         });
     }
 
-    updateDates(newDate) {
-        const date = this.formatDate(newDate || this.state.date);
-        const currentDate = this.formatDate(this.currentDate);
-        this.props.onChangeDate(date, currentDate);
-    }
-
     onClickDay(e) {
-        const selectedDate = new Date(this.state.date.setUTCDate(e.target.dataset.date));
-
-        this.setState({date: selectedDate});
-        this.updateDates();
+        this.date.setUTCDate(e.target.dataset.date);
+        this.props.onChangeDate(this.formatDate(this.date));
     }
 
     changeMonth(n) {
-        const date = this.state.date;
-        const newDate = new Date(date);
-
-        newDate.setUTCMonth(date.getUTCMonth() + 1 * n);
-        this.updateDates(newDate);
-        this.setState({
-            date: newDate,
-            listExistingDates: [],
-        });
-        this.props.onChangeMonth(this.formatDate(newDate));
+        this.date.setUTCMonth(this.date.getUTCMonth() + 1 * n);
+        this.props.onChangeMonth(this.formatDate(this.date));
     }
 
     prevMonth() {
@@ -137,6 +110,8 @@ class Calendar extends React.Component {
     }
 
     render() {
+        const month = this.month[this.date.getUTCMonth()];
+        const year = this.date.getUTCFullYear();
         return (
             <table className="calendar">
                 <thead className="calendar__thead">
@@ -145,8 +120,8 @@ class Calendar extends React.Component {
                         <div className="calendar__header-wrapper">
                             <IconArrowLeft className='calendar__btn calendar__btn--left' onClick={this.prevMonth}/>
                             {this.props.isLoading ? <Preloader/> : <span className="calendar__month">
-                                <span>{this.month[this.state.date.getUTCMonth()]} </span>
-                                <sup>{this.state.date.getUTCFullYear()}</sup>
+                                <span>{month}</span>
+                                <sup>{year}</sup>
                             </span>}
                             <IconArrowRight className='calendar__btn calendar__btn--right' onClick={this.nextMonth}/>
                         </div>

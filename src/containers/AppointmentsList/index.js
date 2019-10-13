@@ -1,8 +1,10 @@
 import './style.scss';
 import React from 'react';
-import {Button} from "../Button";
+import {Button} from "../../components/Button";
 import {API_URL} from "../../constants";
-import {Preloader} from "../Preloader";
+import {Preloader} from "../../components/Preloader";
+import {connect} from "react-redux";
+import * as actions from "../../actions";
 
 class AppointmentsList extends React.Component {
     constructor(props) {
@@ -11,12 +13,6 @@ class AppointmentsList extends React.Component {
         this.unSelectTime = this.unSelectTime.bind(this);
         this.bookTime = this.bookTime.bind(this);
     }
-
-    state = {
-        isLoading: true,
-        timeList: [],
-        selectedTimeIndex: null,
-    };
 
     componentDidMount() {
         this.getTimeList();
@@ -31,9 +27,9 @@ class AppointmentsList extends React.Component {
     getTimeList() {
         const url = `${API_URL}/user-get-list`;
 
-        this.setState({
+        this.props.store.dispatch(actions.setAppointmentListData({
             timeList: null,
-        });
+        }));
 
         fetch(url, {
             method: 'POST',
@@ -48,23 +44,23 @@ class AppointmentsList extends React.Component {
         }).then(result => {
             return result.ok ? result.json() : result;
         }).then(result => {
-            this.setState({
+            this.props.store.dispatch(actions.setAppointmentListData({
                 isUpdating: false,
                 timeList: result.data,
                 isLoading: false,
-            });
+            }));
         });
     }
 
     setSelectedTimeIndex(i) {
-        this.setState({
+        this.props.store.dispatch(actions.setAppointmentListData({
             selectedTimeIndex: i
-        });
+        }));
     }
 
     unSelectTime(e) {
         if (!e.target.classList.contains('appointments-list__item') && !e.target.classList.contains('btn')) {
-            this.setState({selectedTimeIndex: null});
+            this.props.store.dispatch(actions.setAppointmentListData({selectedTimeIndex: null}));
             document.removeEventListener('click', this.unSelectTime);
         }
     }
@@ -72,9 +68,9 @@ class AppointmentsList extends React.Component {
     bookTime() {
         const url = `${API_URL}/user-book-time`;
 
-        this.setState({
+        this.props.store.dispatch(actions.setAppointmentListData({
             isLoading: true,
-        });
+        }));
 
         fetch(url, {
             method: 'POST',
@@ -85,22 +81,23 @@ class AppointmentsList extends React.Component {
             body: JSON.stringify({
                 id: this.props.id,
                 date: this.props.date,
-                time: this.state.timeList[this.state.selectedTimeIndex],
+                time: this.props.timeList[this.props.selectedTimeIndex],
             }),
         }).then(result => {
             return result.ok ? result.json() : result;
         }).then(result => {
             if (result.success) {
-                const timeList = [...this.state.timeList];
+                const timeList = [...this.props.timeList];
 
-                timeList.splice(this.state.selectedTimeIndex, 1);
+                timeList.splice(this.props.selectedTimeIndex, 1);
 
                 this.props.onBookTime();
 
-                this.setState({
+                this.props.store.dispatch(actions.setAppointmentListData({
                     isLoading: false,
+                    selectedTimeIndex: null,
                     timeList,
-                });
+                }));
             }
         });
     }
@@ -110,8 +107,8 @@ class AppointmentsList extends React.Component {
             <React.Fragment>
                 <section className="appointments-list">
                     <div className="appointments-list__wrapper">
-                        {this.state.timeList ? this.state.timeList.map((date, i) => {
-                            const isSelected = this.state.selectedTimeIndex === i;
+                        {this.props.timeList ? this.props.timeList.map((date, i) => {
+                            const isSelected = this.props.selectedTimeIndex === i;
                             const itemClass = 'appointments-list__item';
 
                             return <div
@@ -125,7 +122,7 @@ class AppointmentsList extends React.Component {
                         }): <Preloader/>}
                     </div>
                     <div className="appointments-list__btns-wrapper">
-                        {this.state.selectedTimeIndex !== null && <Button type='success' text={'Book'}
+                        {this.props.selectedTimeIndex !== null && <Button type='success' text={'Book'}
                                                                           action={this.bookTime}/>}
                     </div>
                 </section>
@@ -134,4 +131,12 @@ class AppointmentsList extends React.Component {
     }
 }
 
-export {AppointmentsList};
+const mapStateToProps = state => {
+    return {
+        selectedTimeIndex: state.appointmentListReducer.selectedTimeIndex,
+        timeList: state.appointmentListReducer.timeList,
+        isLoading: state.appointmentListReducer.isLoading,
+    };
+};
+
+export default connect(mapStateToProps)(AppointmentsList);

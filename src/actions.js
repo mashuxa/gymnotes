@@ -1,55 +1,55 @@
-export function setUsers(params) {
+export function setListingData(params) {
     return {
-        type: 'SET_USERS',
+        type: 'SET_LISTING_DATA',
         payload: params
     }
 }
 
-export function setStartDate(params) {
+export function setAuthData(params) {
     return {
-        type: 'SET_START_DATE',
+        type: 'SET_AUTH_DATA',
         payload: params
     }
 }
 
-export function setEndDate(params) {
+export function setUserData(params) {
     return {
-        type: 'SET_END_DATE',
+        type: 'SET_USER_DATA',
         payload: params
     }
 }
 
-export function setTextFilter(params) {
+export function setUserScheduleData(params) {
     return {
-        type: 'SET_TEXT_FILTER',
+        type: 'SET_USER_SCHEDULE_DATA',
         payload: params
     }
 }
 
-export function setEmail(params) {
+export function setContractorCalendarData(params) {
     return {
-        type: 'SET_EMAIL',
+        type: 'SET_CONTRACTOR_CALENDAR_DATA',
         payload: params
     }
 }
 
-export function setPassword(params) {
+export function setScheduleFormData(params) {
     return {
-        type: 'SET_PASSWORD',
+        type: 'SET_SCHEDULE_FORM_DATA',
         payload: params
     }
 }
 
-export function setRepeatPassword(params) {
+export function setScheduleListData(params) {
     return {
-        type: 'SET_REPEAT_PASSWORD',
+        type: 'SET_SCHEDULE_LIST_DATA',
         payload: params
     }
 }
 
-export function setAgreements(params) {
+export function setAppointmentListData(params) {
     return {
-        type: 'SET_AGREEMENTS',
+        type: 'SET_APPOINTMENT_LIST_DATA',
         payload: params
     }
 }

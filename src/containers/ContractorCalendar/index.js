@@ -3,23 +3,19 @@ import './style.scss';
 import {Preloader} from '../../components/Preloader';
 import {ContractorCard} from '../../components/ContractorCard';
 import {Calendar} from '../../components/Calendar';
-import {AppointmentsList} from '../../components/AppointmentsList';
+import AppointmentsList from '../AppointmentsList';
 import {API_URL} from "../../constants";
+import {connect} from "react-redux";
+import * as actions from "../../actions";
+import {withRouter} from "react-router-dom";
 
-class UserCalendar extends React.Component {
+class ContractorCalendar extends React.Component {
     constructor(props) {
         super(props);
 
         this.updateDate = this.updateDate.bind(this);
         this.updateListExistingDates = this.updateListExistingDates.bind(this);
     }
-
-    state = {
-        userData: null,
-        listExistingDates: [],
-        selectedDate: null,
-        isCalendarLoading: true,
-    };
 
     componentDidMount() {
         this.getUserData();
@@ -35,10 +31,11 @@ class UserCalendar extends React.Component {
         }).then(result => {
             return result.ok ? result.json() : this.showError;
         }).then(result => {
-            if (result) {
-                this.setState({
+            if (result.success) {
+                this.props.store.dispatch(actions.setContractorCalendarData({
                     userData: result.data
-                });
+                }));
+                this.updateListExistingDates();
             } else {
                 console.error('Error 1');
             }
@@ -46,15 +43,15 @@ class UserCalendar extends React.Component {
     }
 
     updateDate(date) {
-        this.setState({selectedDate: date});
+        this.props.store.dispatch(actions.setContractorCalendarData({date}));
     }
 
-    updateListExistingDates(date = this.state.selectedDate) {
+    updateListExistingDates(date = this.props.date) {
         const url = `${API_URL}/calendar/get-month-dates`;
 
-        this.setState({
+        this.props.store.dispatch(actions.setContractorCalendarData({
             listExistingDates: [],
-        });
+        }));
 
         fetch(url, {
             method: 'POST',
@@ -63,17 +60,17 @@ class UserCalendar extends React.Component {
                 'Authorization': localStorage.getItem('token'),
             },
             body: JSON.stringify({
-                id: this.state.userData.id,
+                id: this.props.userData.id,
                 date,
             }),
         }).then(result => {
             return result.ok ? result.json() : this.showError;
         }).then(result => {
             if (result.success) {
-                this.setState({
+                this.props.store.dispatch(actions.setContractorCalendarData({
                     listExistingDates: result.data,
                     isCalendarLoading: false,
-                });
+                }));
             } else {
                 console.error(`Access denied! ${result.message}`);
                 this.props.history.push('/login');
@@ -82,15 +79,27 @@ class UserCalendar extends React.Component {
     }
 
     render() {
-        return this.state.userData ? <div className='user-calendar'>
-            <ContractorCard isHiddenLink={true} data={this.state.userData}/>
+        return this.props.userData ? <div className='user-calendar'>
+            <ContractorCard isHiddenLink={true} data={this.props.userData}/>
             <Calendar onChangeDate={this.updateDate} onChangeMonth={this.updateListExistingDates}
-                      listExistingDates={this.state.listExistingDates}/>
-            {this.state.selectedDate &&
-            <AppointmentsList id={this.state.userData.id} date={this.state.selectedDate}
+                      listExistingDates={this.props.listExistingDates} date={this.props.date}/>
+            {this.props.date &&
+            <AppointmentsList id={this.props.userData.id} date={this.props.date} store={this.props.store}
                               onBookTime={this.updateListExistingDates}/>}
         </div> : <Preloader/>;
     }
 }
 
-export {UserCalendar};
+
+
+const mapStateToProps = (state) => {
+    return {
+        date: state.contractorCalendarReducer.date,
+        userData: state.contractorCalendarReducer.userData,
+        listExistingDates: state.contractorCalendarReducer.listExistingDates,
+        selectedDate: state.contractorCalendarReducer.selectedDate,
+        isCalendarLoading: state.contractorCalendarReducer.isCalendarLoading,
+    };
+};
+
+export default connect(mapStateToProps)(withRouter(ContractorCalendar));

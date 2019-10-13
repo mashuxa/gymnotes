@@ -1,13 +1,13 @@
 const initialState = {
-    email: '',
-    password: '',
-    repeatPassword: '',
-    agreements: true,
+    isLoading: true,
+    isShownScheduleForm: false,
+    timeList: '',
+    selectedTimeIndex: null,
 };
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case 'SET_AUTH_DATA':
+        case 'SET_SCHEDULE_LIST_DATA':
             return Object.assign({}, state, action.payload);
 
         default:

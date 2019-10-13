@@ -27,7 +27,7 @@ class Home extends React.Component {
 
         const state = this.props.store.getState().homePageReducer;
 
-        this.props.store.dispatch(actions.setUsers({
+        this.props.store.dispatch(actions.setListingData({
             users: [],
             isLoading: true,
             count: null,
@@ -50,7 +50,7 @@ class Home extends React.Component {
             return result.ok ? result.json() : result;
         }).then(result => {
             if (result.success) {
-                this.props.store.dispatch(actions.setUsers({
+                this.props.store.dispatch(actions.setListingData({
                     users: result.data,
                     isLoading: false,
                     count: result.count,
@@ -63,19 +63,19 @@ class Home extends React.Component {
     }
 
     setTextFilterValue(e) {
-        this.props.store.dispatch(actions.setTextFilter(e.target.value));
+        this.props.store.dispatch(actions.setListingData({textFilter: e.target.value}));
     }
 
     setStartDate(e) {
-        this.props.store.dispatch(actions.setStartDate(e.target.value));
+        this.props.store.dispatch(actions.setListingData({startDate: e.target.value}));
     }
 
     setEndDate(e) {
-        this.props.store.dispatch(actions.setEndDate(e.target.value));
+        this.props.store.dispatch(actions.setListingData({endDate: e.target.value}));
     }
 
     onClickPrevPage() {
-        this.props.store.dispatch(actions.setUsers({
+        this.props.store.dispatch(actions.setListingData({
             users: [],
             count: null,
             page: Math.max(1, this.props.page - 1),
@@ -84,7 +84,7 @@ class Home extends React.Component {
     }
 
     onClickNextPage() {
-        this.props.store.dispatch(actions.setUsers({
+        this.props.store.dispatch(actions.setListingData({
             users: [],
             count: null,
             page: Math.max(1, this.props.page + 1),

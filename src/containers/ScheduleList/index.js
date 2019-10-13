@@ -1,9 +1,11 @@
 import './style.scss';
 import React from 'react';
-import {Button} from "../Button";
-import {Preloader} from "../Preloader";
+import {Button} from "../../components/Button";
+import {Preloader} from "../../components/Preloader";
 import {API_URL} from "../../constants";
-import {ScheduleForm} from "../ScheduleForm";
+import ScheduleForm from "../ScheduleForm";
+import {connect} from "react-redux";
+import * as actions from "../../actions";
 
 class ScheduleList extends React.Component {
     constructor(props) {
@@ -14,13 +16,6 @@ class ScheduleList extends React.Component {
         this.deleteTime = this.deleteTime.bind(this);
         this.unSelectTime = this.unSelectTime.bind(this);
     }
-
-    state = {
-        isLoading: true,
-        isShownScheduleForm: false,
-        timeList: '',
-        selectedTimeIndex: null,
-    };
 
     componentDidMount() {
         this.getTimeList();
@@ -40,9 +35,9 @@ class ScheduleList extends React.Component {
     getTimeList() {
         const url = `${API_URL}/calendar/get-list`;
 
-        this.setState({
+        this.props.store.dispatch(actions.setScheduleListData({
             isLoading: true,
-        });
+        }));
 
         fetch(url, {
             method: 'POST',
@@ -55,28 +50,28 @@ class ScheduleList extends React.Component {
             return result.ok ? result.json() : this.showError;
         }).then(result => {
             if (result.success) {
-                this.setState({
+                this.props.store.dispatch(actions.setScheduleListData({
                     isLoading: false,
                     selectedTimeIndex: null,
                     timeList: result.data
-                });
+                }));
             } else {
                 this.showError(result);
             }
         });
     }
 
-    deleteTime(){
+    deleteTime() {
         const date = this.props.date;
-        const timeIndex = this.state.selectedTimeIndex;
-        const msg = `Do you want to delete appointment ${this.state.timeList[timeIndex].time}/${date}?`;
+        const timeIndex = this.props.selectedTimeIndex;
+        const msg = `Do you want to delete appointment ${this.props.timeList[timeIndex].time}/${date}?`;
         const url = `${API_URL}/calendar/delete-time`;
 
-        {/* eslint-disable-next-line */}
-        if(confirm(msg)){
-            this.setState({
+        /* eslint-disable-next-line */
+        if (confirm(msg)) {
+            this.props.store.dispatch(actions.setScheduleListData({
                 isLoading: true,
-            });
+            }));
 
             fetch(url, {
                 method: 'POST',
@@ -92,11 +87,11 @@ class ScheduleList extends React.Component {
                 return result.ok ? result.json() : this.showError;
             }).then(result => {
                 if (result.success) {
-                    this.setState({
+                    this.props.store.dispatch(actions.setScheduleListData({
                         isLoading: false,
                         timeList: result.data,
                         selectedTimeIndex: null,
-                    });
+                    }));
                 } else {
                     this.showError(result);
                 }
@@ -105,30 +100,30 @@ class ScheduleList extends React.Component {
     }
 
     toggleScheduleForm() {
-        this.setState({
-            isShownScheduleForm: !this.state.isShownScheduleForm
-        });
+        this.props.store.dispatch(actions.setScheduleListData({
+            isShownScheduleForm: !this.props.isShownScheduleForm
+        }));
     }
 
-    unSelectTime(e){
-        if(!e.target.classList.contains('schedule__item')){
-            this.setState({selectedTimeIndex: null});
+    unSelectTime(e) {
+        if (!e.target.classList.contains('schedule__item')) {
+            this.props.store.dispatch(actions.setScheduleListData({selectedTimeIndex: null}));
             document.removeEventListener('click', this.unSelectTime);
         }
     }
 
     render() {
-        const timeList = !this.state.timeList.length ?
+        const timeList = !this.props.timeList.length ?
             <div className="schedule__msg">No items</div> : <div className="schedule__item-wrapper">{
-                this.state.timeList.map((el, i) => {
-                    const isSelectedTime = this.state.selectedTimeIndex === i;
+                this.props.timeList.map((el, i) => {
+                    const isSelectedTime = this.props.selectedTimeIndex === i;
                     const itemClassBase = 'schedule__item';
                     const itemClassSelected = isSelectedTime ? ` ${itemClassBase}--selected` : '';
                     const itemClassBooked = el.bookedBy ? ` ${itemClassBase}--booked` : '';
 
                     return <div className={`${itemClassBase}${itemClassSelected}${itemClassBooked}`} key={i}
                                 onClick={() => {
-                                    this.setState({selectedTimeIndex: i});
+                                    this.props.store.dispatch(actions.setScheduleListData({selectedTimeIndex: i}));
                                     document.addEventListener('click', this.unSelectTime);
                                 }}
                     >{el.time}</div>;
@@ -138,17 +133,19 @@ class ScheduleList extends React.Component {
         return (
             <React.Fragment>
                 <section className="schedule">
-                    <h2 className="schedule__header">{this.state.date}</h2>
-                    {this.state.isLoading ? <Preloader/> : timeList}
+                    <h2 className="schedule__header">{this.props.date}</h2>
+                    {this.props.isLoading ? <Preloader/> : timeList}
 
                     <div className="schedule__btns-wrapper">
-                        {!(this.state.selectedTimeIndex === null) ? <Button type='danger' text={'Cancel time'} action={this.deleteTime}/> : false}
-                        <Button type='success' text={this.state.isShownScheduleForm ? 'Hide form' : 'Add more dates'}
+                        {!(this.props.selectedTimeIndex === null) ?
+                            <Button type='danger' text={'Cancel time'} action={this.deleteTime}/> : false}
+                        <Button type='success' text={this.props.isShownScheduleForm ? 'Hide form' : 'Add more dates'}
                                 action={this.toggleScheduleForm}/>
                     </div>
                 </section>
-                {this.state.isShownScheduleForm && <ScheduleForm currentDate={this.props.currentDate}
-                                                                 onUpdateTimeList={()=>{
+                {this.props.isShownScheduleForm && <ScheduleForm store={this.props.store}
+                                                                 currentDate={this.props.currentDate}
+                                                                 onUpdateTimeList={() => {
                                                                      this.getTimeList();
                                                                      this.props.updateListExistingDates();
                                                                  }}/>}
@@ -157,4 +154,13 @@ class ScheduleList extends React.Component {
     }
 }
 
-export {ScheduleList};
+const mapStateToProps = state => {
+    return {
+        isLoading: state.scheduleListReducer.isLoading,
+        isShownScheduleForm: state.scheduleListReducer.isShownScheduleForm,
+        timeList: state.scheduleListReducer.timeList,
+        selectedTimeIndex: state.scheduleListReducer.selectedTimeIndex,
+    };
+};
+
+export default connect(mapStateToProps)(ScheduleList);

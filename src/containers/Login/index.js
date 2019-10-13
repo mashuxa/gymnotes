@@ -2,10 +2,8 @@ import './style.scss';
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {API_URL} from '../../constants';
-import {Logo} from '../../components/Logo';
 import {connect} from "react-redux";
 import * as actions from "../../actions";
-
 
 class Login extends React.Component {
     state = {
@@ -14,10 +12,10 @@ class Login extends React.Component {
     };
 
     setEmail = (e) => {
-        this.props.store.dispatch(actions.setEmail(e.target.value));
+        this.props.store.dispatch(actions.setAuthData({email: e.target.value}));
     };
     setPassword = (e) => {
-        this.props.store.dispatch(actions.setPassword(e.target.value));
+        this.props.store.dispatch(actions.setAuthData({password: e.target.value}));
     };
 
     validateForm = () => {

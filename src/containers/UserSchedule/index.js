@@ -1,12 +1,14 @@
 import React from 'react';
 import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
-import {Calendar} from '../Calendar';
-import {Preloader} from '../Preloader';
-import {Appointment} from '../Appointment';
-import {ScheduleList} from '../ScheduleList';
+import {Calendar} from '../../components/Calendar';
+import {Preloader} from '../../components/Preloader';
+import {Appointment} from '../../components/Appointment';
+import ScheduleList from '../ScheduleList';
 import {API_URL} from "../../constants";
+import {connect} from "react-redux";
+import * as actions from "../../actions";
 
-class MyCalendar extends React.Component {
+class UserSchedule extends React.Component {
     constructor(props) {
         super(props);
         this.updateDate = this.updateDate.bind(this);
@@ -17,31 +19,23 @@ class MyCalendar extends React.Component {
         this.cancelAppointment = this.cancelAppointment.bind(this);
     }
 
-    state = {
-        currentDate: '',
-        date: '',
-        listExistingDates: '',
-        isCalendarLoading: false,
-        appointments: null,
-        clients: null,
-    };
-
-    updateDate(date, currentDate) {
-        this.setState({
-            date, currentDate
-        }, () => {
-            this.getClients();
-            this.getAppontments();
-        });
+    componentDidMount() {
+        this.updateListExistingDates(this.props.date);
     }
 
-    updateListExistingDates(date) {
-        const url = `${API_URL}/calendar/get-month-dates`;
+    componentDidUpdate(prevProps) {
+        const nextProps = this.props.date;
+        if (prevProps.date !== nextProps) {
+            this.getAppontments(this.props.date);
+            this.getClients(this.props.date);
+        }
+    }
 
-        this.setState({
-            listExistingDates: [],
-            isCalendarLoading: true,
-        });
+    getAppontments(date) {
+        const url = `${API_URL}/user-get-appointments`;
+        this.props.store.dispatch(actions.setUserScheduleData({
+            appointments: null,
+        }));
 
         fetch(url, {
             method: 'POST',
@@ -54,10 +48,75 @@ class MyCalendar extends React.Component {
             return result.ok ? result.json() : this.showError;
         }).then(result => {
             if (result.success) {
-                this.setState({
+                this.props.store.dispatch(actions.setUserScheduleData({
+                    appointments: result.data
+                }));
+            } else {
+                console.error(result.message);
+            }
+        });
+    }
+
+    getClients(date) {
+        const url = `${API_URL}/user-get-clients`;
+
+        this.props.store.dispatch(actions.setUserScheduleData({
+            clients: null,
+        }));
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('token'),
+            },
+            body: JSON.stringify({date}),
+        }).then(result => {
+            return result.ok ? result.json() : this.showError;
+        }).then(result => {
+            if (result.success) {
+                this.props.store.dispatch(actions.setUserScheduleData({
+                    clients: result.data
+                }));
+            } else {
+                console.error(result.message);
+            }
+        });
+    }
+
+    updateDate(date) {
+        this.props.store.dispatch(actions.setUserScheduleData({date}));
+        this.getClients(date);
+        this.getAppontments(date);
+    }
+
+    updateListExistingDates(date) {
+        const url = `${API_URL}/calendar/get-month-dates`;
+
+        this.props.store.dispatch(actions.setUserScheduleData({
+            date,
+            listExistingDates: [],
+            isCalendarLoading: true,
+        }));
+
+        this.getClients(date);
+        this.getAppontments(date);
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('token'),
+            },
+            body: JSON.stringify({date}),
+        }).then(result => {
+            return result.ok ? result.json() : this.showError;
+        }).then(result => {
+            if (result.success) {
+                this.props.store.dispatch(actions.setUserScheduleData({
                     listExistingDates: result.data,
                     isCalendarLoading: false,
-                });
+                }));
             } else {
                 console.error(`Access denied! ${result.message}`);
                 this.props.history.push('/login');
@@ -65,63 +124,10 @@ class MyCalendar extends React.Component {
         });
     }
 
-    getAppontments() {
-        const url = `${API_URL}/user-get-appointments`;
-
-        this.setState({
-            appointments: null,
-        });
-
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': localStorage.getItem('token'),
-            },
-            body: JSON.stringify({date: this.state.date}),
-        }).then(result => {
-            return result.ok ? result.json() : this.showError;
-        }).then(result => {
-            if (result.success) {
-                this.setState({
-                    appointments: result.data
-                });
-            } else {
-                console.error(result.message);
-            }
-        });
-    }
-
-    getClients() {
-        const url = `${API_URL}/user-get-clients`;
-
-        this.setState({
-            clients: null,
-        });
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': localStorage.getItem('token'),
-            },
-            body: JSON.stringify({date: this.state.date}),
-        }).then(result => {
-            return result.ok ? result.json() : this.showError;
-        }).then(result => {
-            if (result.success) {
-                this.setState({
-                    clients: result.data
-                });
-            } else {
-                console.error(result.message);
-            }
-        });
-    }
-
     cancelClient(appointmentData) {
         const url = `${API_URL}/user-cancel-client`;
 
-        this.setState({clients: null});
+        this.props.store.dispatch(actions.setUserScheduleData({clients: null}));
 
         fetch(url, {
             method: 'POST',
@@ -144,7 +150,7 @@ class MyCalendar extends React.Component {
     cancelAppointment(appointmentData) {
         const url = `${API_URL}/user-cancel-appointment`;
 
-        this.setState({appointments: null});
+        this.props.store.dispatch(actions.setUserScheduleData({appointments: null}));
 
         fetch(url, {
             method: 'POST',
@@ -165,17 +171,21 @@ class MyCalendar extends React.Component {
     }
 
     render() {
-        const appointments = this.state.appointments;
-        const clients = this.state.clients;
+        const appointments = this.props.appointments;
+        const clients = this.props.clients;
 
         return (
             <React.Fragment>
-                <Calendar onChangeDate={this.updateDate} onChangeMonth={this.updateListExistingDates}
-                          listExistingDates={this.state.listExistingDates} isLoading={this.state.isCalendarLoading}/>
+                <Calendar onChangeDate={this.updateDate} onChangeMonth={(date) => {
+                    this.updateListExistingDates(date);
+                }}
+                          listExistingDates={this.props.listExistingDates} isLoading={this.props.isCalendarLoading}
+                          date={this.props.date}
+                />
                 <Tabs defaultIndex={3}>
                     <TabList>
-                        <Tab onClick={this.getAppontments}>My Appointments</Tab>
-                        <Tab onClick={this.getClients}>My Clients</Tab>
+                        <Tab>My Appointments</Tab>
+                        <Tab>My Clients</Tab>
                         <Tab>Free time</Tab>
                     </TabList>
                     <TabPanel>
@@ -195,10 +205,10 @@ class MyCalendar extends React.Component {
                         })}
                     </TabPanel>
                     <TabPanel>
-                        {this.state.date && <ScheduleList date={this.state.date} currentDate={this.state.currentDate}
-                                                          listExistingDates={this.state.listExistingDates}
+                        {this.props.date && <ScheduleList date={this.props.date} store={this.props.store}
+                                                          listExistingDates={this.props.listExistingDates}
                                                           updateListExistingDates={() => {
-                                                              this.updateListExistingDates(this.state.date);
+                                                              this.updateListExistingDates(this.props.date);
                                                           }}/>}
                     </TabPanel>
                 </Tabs>
@@ -207,5 +217,14 @@ class MyCalendar extends React.Component {
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        date: state.userScheduleReducer.date,
+        listExistingDates: state.userScheduleReducer.listExistingDates,
+        isCalendarLoading: state.userScheduleReducer.isCalendarLoading,
+        appointments: state.userScheduleReducer.appointments,
+        clients: state.userScheduleReducer.clients,
+    };
+};
 
-export {MyCalendar};
+export default connect(mapStateToProps)(UserSchedule);

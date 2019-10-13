@@ -1,49 +1,38 @@
 import React from 'react';
 import './style.scss';
-import {Avatar} from '../Avatar';
-import {Preloader} from '../Preloader';
+import {Avatar} from '../../components/Avatar';
+import {Preloader} from '../../components/Preloader';
 import {API_URL} from '../../constants';
+import * as actions from '../../actions';
+import {connect} from "react-redux";
 
-
-class ContractorForm extends React.Component {
+class UserSettings extends React.Component {
     constructor(props) {
         super(props);
 
         this.uploadImage = this.uploadImage.bind(this);
     }
 
-    state = {
-        isLoading: true,
-        isUpdating: false,
-        avatarSrc: '',
-        avatar: null,
-        name: '',
-        phone: '',
-        description: '',
-    };
-
     componentDidMount() {
         this.getUserData();
     }
 
     setName = (e) => {
-        this.setState({name: e.target.value});
+        this.props.store.dispatch(actions.setUserData({name: e.target.value}));
     };
 
     setPhone = (e) => {
-        this.setState({phone: e.target.value});
+        this.props.store.dispatch(actions.setUserData({phone: e.target.value}));
     };
 
     setDescription = (e) => {
-        this.setState({description: e.target.value});
+        this.props.store.dispatch(actions.setUserData({description: e.target.value}));
     };
 
     getUserData = () => {
         const url = `${API_URL}/settings`;
 
-        this.setState({
-            isUpdating: true,
-        });
+        this.props.store.dispatch(actions.setUserData({isLoading: true}));
 
         fetch(url, {
             method: 'GET',
@@ -55,14 +44,15 @@ class ContractorForm extends React.Component {
             return result.ok ? result.json() : result;
         }).then(result => {
             if (result.success) {
-                this.setState({
+                const userData = {
                     name: result.data.name || '',
                     phone: result.data.phone || '',
                     description: result.data.description || '',
                     avatarSrc: result.data.avatarSrc ? `${API_URL}${result.data.avatarSrc}` : '',
-                    isUpdating: false,
                     isLoading: false,
-                });
+                };
+
+                this.props.store.dispatch(actions.setUserData(userData));
             } else {
                 console.error(`Access denied! ${result.message}`);
                 this.props.history.push('/login');
@@ -76,15 +66,13 @@ class ContractorForm extends React.Component {
         const url = `${API_URL}/settings`;
         const formData = new FormData();
 
-        this.setState({
-            isUpdating: true,
-        });
+        this.props.store.dispatch(actions.setUserData({isUpdating: true}));
 
-        formData.set('avatar', this.state.avatar);
-        formData.set('name', this.state.name);
-        formData.set('phone', this.state.phone);
-        formData.set('description', this.state.description);
-        formData.set('phone', this.state.phone);
+        formData.set('avatar', this.props.avatar);
+        formData.set('name', this.props.name);
+        formData.set('phone', this.props.phone);
+        formData.set('description', this.props.description);
+        formData.set('phone', this.props.phone);
 
         fetch(url, {
             method: 'POST',
@@ -96,21 +84,20 @@ class ContractorForm extends React.Component {
             return result.ok ? result.json() : result;
         }).then(result => {
             if (result.success) {
-                this.setState({
+                const userData = {
                     name: result.data.name || '',
                     phone: result.data.phone || '',
                     description: result.data.description || '',
                     avatarSrc: result.data.avatarSrc ? `${API_URL}${result.data.avatarSrc}` : '',
                     avatar: null,
                     isUpdating: false,
-                    isLoading: false,
-                });
+                };
+                this.props.store.dispatch(actions.setUserData(userData));
             } else {
-                this.setState({
+                this.props.store.dispatch(actions.setUserData({
                     isUpdating: false,
-                    isLoading: false,
-                    avatar: null,
-                });
+                    avatar: null
+                }));
             }
         });
     };
@@ -119,39 +106,37 @@ class ContractorForm extends React.Component {
         const file = e.target.files[0];
         const url = URL.createObjectURL(file);
 
-        this.setState({
-            avatarSrc: null,
-        });
-        this.setState({
+        this.props.store.dispatch(actions.setUserData({
             avatarSrc: url,
             avatar: file
-        });
+        }));
+
         URL.revokeObjectURL(file);
     }
 
     render() {
         return (
             <React.Fragment>
-                {this.state.isLoading ? <Preloader/> : (
+                {this.props.isLoading ? <Preloader/> : (
                     <form className="contractor-form">
                         <div className="contractor-form__avatar-wrapper">
-                            <Avatar src={this.state.avatarSrc} isFileInput={true} onChangeAvatar={this.uploadImage}/>
+                            <Avatar src={this.props.avatarSrc} isFileInput={true} onChangeAvatar={this.uploadImage}/>
                         </div>
                         <label className="contractor-form__label">
                             Your name:
                             <input className="contractor-form__input contractor-form__input--name"
                                    placeholder="My name is ..."
-                                   type="text" value={this.state.name} onChange={this.setName} name="name"/>
+                                   type="text" value={this.props.name} onChange={this.setName} name="name"/>
                         </label>
                         <label className="contractor-form__label">Your phone number:
                             <input className="contractor-form__input contractor-form__input--phone"
                                    placeholder="375291234567"
-                                   type="tel" value={this.state.phone} onChange={this.setPhone} name="phone"/>
+                                   type="tel" value={this.props.phone} onChange={this.setPhone} name="phone"/>
                         </label>
                         <textarea className="contractor-form__description" rows="4" placeholder="Tell about you"
-                                  value={this.state.description} onChange={this.setDescription} name="description">
+                                  value={this.props.description} onChange={this.setDescription} name="description">
                         </textarea>
-                        {this.state.isUpdating ? <Preloader/> :
+                        {this.props.isUpdating ? <Preloader/> :
                             <div className="contractor-form__btns-wrapper">
                                 <button className="btn btn--default" type="button" onClick={this.getUserData}>Reset
                                 </button>
@@ -166,4 +151,16 @@ class ContractorForm extends React.Component {
     };
 }
 
-export {ContractorForm};
+const mapStateToProps = state => {
+    return {
+        isLoading: state.userSettingsReducer.isLoading,
+        isUpdating: state.userSettingsReducer.isUpdating,
+        avatarSrc: state.userSettingsReducer.avatarSrc,
+        avatar: state.userSettingsReducer.avatar,
+        name: state.userSettingsReducer.name,
+        phone: state.userSettingsReducer.phone,
+        description: state.userSettingsReducer.description,
+    };
+};
+
+export default connect(mapStateToProps)(UserSettings);

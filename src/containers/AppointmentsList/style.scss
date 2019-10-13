@@ -1,5 +1,5 @@
-@import "../common/theme";
-@import "../common/mixins";
+@import "../../components/common/theme";
+@import "../../components/common/mixins";
 
 .appointments-list {
   @include block();

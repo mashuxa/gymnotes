@@ -13,17 +13,8 @@ const initialState = {
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case 'SET_USERS':
+        case 'SET_LISTING_DATA':
             return Object.assign({}, state, action.payload);
-
-        case 'SET_START_DATE':
-            return Object.assign({}, state, {startDate: action.payload});
-
-        case 'SET_END_DATE':
-            return Object.assign({}, state, {endDate: action.payload});
-
-        case 'SET_TEXT_FILTER':
-            return Object.assign({}, state, {textFilter: action.payload});
 
         default:
             return state;

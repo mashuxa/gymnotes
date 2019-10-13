@@ -27,6 +27,11 @@
 
 //END Scroll
 
+::selection {
+  color: $color-light;
+  background: $color-primary;
+}
+
 html {
   font-size: 10px;
   line-height: 1.3;

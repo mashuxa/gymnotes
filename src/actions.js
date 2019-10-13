@@ -25,3 +25,31 @@ export function setTextFilter(params) {
         payload: params
     }
 }
+
+export function setEmail(params) {
+    return {
+        type: 'SET_EMAIL',
+        payload: params
+    }
+}
+
+export function setPassword(params) {
+    return {
+        type: 'SET_PASSWORD',
+        payload: params
+    }
+}
+
+export function setRepeatPassword(params) {
+    return {
+        type: 'SET_REPEAT_PASSWORD',
+        payload: params
+    }
+}
+
+export function setAgreements(params) {
+    return {
+        type: 'SET_AGREEMENTS',
+        payload: params
+    }
+}

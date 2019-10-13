@@ -7,8 +7,8 @@ import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import Home from './containers/Home';
 import {MyCalendar} from './components/MyCalendar';
 import {ContractorForm} from './components/ContractorForm';
-import {Login} from './components/Login';
-import {Registration} from './components/Registration';
+import Login from './containers/Login';
+import Registration from './containers/Registration';
 import {Terms} from './components/Terms';
 import {Policy} from './components/Policy';
 import {AccessDenied} from './components/AccessDenied';
@@ -29,8 +29,8 @@ ReactDOM.render((
                     <Route exact path='/' component={() => <Home store={store}/>}/>
                     <Route path='/calendar' component={MyCalendar}/>
                     <Route path='/settings' component={ContractorForm}/>
-                    <Route path='/login' component={Login}/>
-                    <Route path='/registration' component={Registration}/>
+                    <Route path='/login' component={() => <Login store={store}/>}/>
+                    <Route path='/registration' component={() => <Registration store={store}/>}/>
                     <Route path='/terms' component={Terms}/>
                     <Route path='/policy' component={Policy}/>
                     <Route path='/access-denied' component={AccessDenied}/>

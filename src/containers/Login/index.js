@@ -1,8 +1,10 @@
 import './style.scss';
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { API_URL } from '../../constants';
-import { Logo } from '../Logo';
+import {Link} from 'react-router-dom';
+import {API_URL} from '../../constants';
+import {Logo} from '../../components/Logo';
+import {connect} from "react-redux";
+import * as actions from "../../actions";
 
 
 class Login extends React.Component {
@@ -12,10 +14,10 @@ class Login extends React.Component {
     };
 
     setEmail = (e) => {
-        this.setState({email: e.target.value});
+        this.props.store.dispatch(actions.setEmail(e.target.value));
     };
     setPassword = (e) => {
-        this.setState({password: e.target.value});
+        this.props.store.dispatch(actions.setPassword(e.target.value));
     };
 
     validateForm = () => {
@@ -28,7 +30,10 @@ class Login extends React.Component {
         if (this.validateForm()) {
             fetch(`${API_URL}/login`, {
                 method: 'POST',
-                body: JSON.stringify(this.state),
+                body: JSON.stringify({
+                    email: this.props.email,
+                    password: this.props.password,
+                }),
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -52,10 +57,10 @@ class Login extends React.Component {
         return (
             <form className="login" name="login" onSubmit={this.handleSubmit}>
                 <h1>Log In</h1>
-                <input className="login__input" onChange={this.setEmail} value={this.state.email} placeholder="Email"
+                <input className="login__input" onChange={this.setEmail} value={this.props.email} placeholder="Login"
                        type="text" name="email"/>
-                <input className="login__input" onChange={this.setPassword} value={this.state.password}
-                       placeholder="Password" type="text" name="password"/>
+                <input className="login__input" onChange={this.setPassword} value={this.props.password}
+                       placeholder="Password" type="password" name="password"/>
                 <button className="login__btn" type="submit">Send</button>
                 <hr/>
                 <div>
@@ -66,4 +71,11 @@ class Login extends React.Component {
     }
 }
 
-export { Login };
+const mapStateToProps = state => {
+    return {
+        email: state.authReducer.email,
+        password: state.authReducer.password,
+    };
+};
+
+export default connect(mapStateToProps)(Login);

@@ -1,8 +1,8 @@
-@import "../common/breakpoints";
-@import "../common/mixins";
-@import "../common/theme";
+@import "../../components/common/breakpoints";
+@import "../../components/common/mixins";
+@import "../../components/common/theme";
 
-.login {
+.registration {
   @include block(
           $type: flex,
           $theme: light,

@@ -1,9 +1,9 @@
 import React from 'react';
 import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
-import {Calendar} from '../../components/Calendar';
-import {Preloader} from '../../components/Preloader';
-import {Appointment} from '../../components/Appointment';
-import {ScheduleList} from '../../components/ScheduleList';
+import {Calendar} from '../Calendar';
+import {Preloader} from '../Preloader';
+import {Appointment} from '../Appointment';
+import {ScheduleList} from '../ScheduleList';
 import {API_URL} from "../../constants";
 
 class MyCalendar extends React.Component {

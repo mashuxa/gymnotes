@@ -9,7 +9,6 @@ import {Header} from '../Header';
 import {Navigation} from '../Navigation';
 import {Footer} from '../Footer';
 
-
 function App({children}) {
     return (
         <React.Fragment>

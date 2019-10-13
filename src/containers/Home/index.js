@@ -2,7 +2,9 @@ import React from 'react';
 import {Filter} from "../../components/Filter";
 import {Listing} from '../../components/Listing';
 import {Preloader} from "../../components/Preloader";
-import {API_URL, listing} from "../../constants";
+import {API_URL} from "../../constants";
+import * as actions from '../../actions';
+import {connect} from "react-redux";
 
 class Home extends React.Component {
     constructor(props) {
@@ -16,44 +18,43 @@ class Home extends React.Component {
         this.onClickNextPage = this.onClickNextPage.bind(this);
     }
 
-    state = {
-        users: [],
-        startDate: '2019-01-01T09:00',
-        endDate: '2020-01-01T18:00',
-        textFilter: '',
-        perPage: listing.COUNT_PER_PAGE,
-        page: 1,
-        count: null,
-    };
-
     componentDidMount() {
         this.getUsers();
     }
 
     getUsers(e) {
         e && e.preventDefault();
-        return fetch(`${API_URL}/users`, {
+
+        const state = this.props.store.getState().homePageReducer;
+
+        this.props.store.dispatch(actions.setUsers({
+            users: [],
+            isLoading: true,
+            count: null,
+        }));
+
+        fetch(`${API_URL}/users`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': localStorage.getItem('token'),
             },
             body: JSON.stringify({
-                startDate: this.state.startDate,
-                endDate: this.state.endDate,
-                textFilter: this.state.textFilter,
-                perPage: this.state.perPage,
-                page: this.state.page,
+                startDate: state.startDate,
+                endDate: state.endDate,
+                textFilter: state.textFilter,
+                perPage: state.perPage,
+                page: state.page,
             }),
         }).then(result => {
             return result.ok ? result.json() : result;
         }).then(result => {
             if (result.success) {
-                this.setState({
+                this.props.store.dispatch(actions.setUsers({
                     users: result.data,
                     isLoading: false,
                     count: result.count,
-                });
+                }));
             } else {
                 console.error(`Access denied! ${result.message}`);
                 this.props.history.push('/login');
@@ -62,44 +63,46 @@ class Home extends React.Component {
     }
 
     setTextFilterValue(e) {
-        this.setState({textFilter: e.target.value});
+        this.props.store.dispatch(actions.setTextFilter(e.target.value));
     }
 
     setStartDate(e) {
-        this.setState({startDate: e.target.value});
+        this.props.store.dispatch(actions.setStartDate(e.target.value));
     }
 
     setEndDate(e) {
-        this.setState({endDate: e.target.value});
+        this.props.store.dispatch(actions.setEndDate(e.target.value));
     }
 
     onClickPrevPage() {
-        this.setState({
+        this.props.store.dispatch(actions.setUsers({
             users: [],
             count: null,
-            page:  Math.max(1, this.state.page - 1),
-        }, this.getUsers);
+            page: Math.max(1, this.props.page - 1),
+        }));
+        this.getUsers();
     }
 
     onClickNextPage() {
-        this.setState({
+        this.props.store.dispatch(actions.setUsers({
             users: [],
             count: null,
-            page: this.state.page + 1,
-        }, this.getUsers);
+            page: Math.max(1, this.props.page + 1),
+        }));
+        this.getUsers();
     }
 
     render() {
         return (
             <React.Fragment>
-                <Filter onClickSearch={this.getUsers} usersPerPage={this.state.perPage} page={this.state.page}
-                        onSetTextFilterValue={this.setTextFilterValue} textFilterValue={this.state.textFilter}
-                        onSetStartDate={this.setStartDate} startDate={this.state.startDate}
-                        onSetEndDate={this.setEndDate} endDate={this.state.endDate}
+                <Filter onClickSearch={this.getUsers} usersPerPage={this.props.perPage} page={this.props.page}
+                        onSetTextFilterValue={this.setTextFilterValue} textFilterValue={this.props.textFilter}
+                        onSetStartDate={this.setStartDate} startDate={this.props.startDate}
+                        onSetEndDate={this.setEndDate} endDate={this.props.endDate}
                 />
-                {this.state.count === null ? <Preloader/> :
-                    <Listing perPage={this.state.perPage} page={this.state.page} count={this.state.count}
-                             items={this.state.users}
+                {this.props.count === null ? <Preloader/> :
+                    <Listing perPage={this.props.perPage} page={this.props.page} count={this.props.count}
+                             items={this.props.users}
                              onClickPrevPage={this.onClickPrevPage}
                              onClickNextPage={this.onClickNextPage}/>}
             </React.Fragment>
@@ -107,5 +110,17 @@ class Home extends React.Component {
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        count: state.homePageReducer.count,
+        endDate: state.homePageReducer.endDate,
+        isLoading: state.homePageReducer.isLoading,
+        page: state.homePageReducer.page,
+        perPage: state.homePageReducer.perPage,
+        startDate:state.homePageReducer.startDate,
+        textFilter: state.homePageReducer.textFilter,
+        users: state.homePageReducer.users,
+    };
+};
 
-export {Home};
+export default connect(mapStateToProps)(Home);

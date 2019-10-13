@@ -25,6 +25,7 @@
             $padding: 5px
     );
 
+    line-height: 2rem;
     color: $color-text;
     font-weight: 600;
   }
@@ -88,6 +89,7 @@
     @include input();
 
     width: 100%;
+    line-height: 2rem;
     margin-right: auto;
 
     &:focus {
@@ -112,6 +114,6 @@
   }
 
   & &__btn {
-    margin: auto;
+    margin: 0 1rem 0 auto;
   }
 }

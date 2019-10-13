@@ -29,10 +29,6 @@
   text-align: $text-align;
   margin: $margin;
 
-  @media (min-width: $breakpoint-tablet-sm) {
-    font-size: calc(#{$font-size} + 2px);
-  }
-
   @if $padding != none {
     padding: $padding;
   }
@@ -96,17 +92,17 @@
   color: $color-primary;
   font-size: inherit;
   text-transform: inherit;
-  line-height: inherit;
+  line-height: normal;
   text-decoration: inherit;
   cursor: pointer;
   transition-duration: 0.3s;
 
   &:hover {
-    color: darken($color-primary, 5%);
+    filter: brightness(95%);
   }
 
   &:active {
-    color: darken($color-primary, 10%);
+    filter: brightness(90%);
   }
 }
 
@@ -149,20 +145,24 @@
 
 @mixin btn() {
   @include block(
-          $type: inline-block,
+          $type: block,
           $theme: light,
-          $padding: 5px 10px);
+          $line-height: 1.4rem,
+          $font-size: 1.2rem,
+          $padding: 5px 10px
+  );
 
   border: 1px solid $color-primary;
   user-select: none;
   color: $color-primary;
   border-radius: 4px;
-  display: table;
   cursor: pointer;
   text-decoration: none;
   opacity: 0.8;
   text-align: center;
   transition-duration: 0.15s;
+  line-height: normal;
+  min-width: 10rem;
 
   &:focus {
     outline: none;
@@ -171,6 +171,11 @@
   &:hover,
   &:active {
     filter: brightness(1.1);
+  }
+
+  &:hover {
+    color: $color-light;
+    background-color: $color-primary;
   }
 }
 
@@ -186,6 +191,7 @@
   background-color: $background-color;
   border-radius: $border-radius;
   overflow: hidden;
+  line-height: 2rem;
 }
 
 @mixin clearfix {

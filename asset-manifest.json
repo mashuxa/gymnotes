@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/gymnotes/static/css/main.1ffbef73.chunk.css",
-    "main.js": "/gymnotes/static/js/main.1602b52e.chunk.js",
-    "main.js.map": "/gymnotes/static/js/main.1602b52e.chunk.js.map",
+    "main.js": "/gymnotes/static/js/main.a2232b8e.chunk.js",
+    "main.js.map": "/gymnotes/static/js/main.a2232b8e.chunk.js.map",
     "runtime-main.js": "/gymnotes/static/js/runtime-main.b55333e4.js",
     "runtime-main.js.map": "/gymnotes/static/js/runtime-main.b55333e4.js.map",
     "static/js/2.c9ffe093.chunk.js": "/gymnotes/static/js/2.c9ffe093.chunk.js",
     "static/js/2.c9ffe093.chunk.js.map": "/gymnotes/static/js/2.c9ffe093.chunk.js.map",
     "index.html": "/gymnotes/index.html",
-    "precache-manifest.00f66317138a45dfa06a6f8bd937c29f.js": "/gymnotes/precache-manifest.00f66317138a45dfa06a6f8bd937c29f.js",
+    "precache-manifest.25a9974a7ee0ba5c65a7f986e5b8fd34.js": "/gymnotes/precache-manifest.25a9974a7ee0ba5c65a7f986e5b8fd34.js",
     "service-worker.js": "/gymnotes/service-worker.js",
     "static/css/main.1ffbef73.chunk.css.map": "/gymnotes/static/css/main.1ffbef73.chunk.css.map",
     "static/js/2.c9ffe093.chunk.js.LICENSE.txt": "/gymnotes/static/js/2.c9ffe093.chunk.js.LICENSE.txt",
@@ -22,6 +22,6 @@
     "static/js/runtime-main.b55333e4.js",
     "static/js/2.c9ffe093.chunk.js",
     "static/css/main.1ffbef73.chunk.css",
-    "static/js/main.1602b52e.chunk.js"
+    "static/js/main.a2232b8e.chunk.js"
   ]
 }

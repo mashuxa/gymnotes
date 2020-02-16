@@ -1,24 +1,15 @@
-import './style.scss';
 import React from 'react';
+import './style.scss';
 
-function Button(props) {
-    let className;
-
-    switch (props.type) {
-        case 'danger':
-            className = 'btn btn--danger';
-            break;
-        case 'success':
-            className = 'btn btn--success';
-            break;
-        default:
-            className = 'btn btn--default';
-    }
-
-    return (
-        <button type="button" onClick={props.action} className={className} title={props.title}>
-            {props.text}
-        </button>);
+export default (props) => {
+  switch(props.type) {
+    case 'add':
+      return <button type="button" className="button button--add" onClick={props.handleClick}>+</button>;
+    case 'cancel':
+      return <button type="button" className="button button--regular" onClick={props.handleClick}>Cancel</button>;
+    case 'apply':
+      return <button type="button" className="button button--primary" onClick={props.handleClick}>Apply</button>;
+    default:
+      return <button type="button" className="button" onClick={props.handleClick}>Button</button>;
+  }
 }
-
-export {Button};

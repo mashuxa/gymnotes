@@ -1,9 +1,0 @@
-@import "../common/mixins";
-
-.logo {
-  @include clear-link();
-
-  &__image {
-    display: block;
-  }
-}

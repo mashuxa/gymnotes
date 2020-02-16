@@ -1,44 +1,35 @@
 @import "../common/theme";
 @import "../common/mixins";
-@import "../common/breakpoints";
 
-.btn {
-  @include btn();
+.button {
+  & {
+    cursor: pointer;
+    user-select: none;
+    outline: unset;
+    border: unset;
+    transition-duration: .3s;
 
-  &__icon {
-    max-width: 10px;
-    max-height: 10px;
-    fill: $color-primary;
+    &:active {
+      opacity: .9;
+    }
+
+    &:hover {
+      @include box-shadow;
+    }
   }
 
-  &--default,
-  &--success,
-  &--danger {
-    @include box-shadow();
+  &--add {
+    $width: 44px;
 
-    font-weight: bold;
-    color: $color-light;
-  }
-
-  &--success {
-    background-color: $color-primary;
-  }
-
-  &--danger {
-    border: $color-secondary;
-    background-color: $color-secondary;
-  }
-
-  &--default {
-    border: $color-text;
-    background-color: $color-text;
-  }
-
-  &--edit {
     position: absolute;
-    top: 0;
-    right: 0;
-    transform: translate(-100%, -100%);
-    background: none;
+    bottom: 1rem;
+    right: .5rem;
+    width: $width;
+    border-radius: 50%;
+    font-size: 2rem;
+    font-weight: 500;
+    line-height: $width;
+    color: $color-light;
+    background-color: $color-primary;
   }
 }

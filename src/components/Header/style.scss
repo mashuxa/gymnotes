@@ -11,26 +11,6 @@
 
   position: relative;
   flex: 0 0 auto;
-
-  @media (min-width: $breakpoint-tablet-sm) {
-    padding: 10px;
-  }
-
-  &__icon {
-    &--login {
-      display: block;
-      width: 25px;
-      height: 25px;
-      fill: $color-primary;
-    }
-  }
-
-  &__link {
-    display: inline-block;
-
-    &--login {
-      display: inline-block;
-      padding: 10px;
-    }
-  }
+  color: $color-light;
+  padding: 10px;
 }

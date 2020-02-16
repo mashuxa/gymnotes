@@ -3,6 +3,8 @@
 @import "../common/theme";
 
 .navigation {
+  $icon-size: 20px;
+
   @include block(
           $type: flex,
           $theme: light,
@@ -26,7 +28,7 @@
   @media (min-width: $breakpoint-tablet-sm) {
     flex-direction: column;
     justify-content: flex-start;
-    width: 45px;
+    width: 44px;
     box-shadow: 0 -1px 1px 0 rgba(0,0,0,0.05);
   }
 
@@ -35,40 +37,34 @@
 
     color: $color-text;
     fill: $color-text;
-    padding: 13px;
     cursor: pointer;
     flex: 1 1 0;
+    padding: 12px;
+    line-height: $icon-size;
     text-align: center;
-    border-right: 1px solid transparent;
+    font-size: 1.4rem;
 
-    &:not(:last-of-type) {
-      border-right-color: $color-border-lightgrey;
+    &--menu {
+      padding: 22px 12px;
     }
 
     @media (min-width: $breakpoint-tablet-sm) {
       display: flex;
       align-content: center;
-      padding: 10px 15px;
       flex-grow: 0;
-
-      &:first-of-type {
-        padding-top: 15px;
-      }
-
-      &:last-of-type {
-        padding-bottom: 15px;
-      }
 
       &:not(:last-of-type) {
         border-right-color: transparent;
+      }
+
+      &--history {
+        padding-top: 22px;
       }
     }
 
     &--menu {
       display: none;
       border-bottom: 1px solid $color-border-lightgrey;
-      padding-top: 15px;
-      padding-bottom: 15px;
       color: $color-primary;
 
       @media (min-width: $breakpoint-tablet-sm) {
@@ -86,6 +82,7 @@
 
   &__link-name {
     display: none;
+    white-space: nowrap;
     padding-left: 10px;
     visibility: hidden;
     transition-duration: 0.3s;
@@ -98,8 +95,8 @@
 
   &__link-icon {
     display: inline-block;
-    width: 15px;
-    height: 15px;
+    width: $icon-size;
+    height: $icon-size;
     flex-shrink: 0;
 
     @media (min-width: $breakpoint-tablet-md) {

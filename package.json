@@ -2,6 +2,7 @@
   "name": "gymnotes",
   "version": "0.0.0",
   "private": false,
+  "homepage": "http://mashuxa.github.io/gymnotes",
   "dependencies": {
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
@@ -13,7 +14,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -25,6 +27,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "gh-pages": "^2.2.0",
     "node-sass": "^4.13.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.4.0",

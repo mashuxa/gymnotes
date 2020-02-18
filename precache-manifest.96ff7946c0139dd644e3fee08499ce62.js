@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "d621e23e9543edfd8961962f7e4d7646",
+    "revision": "75b48d3f5e738eb096f7750032caced7",
     "url": "/gymnotes/index.html"
   },
   {
-    "revision": "4992c589520aa17a946d",
-    "url": "/gymnotes/static/css/main.1ffbef73.chunk.css"
+    "revision": "9733c6948a22e10dc3fc",
+    "url": "/gymnotes/static/css/main.fda7439a.chunk.css"
   },
   {
-    "revision": "474f44375a1f8b214cfd",
-    "url": "/gymnotes/static/js/2.b5d2db4a.chunk.js"
+    "revision": "4fb2c82eaddd85cf6af7",
+    "url": "/gymnotes/static/js/2.803e20b2.chunk.js"
   },
   {
-    "revision": "928d7b5eb39d16fe9a880722c974b51e",
-    "url": "/gymnotes/static/js/2.b5d2db4a.chunk.js.LICENSE.txt"
+    "revision": "bf23039b4e70a07c5aeb1b4010df3572",
+    "url": "/gymnotes/static/js/2.803e20b2.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "4992c589520aa17a946d",
-    "url": "/gymnotes/static/js/main.e2478d78.chunk.js"
+    "revision": "9733c6948a22e10dc3fc",
+    "url": "/gymnotes/static/js/main.6bea71ff.chunk.js"
   },
   {
     "revision": "616199243c909dca47b5",

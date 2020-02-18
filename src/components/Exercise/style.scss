@@ -1,0 +1,19 @@
+@import "../common/mixins";
+
+.exercise {
+  @include block(
+      $type: flex,
+      $justify-content: space-between,
+      $theme: light,
+      $padding: 8px 10px
+  );
+
+  & {
+    margin-bottom: 5px;
+  }
+
+  &__column {
+    display: flex;
+    flex-direction: column;
+  }
+}

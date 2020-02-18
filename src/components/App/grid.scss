@@ -18,17 +18,10 @@ html {
   display: grid;
   grid-template-rows: auto 1fr auto;
   grid-template-columns: 45px 1fr;
-  grid-template-areas:
-     "header header"
-     "page-wrapper page-wrapper"
-     "navigation navigation"
-     "footer footer";
+  grid-template-areas: "header header" "wrapper wrapper" "navigation navigation" "footer footer";
 
   @media (min-width: $breakpoint-tablet-sm) {
-    grid-template-areas:
-            "header     header"
-            "navigation page-wrapper"
-            "footer     footer";
+    grid-template-areas: "header     header" "navigation wrapper" "footer     footer";
   }
 }
 
@@ -42,35 +35,23 @@ html {
 }
 
 .page-wrapper {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-content: flex-start;
-  grid-area: page-wrapper;
-  padding: 10px 5px;
-  overflow-y: scroll;
+  grid-area: wrapper;
   position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  overflow-y: hidden;
+  padding-bottom: 6rem;
+  box-sizing: border-box;
 
   @media (min-width: $breakpoint-tablet-sm) {
-    flex-direction: row-reverse;
+    padding: 0 5rem;
   }
 }
 
-.sidebar,
 .main {
-  padding: 5px;
-  box-sizing: border-box;
-
-}
-
-.sidebar {
-  flex: 1 1 275px;
-}
-.main {
-  width: 100%;
-  max-width: 800px;
-  flex: 20 1 275px;
-  margin: auto;
+  overflow-y: auto;
+  height: 100%;
 }
 
 .footer {
@@ -78,11 +59,3 @@ html {
 }
 
 
-//for delete
-.sidebar {
-  min-height: 50px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  text-align: center;
-  background: repeating-linear-gradient(-45deg, #fff, #fff 2px, #f8f8f8 2px, #f8f8f8 4px);
-}

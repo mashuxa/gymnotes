@@ -11,9 +11,7 @@ export default function ({children}) {
         <React.Fragment>
             <Header/>
             <div className="page-wrapper">
-                <main className="main">
-                    {children}
-                </main>
+              {children}
             </div>
             <Navigation/>
             <Footer/>

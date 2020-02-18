@@ -21,9 +21,10 @@
   &--add {
     $width: 44px;
 
+    opacity: .5;
     position: absolute;
-    bottom: 1rem;
-    right: .5rem;
+    bottom: .5rem;
+    right: 0;
     width: $width;
     border-radius: 50%;
     font-size: 2rem;
@@ -31,5 +32,15 @@
     line-height: $width;
     color: $color-light;
     background-color: $color-primary;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  &--edit,
+  &--delete {
+    margin-bottom: 5px;
+    padding: 5px;
   }
 }

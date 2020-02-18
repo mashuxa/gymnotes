@@ -9,6 +9,7 @@
 
   margin-top: auto;
   flex: 0 0 auto;
+  position: absolute;
 
   @media (min-width: $breakpoint-tablet-sm) {
     padding: 15px 20px;

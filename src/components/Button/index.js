@@ -1,15 +1,19 @@
 import React from 'react';
+import classnames from 'classnames';
 import './style.scss';
 
 export default (props) => {
+  const baseClassName = classnames(props.className, "button", `button--${props.type}`);
+  let text;
+
   switch(props.type) {
     case 'add':
-      return <button type="button" className="button button--add" onClick={props.handleClick}>+</button>;
-    case 'cancel':
-      return <button type="button" className="button button--regular" onClick={props.handleClick}>Cancel</button>;
-    case 'apply':
-      return <button type="button" className="button button--primary" onClick={props.handleClick}>Apply</button>;
+      text = "+";
+      break;
+
     default:
-      return <button type="button" className="button" onClick={props.handleClick}>Button</button>;
+      text = props.type;
   }
+
+  return <button type="button" className={baseClassName} onClick={props.onClick}>{text}</button>;
 }

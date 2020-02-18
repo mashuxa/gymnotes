@@ -4,6 +4,7 @@
   "private": false,
   "homepage": "http://mashuxa.github.io/gymnotes",
   "dependencies": {
+    "classnames": "^2.2.6",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-redux": "^7.1.3",

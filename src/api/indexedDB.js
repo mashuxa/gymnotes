@@ -30,13 +30,26 @@ export default class IndexedDB {
     });
   }
 
-  static async addData(storeName, data) {
+  static async putData(storeName, data) {
     const db = await IndexedDB.openDB();
     const transaction = db.transaction(storeName, "readwrite");
     const store = transaction.objectStore(storeName);
 
     return new Promise((resolve, reject) => {
-      const request = store.add(data);
+      const request = store.put(data);
+
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  static async deleteData(storeName, key) {
+    const db = await IndexedDB.openDB();
+    const transaction = db.transaction(storeName, "readwrite");
+    const store = transaction.objectStore(storeName);
+
+    return new Promise((resolve, reject) => {
+      const request = store.delete(key);
 
       request.onsuccess = () => resolve(request.result);
       request.onerror = () => reject(request.error);

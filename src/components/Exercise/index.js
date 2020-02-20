@@ -8,7 +8,7 @@ export default function (props) {
     props.deleteExercise(id);
   };
   const editExercise = () => {
-    props.editExercise(id, type, name);
+    props.editExercise({type, name, id});
   };
 
   return (

@@ -1,21 +1,21 @@
 export const API_URL = 'http://127.0.0.1:3000';
 
 export const TYPES = {
-    cardio: {
-        name: 'Кардио',
-        params: {
-            distance: '',
-            duration: '',
-            speed: '',
-            calories: ''
-        }
-    },
-    strength: {
+    STRENGTH: {
         name: 'Силовые',
         params: {
-            sets: '',
-            count: '',
-            weight: ''
+            SETS: '',
+            COUNT: '',
+            WEIGHTH: ''
+        }
+    },
+    CARDIO: {
+        name: 'Кардио',
+        params: {
+            DISTANCE: '',
+            DURATION: '',
+            SPEED: '',
+            CALORIES: ''
         }
     }
 };
@@ -23,7 +23,6 @@ export const TYPES = {
 export const ERRORS = {
     err_001: 'IndexedDB can not be open'
 };
-
 export const WARNINGS = {
     wrn_001: 'IndexedDB should be updated'
 };

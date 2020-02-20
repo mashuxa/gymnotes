@@ -1,6 +1,6 @@
 import {combineReducers} from "redux";
-import history from "./history";
+import application from "./application";
 
 export default combineReducers({
-    history,
+    application
 });

@@ -1,19 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Provider} from 'react-redux';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
-import {createStore} from 'redux';
-import App from './components/App';
-import rootReducer from './reducers';
+import {Provider} from 'react-redux';
+import {createStore, applyMiddleware} from 'redux';
+import thunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import App from './containers/App';
+import reducer from './reducers';
 import History from './containers/History';
 import CurrentActivity from './containers/CurrentActivity';
 import ExerciseList from './containers/ExerciseList';
 import Error from './containers/Error';
 
-const store = createStore(
-  rootReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+const store = createStore( reducer, composeWithDevTools(applyMiddleware(thunk)));
 
 ReactDOM.render((
     <Provider store={store}>

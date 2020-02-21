@@ -1,27 +1,26 @@
 {
   "files": {
-    "main.css": "/gymnotes/static/css/main.fda7439a.chunk.css",
-    "main.js": "/gymnotes/static/js/main.6bea71ff.chunk.js",
-    "main.js.map": "/gymnotes/static/js/main.6bea71ff.chunk.js.map",
+    "main.css": "/gymnotes/static/css/main.4ee69c6c.chunk.css",
+    "main.js": "/gymnotes/static/js/main.21709375.chunk.js",
+    "main.js.map": "/gymnotes/static/js/main.21709375.chunk.js.map",
     "runtime-main.js": "/gymnotes/static/js/runtime-main.b55333e4.js",
     "runtime-main.js.map": "/gymnotes/static/js/runtime-main.b55333e4.js.map",
-    "static/js/2.803e20b2.chunk.js": "/gymnotes/static/js/2.803e20b2.chunk.js",
-    "static/js/2.803e20b2.chunk.js.map": "/gymnotes/static/js/2.803e20b2.chunk.js.map",
+    "static/js/2.8c65ea5e.chunk.js": "/gymnotes/static/js/2.8c65ea5e.chunk.js",
+    "static/js/2.8c65ea5e.chunk.js.map": "/gymnotes/static/js/2.8c65ea5e.chunk.js.map",
     "index.html": "/gymnotes/index.html",
-    "precache-manifest.96ff7946c0139dd644e3fee08499ce62.js": "/gymnotes/precache-manifest.96ff7946c0139dd644e3fee08499ce62.js",
+    "precache-manifest.fda1c601817bcee2cffd6933534aca27.js": "/gymnotes/precache-manifest.fda1c601817bcee2cffd6933534aca27.js",
     "service-worker.js": "/gymnotes/service-worker.js",
-    "static/css/main.fda7439a.chunk.css.map": "/gymnotes/static/css/main.fda7439a.chunk.css.map",
-    "static/js/2.803e20b2.chunk.js.LICENSE.txt": "/gymnotes/static/js/2.803e20b2.chunk.js.LICENSE.txt",
-    "static/media/exercise.6e4f7313.svg": "/gymnotes/static/media/exercise.6e4f7313.svg",
-    "static/media/history.eaa7aac4.svg": "/gymnotes/static/media/history.eaa7aac4.svg",
+    "static/css/main.4ee69c6c.chunk.css.map": "/gymnotes/static/css/main.4ee69c6c.chunk.css.map",
+    "static/js/2.8c65ea5e.chunk.js.LICENSE.txt": "/gymnotes/static/js/2.8c65ea5e.chunk.js.LICENSE.txt",
+    "static/media/activity.b7e14bb1.svg": "/gymnotes/static/media/activity.b7e14bb1.svg",
     "static/media/letter.4014f93e.svg": "/gymnotes/static/media/letter.4014f93e.svg",
     "static/media/list.7dd3a09d.svg": "/gymnotes/static/media/list.7dd3a09d.svg",
     "static/media/menu.dff3a5a5.svg": "/gymnotes/static/media/menu.dff3a5a5.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.b55333e4.js",
-    "static/js/2.803e20b2.chunk.js",
-    "static/css/main.fda7439a.chunk.css",
-    "static/js/main.6bea71ff.chunk.js"
+    "static/js/2.8c65ea5e.chunk.js",
+    "static/css/main.4ee69c6c.chunk.css",
+    "static/js/main.21709375.chunk.js"
   ]
 }

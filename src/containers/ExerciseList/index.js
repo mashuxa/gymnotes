@@ -38,7 +38,7 @@ const ExerciseList = (props) => {
 
   return <React.Fragment>
     <main className="main">
-      <h1>Exercises List</h1>
+      <h1>List of exercises</h1>
       {isVisibleConfigurator &&
       <ExerciseConfigurator
         data={exerciseData}

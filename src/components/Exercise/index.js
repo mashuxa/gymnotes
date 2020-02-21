@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from "../../components/Button";
+import {TYPES} from "../../constants";
 import './style.scss';
 
 export default function (props) {
@@ -15,7 +16,7 @@ export default function (props) {
     <article className="exercise">
       <div className="exercise__column">
         <h1>{name}</h1>
-        <span>{type}</span>
+        <span>{TYPES[type].name}</span>
       </div>
       <div className="exercise__column">
         <Button type="edit" onClick={editExercise}/>

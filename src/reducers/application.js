@@ -1,6 +1,7 @@
 import actionTypes from "../actionTypes";
 const initialState = {
-    exercises: []
+    exercises: [],
+    exercisesHistory: {}
 };
 
 export default (state = initialState, action) => {

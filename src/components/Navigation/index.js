@@ -3,9 +3,8 @@ import React from 'react';
 import {NavLink} from 'react-router-dom';
 
 import {ReactComponent as IconMenu} from './assets/menu.svg';
-import {ReactComponent as IconHistory} from './assets/history.svg';
-import {ReactComponent as IconExercise} from './assets/exercise.svg';
 import {ReactComponent as IconList} from './assets/list.svg';
+import {ReactComponent as IconActivity} from './assets/activity.svg';
 
 export default function () {
   return (
@@ -17,17 +16,14 @@ export default function () {
           <span className="navigation__link-name">Menu</span>
         </label>
 
-        <NavLink exact to='/' className="navigation__link navigation__link--history">
-          <IconHistory className="navigation__link-icon"/>
-          <span className="navigation__link-name">History</span>
-        </NavLink>
-        <NavLink to='/current-activity' className="navigation__link">
-          <IconExercise className="navigation__link-icon"/>
-          <span className="navigation__link-name">Current Activity</span>
-        </NavLink>
-        <NavLink to='/exercise-list' className="navigation__link">
+        <NavLink exact to='/exercises-list' className="navigation__link">
           <IconList className="navigation__link-icon"/>
-          <span className="navigation__link-name">List of exercise</span>
+          <span className="navigation__link-name">List of exercises</span>
+        </NavLink>
+
+        <NavLink exact to='/exercises-history' className="navigation__link">
+          <IconActivity className="navigation__link-icon"/>
+          <span className="navigation__link-name">History of exercises</span>
         </NavLink>
       </nav>
     </React.Fragment>);

@@ -38,7 +38,7 @@ const ExerciseList = (props) => {
 
   return <React.Fragment>
     <main className="main">
-      <h1>List of exercises</h1>
+      <h1>Список упражнений:</h1>
       {isVisibleConfigurator &&
       <ExerciseConfigurator
         data={exerciseData}
@@ -47,9 +47,9 @@ const ExerciseList = (props) => {
         putExercise={putExercise}
       />}
       <section>
-        {props.exercises.map(exercise =>
-          <Exercise key={exercise.id}
-                    data={exercise}
+        {Object.keys(props.exercises).map(id =>
+          <Exercise key={id}
+                    data={props.exercises[id]}
                     editExercise={editExercise}
                     deleteExercise={deleteExercise}
           />)}
@@ -61,7 +61,7 @@ const ExerciseList = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    exercises: state.application.exercises
+    exercises: state.exercise.exercises
   };
 };
 const mapDispatchToProps = (dispatch) => {

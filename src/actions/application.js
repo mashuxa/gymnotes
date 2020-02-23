@@ -26,3 +26,17 @@ export const putExercise = ({type, name, id}) => async (dispatch) => {
     dispatch(fetchExercises());
 };
 
+export const addToCurrentTraining = (params) => {
+    return {
+        type: actionTypes.ADD_EXERCISE,
+        payload: params
+    }
+};
+
+export const fetchCurrentTraining = () => async (dispatch) =>
+  dispatch(addToCurrentTraining(await IndexedDB.getData(INDEXED_DB_TABLES.currentTraining)));
+
+export const putCurrentTraining = (data) => async (dispatch) => {
+    await IndexedDB.putData(INDEXED_DB_TABLES.currentTraining, data);
+    dispatch(fetchCurrentTraining());
+};

@@ -5,6 +5,7 @@ import {NavLink} from 'react-router-dom';
 import {ReactComponent as IconMenu} from './assets/menu.svg';
 import {ReactComponent as IconList} from './assets/list.svg';
 import {ReactComponent as IconActivity} from './assets/activity.svg';
+import {ReactComponent as IconPower} from './assets/power.svg';
 
 export default function () {
   return (
@@ -15,6 +16,11 @@ export default function () {
           <IconMenu className="navigation__link-icon"/>
           <span className="navigation__link-name">Menu</span>
         </label>
+
+        <NavLink exact to='/current-training' className="navigation__link">
+          <IconPower className="navigation__link-icon"/>
+          <span className="navigation__link-name">Current training</span>
+        </NavLink>
 
         <NavLink exact to='/exercises-list' className="navigation__link">
           <IconList className="navigation__link-icon"/>

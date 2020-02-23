@@ -9,6 +9,7 @@ import App from './containers/App';
 import reducer from './reducers';
 import ExercisesHistory from './containers/ExercisesHistory';
 import ExerciseList from './containers/ExerciseList';
+import CurrentTraining from './containers/CurrentTraining';
 import Error from './containers/Error';
 
 const store = createStore( reducer, composeWithDevTools(applyMiddleware(thunk)));
@@ -20,6 +21,7 @@ ReactDOM.render((
                 <Switch>
                     <Route exact path='/exercises-list' component={ExerciseList} />
                     <Route exact path='/exercises-history' component={ExercisesHistory} />
+                    <Route exact path='/current-training' component={CurrentTraining} />
                     <Route path='*' component={Error} />
                 </Switch>
             </App>

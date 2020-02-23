@@ -13,6 +13,10 @@ export default class IndexedDB {
         if (!db.objectStoreNames.contains(INDEXED_DB_TABLES.exercises)) {
           db.createObjectStore(INDEXED_DB_TABLES.exercises, {keyPath: 'id', autoIncrement: true});
         }
+
+        if (!db.objectStoreNames.contains(INDEXED_DB_TABLES.currentTraining)) {
+          db.createObjectStore(INDEXED_DB_TABLES.currentTraining, {keyPath: 'id', autoIncrement: true});
+        }
       };
     });
   }

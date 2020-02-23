@@ -1,6 +1,8 @@
 import {combineReducers} from "redux";
-import application from "./application";
+import exercise from "./exercise";
+import training from "./training";
 
 export default combineReducers({
-    application
+    exercise,
+    training
 });

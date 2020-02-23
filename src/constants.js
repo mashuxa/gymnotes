@@ -50,5 +50,6 @@ export const WARNINGS = {
 
 export const INDEXED_DB_NAME = "gymnotesDB";
 export const INDEXED_DB_TABLES = {
-  exercises: "exercises"
+  exercises: "exercises",
+  currentTraining: "currentTraining"
 };

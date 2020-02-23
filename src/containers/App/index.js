@@ -3,13 +3,14 @@ import {connect} from 'react-redux';
 import Header from '../../components/Header';
 import Navigation from '../../components/Navigation';
 import Footer from '../../components/Footer';
-import {fetchExercises} from '../../actions/application';
+import {fetchCurrentTraining, fetchExercises} from '../../actions/application';
 import './normalize.scss';
 import './grid.scss';
 import './utilities.scss';
 
 const App = (props) => {
   props.fetchExercises();
+  props.fetchCurrentTraining();
 
   return (
     <React.Fragment>
@@ -25,7 +26,8 @@ const App = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchExercises: () => dispatch(fetchExercises())
+    fetchExercises: () => dispatch(fetchExercises()),
+    fetchCurrentTraining: () => dispatch(fetchCurrentTraining())
   }
 };
 

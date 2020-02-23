@@ -1,13 +1,14 @@
 import React from 'react';
-import Button from "../../components/Button";
 import {TYPES} from "../../constants";
+import Button from "../../components/Button";
 import './style.scss';
 
 export default function (props) {
   const {type, name, id} = props.data;
-  const {params} = TYPES[type];
   const {values} = props;
-
+  const addToCurrentTraining = () => {
+    props.addToCurrentTraining({id, values});
+  };
   return (
     <article className="exercise">
       <div className="exercise__column">
@@ -15,18 +16,16 @@ export default function (props) {
         <span>{TYPES[type].name}</span>
       </div>
       <div>
-        {Object.keys(params).map((param) => {
-          const {name, unit} = params[param];
-          const value = (values && values[param]) || 0;
+        {values && Object.keys(TYPES[type].params).map((param) => {
+          const {name, unit} = TYPES[type].params[param];
+          const value = values || 0;
 
-          return <p>{`${name}: ${value} ${unit}`}</p>
+          return <p key={name}>{`${name}: ${value} ${unit}`}</p>
         })}
       </div>
       <div className="exercise__column">
-        <i><b>{props.date}</b></i>
-        <Button type="add" onClick={() => {
-          console.warn("add to current workout");
-        }}/>
+        <b>{props.date}</b>
+        <Button type="add" onClick={addToCurrentTraining}/>
       </div>
     </article>
   );

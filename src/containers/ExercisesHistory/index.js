@@ -1,43 +1,45 @@
 import React from 'react';
 import {connect} from "react-redux";
+import {TYPES} from "../../constants";
 import ExerciseCard from "../../components/ExerciseCard";
+import {putCurrentTraining} from "../../actions/application";
 
 class ExercisesHistory extends React.Component {
-  constructor(props) {
-    super(props);
+  renderEmptyExercise(data) {
+    return <ExerciseCard key={data.id} data={data} date={null} addToCurrentTraining={this.props.addToCurrentTraining} />;
   }
 
-  renderEmptyExercise(id){
-      return <ExerciseCard data={this.props.types.find(el => el.id === id)}  date={'11-11-2020'} />;
-  }
-
-  renderExercisesSlider(exercises){
-    return exercises.map(exercise => {
-      return <ExerciseCard data={exercise} date={new Date()}
-                           // values={}
-      />;
-    });
+  renderExercisesSlider(data) {
+    return <ExerciseCard key={data.id} data={data} date={null} />;
   }
 
   render() {
-    return <React.Fragment>
-      <h1>History of exercises</h1>
-      {
-        this.props.types.map(type => {
-            const exercisesByType = this.props.exercises[type.id];
+    const {types, exercisesHistory} = this.props;
 
-            return exercisesByType ? this.renderExercisesSlider(exercisesByType) : this.renderEmptyExercise(type.id);
-        })
-      }
+    return <React.Fragment>
+      <main className="main">
+        <h1>История упражнений:</h1>
+        {
+          Object.keys(types).map((id) => {
+            return exercisesHistory[id] ? this.renderExercisesSlider(types[id]) : this.renderEmptyExercise(types[id]);
+          })
+        }
+      </main>
     </React.Fragment>
   }
 }
 
 const mapStateToProps = state => {
   return {
-    types: state.application.exercises,
-    exercises: state.application.exercisesHistory,
+    types: state.exercise.exercises,
+    exercisesHistory: state.exercise.exercisesHistory,
   };
 };
 
-export default connect(mapStateToProps)(ExercisesHistory);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addToCurrentTraining: (data) => dispatch(putCurrentTraining(data))
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExercisesHistory);

@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "f30c3a3ad962068f8934b0b49c7d7550",
+    "revision": "5f12066c599175da09bd3e67ec0dbd0a",
     "url": "/gymnotes/index.html"
   },
   {
-    "revision": "1d3c6a320a92a5c62f28",
+    "revision": "79fdd39bc7e3b85f57e4",
     "url": "/gymnotes/static/css/main.4ee69c6c.chunk.css"
   },
   {
-    "revision": "4858370792ea778f8efd",
-    "url": "/gymnotes/static/js/2.8c65ea5e.chunk.js"
+    "revision": "4604e86a4844381d671a",
+    "url": "/gymnotes/static/js/2.4a27bb23.chunk.js"
   },
   {
     "revision": "bf23039b4e70a07c5aeb1b4010df3572",
-    "url": "/gymnotes/static/js/2.8c65ea5e.chunk.js.LICENSE.txt"
+    "url": "/gymnotes/static/js/2.4a27bb23.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "1d3c6a320a92a5c62f28",
-    "url": "/gymnotes/static/js/main.21709375.chunk.js"
+    "revision": "79fdd39bc7e3b85f57e4",
+    "url": "/gymnotes/static/js/main.4c61df44.chunk.js"
   },
   {
     "revision": "616199243c909dca47b5",
@@ -38,5 +38,9 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "dff3a5a5ba48956742dffa528d3422d9",
     "url": "/gymnotes/static/media/menu.dff3a5a5.svg"
+  },
+  {
+    "revision": "8d6b27b1b6802167f6e28cb4989c45e0",
+    "url": "/gymnotes/static/media/power.8d6b27b1.svg"
   }
 ]);

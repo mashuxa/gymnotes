@@ -5,10 +5,15 @@ import './style.scss';
 
 export default function (props) {
   const {type, name, id} = props.data;
-  const {values} = props;
+  const params = Object.keys(TYPES[type].params);
+  const values = props.values ? props.values : params.reduce((accum, current)=> {
+    accum[current] = 0;
+    return accum;
+  }, {});
   const addToCurrentTraining = () => {
     props.addToCurrentTraining({id, values});
   };
+
   return (
     <article className="exercise">
       <div className="exercise__column">
@@ -16,11 +21,10 @@ export default function (props) {
         <span>{TYPES[type].name}</span>
       </div>
       <div>
-        {values && Object.keys(TYPES[type].params).map((param) => {
+        {params.map((param) => {
           const {name, unit} = TYPES[type].params[param];
-          const value = values || 0;
 
-          return <p key={name}>{`${name}: ${value} ${unit}`}</p>
+          return <p key={name}>{`${name}: ${values[param]} ${unit}`}</p>
         })}
       </div>
       <div className="exercise__column">

@@ -6,7 +6,7 @@ import {putCurrentTraining} from "../../actions/application";
 
 class ExercisesHistory extends React.Component {
   renderEmptyExercise(data) {
-    return <ExerciseCard key={data.id} data={data} date={null} addToCurrentTraining={this.props.addToCurrentTraining} />;
+    return <ExerciseCard key={data.id} data={data} values={null} date={null} addToCurrentTraining={this.props.addToCurrentTraining} />;
   }
 
   renderExercisesSlider(data) {
@@ -19,11 +19,7 @@ class ExercisesHistory extends React.Component {
     return <React.Fragment>
       <main className="main">
         <h1>История упражнений:</h1>
-        {
-          Object.keys(types).map((id) => {
-            return exercisesHistory[id] ? this.renderExercisesSlider(types[id]) : this.renderEmptyExercise(types[id]);
-          })
-        }
+        {Object.keys(types).map((id) => exercisesHistory[id] ? this.renderExercisesSlider(types[id]) : this.renderEmptyExercise(types[id]))}
       </main>
     </React.Fragment>
   }

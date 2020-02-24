@@ -6,12 +6,12 @@ import './style.scss';
 export default function (props) {
   const {type, name, id} = props.data;
   const params = Object.keys(TYPES[type].params);
-  const values = props.values ? props.values : params.reduce((accum, current)=> {
-    accum[current] = 0;
+  const values = props.values ? props.values : params.reduce((accum, param)=> {
+    accum[param] = 0;
     return accum;
   }, {});
   const addToCurrentTraining = () => {
-    props.addToCurrentTraining({id, values});
+    props.addToCurrentTraining({id: Date.now(), values, typeId: id});
   };
 
   return (
@@ -24,7 +24,7 @@ export default function (props) {
         {params.map((param) => {
           const {name, unit} = TYPES[type].params[param];
 
-          return <p key={name}>{`${name}: ${values[param]} ${unit}`}</p>
+          return <p key={param}>{`${name}: ${values[param]} ${unit}`}</p>
         })}
       </div>
       <div className="exercise__column">

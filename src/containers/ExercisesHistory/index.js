@@ -1,6 +1,5 @@
 import React from 'react';
 import {connect} from "react-redux";
-import {TYPES} from "../../constants";
 import ExerciseCard from "../../components/ExerciseCard";
 import {putCurrentTraining} from "../../actions/application";
 

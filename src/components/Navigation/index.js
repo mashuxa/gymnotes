@@ -3,8 +3,8 @@ import React from 'react';
 import {NavLink} from 'react-router-dom';
 
 import {ReactComponent as IconMenu} from './assets/menu.svg';
-import {ReactComponent as IconList} from './assets/list.svg';
-import {ReactComponent as IconActivity} from './assets/activity.svg';
+import {ReactComponent as IconSettings} from './assets/settings.svg';
+import {ReactComponent as IconHistory} from './assets/history.svg';
 import {ReactComponent as IconPower} from './assets/power.svg';
 
 export default function () {
@@ -22,14 +22,14 @@ export default function () {
           <span className="navigation__link-name">Current training</span>
         </NavLink>
 
-        <NavLink exact to='/exercises-list' className="navigation__link">
-          <IconList className="navigation__link-icon"/>
-          <span className="navigation__link-name">List of exercises</span>
+        <NavLink exact to='/exercises-history' className="navigation__link">
+          <IconHistory className="navigation__link-icon"/>
+          <span className="navigation__link-name">History of exercises</span>
         </NavLink>
 
-        <NavLink exact to='/exercises-history' className="navigation__link">
-          <IconActivity className="navigation__link-icon"/>
-          <span className="navigation__link-name">History of exercises</span>
+        <NavLink exact to='/exercises-list' className="navigation__link">
+          <IconSettings className="navigation__link-icon"/>
+          <span className="navigation__link-name">Все упражнения</span>
         </NavLink>
       </nav>
     </React.Fragment>);

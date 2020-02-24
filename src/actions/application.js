@@ -36,6 +36,11 @@ export const addToCurrentTraining = (params) => {
 export const fetchCurrentTraining = () => async (dispatch) =>
   dispatch(addToCurrentTraining(await IndexedDB.getData(INDEXED_DB_TABLES.currentTraining)));
 
+export const deleteCurrentTrainingExercise = (id) => async (dispatch) => {
+    await IndexedDB.deleteData(INDEXED_DB_TABLES.currentTraining, id);
+    dispatch(fetchCurrentTraining());
+};
+
 export const putCurrentTraining = (data) => async (dispatch) => {
     await IndexedDB.putData(INDEXED_DB_TABLES.currentTraining, data);
     dispatch(fetchCurrentTraining());

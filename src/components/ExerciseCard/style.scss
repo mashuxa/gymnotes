@@ -27,9 +27,24 @@
     position: static;
   }
 
+  &__label {
+    display: flex;
+  }
+
   &__input {
+    -moz-appearance: textfield;
     width: 40px;
-    margin: 0 5px;
+    margin: 0 5px 0 auto;
     text-align: center;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+
+  &__unit {
+    width: 20px;
   }
 }

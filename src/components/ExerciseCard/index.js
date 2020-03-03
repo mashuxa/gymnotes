@@ -22,10 +22,10 @@ export default (props) => {
           const {name, unit} = TYPES[type].params[param];
 
           if (props.isEditable) {
-            return <label key={param}>
+            return <label className="exercise__label" key={param}>
               <span>{name}:</span>
               <input className="exercise__input" type="number" value={values[param]}/>
-              <span>{unit}</span>
+              <span className="exercise__unit">{unit}</span>
             </label>
           }
 

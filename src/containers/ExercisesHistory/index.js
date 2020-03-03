@@ -21,6 +21,7 @@ class ExercisesHistory extends React.Component {
             const addToTraining = () => {
               this.props.addToTraining(data);
             };
+
             return exercisesHistory[id] ? this.renderExercisesSlider(types[id]) :
               <ExerciseCard key={id} data={data} addToTraining={addToTraining} isEditable={false} />
           })

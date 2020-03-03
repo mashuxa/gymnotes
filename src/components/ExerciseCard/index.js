@@ -3,16 +3,13 @@ import {TYPES} from "../../constants";
 import Button from "../../components/Button";
 import './style.scss';
 
-export default function (props) {
-  const {type, name, id} = props.data;
+export default (props) => {
+  const {type, name, typeId} = props.data;
   const params = Object.keys(TYPES[type].params);
-  const values = props.values ? props.values : params.reduce((accum, param)=> {
+  const values = props.values ? props.values : params.reduce((accum, param) => {
     accum[param] = 0;
     return accum;
   }, {});
-  const addToCurrentTraining = () => {
-    props.addToCurrentTraining({id: Date.now(), values, typeId: id});
-  };
 
   return (
     <article className="exercise">
@@ -20,16 +17,26 @@ export default function (props) {
         <h1>{name}</h1>
         <span>{TYPES[type].name}</span>
       </div>
-      <div>
+      <div className="exercise__column">
         {params.map((param) => {
           const {name, unit} = TYPES[type].params[param];
+
+          if (props.isEditable) {
+            return <label key={param}>
+              <span>{name}:</span>
+              <input className="exercise__input" type="number" value={values[param]}/>
+              <span>{unit}</span>
+            </label>
+          }
 
           return <p key={param}>{`${name}: ${values[param]} ${unit}`}</p>
         })}
       </div>
-      <div className="exercise__column">
-        <b>{props.date}</b>
-        <Button type="add" onClick={addToCurrentTraining}/>
+      <div className="exercise__btn-wrapper">
+        {props.isEditable ?
+          <Button className="exercise__btn" type="delete" onClick={props.removeFromTraining} title="Remove"/> :
+          <Button className="exercise__btn" type="add" onClick={props.addToTraining} title="add to current training"/>
+        }
       </div>
     </article>
   );

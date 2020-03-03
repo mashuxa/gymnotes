@@ -4,16 +4,15 @@ import './style.scss';
 
 export default (props) => {
   const baseClassName = classnames(props.className, "button", `button--${props.type}`);
-  let text;
+  const getText = () => {
+    switch(props.type) {
+      case 'add':
+        return "+";
 
-  switch(props.type) {
-    case 'add':
-      text = "+";
-      break;
+      default:
+        return props.type;
+    }
+  };
 
-    default:
-      text = props.type;
-  }
-
-  return <button type="button" className={baseClassName} onClick={props.onClick}>{text}</button>;
+  return <button title={props.title} type="button" className={baseClassName} onClick={props.onClick}>{getText()}</button>;
 }

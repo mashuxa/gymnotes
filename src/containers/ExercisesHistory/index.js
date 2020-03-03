@@ -4,10 +4,6 @@ import ExerciseCard from "../../components/ExerciseCard";
 import {putCurrentTraining} from "../../actions/application";
 
 class ExercisesHistory extends React.Component {
-  renderEmptyExercise(data) {
-    return <ExerciseCard key={data.id} data={data} values={null} date={null} addToCurrentTraining={this.props.addToCurrentTraining} />;
-  }
-
   renderExercisesSlider(data) {
     return <ExerciseCard key={data.id} data={data} date={null} />;
   }
@@ -18,7 +14,17 @@ class ExercisesHistory extends React.Component {
     return <React.Fragment>
       <main className="main">
         <h1>История упражнений:</h1>
-        {Object.keys(types).map((id) => exercisesHistory[id] ? this.renderExercisesSlider(types[id]) : this.renderEmptyExercise(types[id]))}
+        {
+          Object.keys(types).map((id) => {
+            const {type, name} = types[id];
+            const data = {type, name, typeId: id};
+            const addToTraining = () => {
+              this.props.addToTraining(data);
+            };
+            return exercisesHistory[id] ? this.renderExercisesSlider(types[id]) :
+              <ExerciseCard key={id} data={data} addToTraining={addToTraining} isEditable={false} />
+          })
+        }
       </main>
     </React.Fragment>
   }
@@ -33,7 +39,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addToCurrentTraining: (data) => dispatch(putCurrentTraining(data))
+    addToTraining: (data) => dispatch(putCurrentTraining(data))
   }
 };
 

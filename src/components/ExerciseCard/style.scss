@@ -5,15 +5,31 @@
       $type: flex,
       $justify-content: space-between,
       $theme: light,
-      $padding: 8px 10px
+      $padding: 20px
   );
 
   & {
     margin-bottom: 5px;
+    align-content: center;
   }
 
   &__column {
     display: flex;
     flex-direction: column;
+    flex: 0 1 35%;
+  }
+
+  &__btn-wrapper {
+    margin-left: auto;
+  }
+
+  &__btn {
+    position: static;
+  }
+
+  &__input {
+    width: 40px;
+    margin: 0 5px;
+    text-align: center;
   }
 }

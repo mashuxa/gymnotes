@@ -6,7 +6,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.ADD_EXERCISE:
+    case actionTypes.SET_EXERCISES_TO_TRAINING:
       return {currentTraining: action.payload};
 
     default:

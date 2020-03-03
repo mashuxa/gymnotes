@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from "react-redux";
 import ExerciseCard from "../../components/ExerciseCard";
 import {putCurrentTraining} from "../../actions/application";
+import {TYPES} from "../../constants";
 
 class ExercisesHistory extends React.Component {
   renderExercisesSlider(data) {
@@ -17,7 +18,12 @@ class ExercisesHistory extends React.Component {
         {
           Object.keys(types).map((id) => {
             const {type, name} = types[id];
-            const data = {type, name, typeId: id};
+            const defaultValues = Object.keys(TYPES[type].params).reduce((accum, param) => {
+              accum[param] = 0;
+              return accum;
+            }, {});
+            const data = {type, name, typeId: id, values: defaultValues};
+
             const addToTraining = () => {
               this.props.addToTraining(data);
             };

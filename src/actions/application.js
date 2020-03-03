@@ -9,6 +9,13 @@ const setExercises = (params) => {
     }
 };
 
+export const setExercisesToTraining = (params) => {
+    return {
+        type: actionTypes.SET_EXERCISES_TO_TRAINING,
+        payload: params
+    }
+};
+
 export const fetchExercises = () => async (dispatch) =>
   dispatch(setExercises(await IndexedDB.getData(INDEXED_DB_TABLES.exercises)));
 
@@ -26,15 +33,8 @@ export const putExercise = ({type, name, id}) => async (dispatch) => {
     dispatch(fetchExercises());
 };
 
-export const addToCurrentTraining = (params) => {
-    return {
-        type: actionTypes.ADD_EXERCISE,
-        payload: params
-    }
-};
-
 export const fetchCurrentTraining = () => async (dispatch) =>
-  dispatch(addToCurrentTraining(await IndexedDB.getData(INDEXED_DB_TABLES.currentTraining)));
+  dispatch(setExercisesToTraining(await IndexedDB.getData(INDEXED_DB_TABLES.currentTraining)));
 
 export const deleteCurrentTrainingExercise = (id) => async (dispatch) => {
     await IndexedDB.deleteData(INDEXED_DB_TABLES.currentTraining, id);

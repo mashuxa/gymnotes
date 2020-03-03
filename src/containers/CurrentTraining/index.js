@@ -2,24 +2,28 @@ import React from 'react';
 import {connect} from "react-redux";
 import ExerciseCard from "../../components/ExerciseCard";
 import Button from "../../components/Button";
-import {deleteCurrentTrainingExercise} from "../../actions/application";
+import {setExercisesToTraining, deleteCurrentTrainingExercise, putCurrentTraining} from "../../actions/application";
 
 class CurrentTraining extends React.Component {
   render() {
-    const {currentTraining, exercisesList} = this.props;
+    const {currentTraining} = this.props;
+
     return <React.Fragment>
       <h1>{`Текущих упражнений: ${currentTraining.length}`}</h1>
-      {currentTraining.map((exercise) => {
-        const data = exercisesList[exercise.typeId];
+      {currentTraining.map((exercise, index) => {
         const removeFromTraining = () => {
           this.props.deleteCurrentTrainingExercise(exercise.id);
         };
+        const updateExercises = (values) => {
+          const updatedExercises = [...this.props.currentTraining];
 
-        return <ExerciseCard key={exercise.id} data={data} isEditable={true} removeFromTraining={removeFromTraining}/>;
+          updatedExercises[index].values = values;
+          this.props.setExercisesToTraining(updatedExercises);
+          updatedExercises.forEach(exercise => this.props.saveTraining(exercise));
+        };
+
+        return <ExerciseCard key={exercise.id} data={exercise} isEditable={true} removeFromTraining={removeFromTraining} onChange={updateExercises}/>;
       })}
-      <Button type="save" onClick={() => {
-        console.warn('save data in current training')
-      }}/>
       <Button type="end" onClick={() => {
         console.warn('finish training and save')
       }}/>
@@ -36,7 +40,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteCurrentTrainingExercise: (id) => dispatch(deleteCurrentTrainingExercise(id))
+    deleteCurrentTrainingExercise: (id) => dispatch(deleteCurrentTrainingExercise(id)),
+    setExercisesToTraining: (exercises) => dispatch(setExercisesToTraining(exercises)),
+    saveTraining: (exercises) => dispatch(putCurrentTraining(exercises)),
   }
 };
 

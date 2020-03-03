@@ -9,6 +9,9 @@ export default (props) => {
       case 'add':
         return "+";
 
+      case 'end':
+        return "Закончить тренировку";
+
       default:
         return props.type;
     }
